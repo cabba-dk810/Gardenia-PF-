@@ -1,0 +1,71 @@
+<div class="container">
+	<div class="row">
+		<h2>会員情報編集</h2>
+
+		<%= form_for (@user), url: user_path do |f| %>
+
+			<div class="col-xs-3 col-xs-offset-3">
+		      <%= f.label :名前（姓）, class: "float-left" %><br />
+		      <%= f.text_field :last_name, autofocus: true, autocomplete: "last_name", class:"col-auto form-control form-control-lg w-100" %>
+		    </div>
+
+		    <div class="col-xs-3">
+		      <%= f.label :名前（名）, class: "float-left" %><br />
+		      <%= f.text_field :first_name, autofocus: true, autocomplete: "first_name", class:"col-auto form-control form-control-lg w-100" %>
+		    </div>
+
+		    <div class="col-xs-3 col-xs-offset-3">
+		      <%= f.label :名前（セイ）, class: "float-left" %><br />
+		      <%= f.text_field :last_furigana, class:"col-auto form-control form-control-lg w-100" %>
+		    </div>
+
+		    <div class="col-xs-3">
+		      <%= f.label :名前（メイ）, class: "float-left" %><br />
+		      <%= f.text_field :first_furigana, class:"col-auto form-control form-control-lg w-100" %>
+		    </div>
+
+		    <div class="col-xs-6 col-xs-offset-3">
+		    	<%= attachment_image_tag @user, :profile_image, :fill, 50, 50, format: 'jpg', fallback: "no_image.jpg" %>
+		        <%= f.attachment_field :profile_image %>
+		    </div>
+
+		    <div class="col-xs-6 col-xs-offset-3">
+		      <%= f.label :郵便番号（ハイフンを除いた７桁の数字） %><br />
+		      <%= f.text_field :postal_code, class:"col-auto form-control form-control-lg w-100" %>
+		    </div>
+
+		    <div class="col-xs-6 col-xs-offset-3">
+		      <%= f.label :都道府県 %><br />
+		      <%= f.select :prefecture, User.prefectures.keys.to_a, class:"col-auto form-control form-control-lg w-100" %>
+		    </div>
+
+		    <div class="col-xs-6 col-xs-offset-3">
+		      <%= f.label :住所 %><br />
+		      <%= f.text_field :address, class:"col-auto form-control form-control-lg w-100" %>
+		    </div>
+
+		    <div class="col-xs-6 col-xs-offset-3">
+		      <%= f.label :電話番号 %><br />
+		      <%= f.text_field :phone_number, class:"col-auto form-control form-control-lg w-100" %>
+		    </div>
+
+		    <div class="col-xs-6 col-xs-offset-3">
+		      <%= f.label :メールアドレス %><br />
+		      <%= f.email_field :email, autocomplete: "email", class:"col-auto form-control form-control-lg w-100" %>
+		    </div>
+
+		    <div class="col-xs-6 col-xs-offset-3">
+		      <%= f.label :フロフィール文 %><br />
+		      <%= f.text_area :profile_text, class:"col-auto form-control form-control-lg w-100" %>
+		    </div>
+
+
+			<div class="actions">
+				<%= f.submit "更新", class:"col-xs-4 col-xs-offset-4 btn btn-primary" %>
+			</div>
+
+		<% end %>
+
+
+	</div>
+</div>
