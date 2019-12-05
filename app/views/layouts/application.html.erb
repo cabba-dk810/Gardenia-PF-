@@ -5,6 +5,10 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <!-- fontawesomeとbootstrapの読み込み -->
+    <script src="https://kit.fontawesome.com/b1ddc8e955.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css">
+
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
@@ -13,5 +17,11 @@
     <%= render 'layouts/header' %>
     <%= yield %>
     <%= render 'layouts/footer' %>
+
+    <!-- bootstrap-tags-inputの読み込み（javascript) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js.map"></script>
+
+
   </body>
 </html>

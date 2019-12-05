@@ -1,1 +1,101 @@
-<h1>top</h1>
+<div class="container">
+	<div class="row">
+
+		<%= form_for(@post_garden) do |f| %>
+
+			<!-- 画像投稿 -->
+			<div class="field">
+			<%= f.fields_for :post_images do |image| %>
+			<%= render 'post_image_fields', f: image %>
+
+			<div class="links">
+				<%= link_to_add_association "追加", f, :post_images %>
+			</div>
+			<% end %>
+			</div>
+
+			<!-- 投稿内容 -->
+			<div class="field">
+				<label class="post_content-text">投稿内容</label>
+				<%= f.text_area :post_content, class:"col-auto form-control form-control-lg w-100" %>
+			</div>
+
+			<!-- 場所 -->
+			<div class="field">
+				<label class="place-text">場所</label>
+				<%= f.text_field :place, class:"col-auto form-control form-control-lg w-100", placeholder: "東京都品川区" %>
+			</div>
+
+			<!-- タグ -->
+			<div class="field">
+				<label class="tag-text">タグ</label>
+				<%= f.text_field :tag_list, value: @post_garden.tag_list.join(","), 'data-role':'tagsinput', class:"col-auto form-control form-control-lg w-100", placeholder: "登録したいキーワードを入れてください。2つ以上の時はスペースを開けてください。" %>
+			</div>
+
+			<!-- 庭の広さ -->
+			<div class="field">
+				<label class="area-text">庭の広さ</label>
+				<%= f.text_field :area, class:"col-auto form-control form-control-lg w-100", placeholder: "5m2" %>
+			</div>
+
+			<!-- かかった経費 -->
+			<div class="field">
+				<label class="price-text">かかった経費</label>
+				<%= f.text_field :price, class:"col-auto form-control form-control-lg w-100", placeholder: "15,000円" %>
+			</div>
+
+			<!-- 使った庭木 -->
+			<div class="field">
+				<label class="price-text">使った庭木</label>
+				<%= f.fields_for :planted_gardens do |planted_garden| %>
+				<%= render 'planted_garden_fields', f: planted_garden %>
+
+				<div class="links">
+					<%= link_to_add_association "追加", f, :planted_gardens %>
+				</div>
+				<% end %>
+			</div>
+
+			<!-- 問題点（害虫、病気等） -->
+			<div class="field">
+				<label class="problem-text">問題点（害虫、病気等）</label>
+				<%= f.text_area :problem, class:"col-auto form-control form-control-lg w-100", placeholder: "ハダニが多い。うどんこ病になってしまった。" %>
+			</div>
+
+			<!-- 解決策 -->
+			<div class="field">
+				<label class="solution-text">解決策</label>
+				<%= f.text_area :solution, class:"col-auto form-control form-control-lg w-100", placeholder: "殺虫殺菌スプレー剤の「ベニカXスプレー」、「ベニカXファインスプレー」を散布しました" %>
+			</div>
+
+
+			<!-- 庭を公開するかどうか（ラジオボタン） -->
+			<div class="open_status_select">
+				<label><%= f.radio_button :open_status, "公開", :onchange => 'entryChange1(this)' %>  庭を公開する</label>
+			</div>
+			<div class="open_status_select">
+				<label><%= f.radio_button :open_status, "非公開", :onchange => 'entryChange1(this)' %>  公開しない</label>
+			</div>
+
+			<!--  庭を公開するかによる条件分岐 -->
+			<script>
+				function entryChange1(radio){
+				  if ( radio.value == "公開" ) {
+
+				  	// 庭を公開した場合
+				  	
+
+				  } else if ( radio.value == "非公開"){
+				  }
+				}
+				</script>
+
+
+			<div class="row">
+				<%= f.submit "投稿する", class:"col-xs-3 col-xs-offset-2 btn btn-primary" %>
+			</div>
+
+
+		<% end %>
+	</div>
+</div>

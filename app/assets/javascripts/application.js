@@ -16,3 +16,29 @@
 //= require jquery
 //= require bootstrap-sprockets
 //= require_tree .
+//= require cocoon
+
+// 画像投稿時の画像プレビュー
+$(function(){
+  $fileField = $('#file')
+ 
+  // 選択された画像を取得し表示
+  $($fileField).on('change', $fileField, function(e) {
+    file = e.target.files[0]
+    reader = new FileReader(),
+    $preview = $("#upload_image");
+ 
+    reader.onload = (function(file) {
+      return function(e) {
+        $preview.empty();
+        $preview.append($('<img>').attr({
+          src: e.target.result,
+          height: "100%",
+          class: "preview",
+          title: file.name
+        }));
+      };
+    })(file);
+    reader.readAsDataURL(file);
+  });
+});

@@ -1,0 +1,25 @@
+<div class="nested-fields well well-compact">
+	<div class="form-group">
+
+		<div class="col-xs-3">
+			<div id="upload_image" onClick="$('#file').click()" >
+				<% if @post_image.garden_image.present? %>
+					<%= attachment_iamge_tag (image.garden_image.url) %>
+				<% else %>
+					<i class="fas fa-image"></i><i class="fas fa-file-upload add"></i>
+				<% end %>
+			</div>
+			<%= f.attachment_field :garden_image, direct: true, class:"garden_image_field", style: "display:none", id: "file" %>
+		</div>
+
+		<div class="col-xs-3">
+			<%= f.attachment_field :garden_image, direct: true, class:"song-setlist_field" %>
+		</div>
+		<div class="col-xs-3">
+			<%= f.attachment_field :garden_image, direct: true, class:"song-setlist_field" %>
+		</div>
+		<div class="col-xs-3">
+			<%= f.attachment_field :garden_image, direct: true, class:"song-setlist_field" %>
+		</div>
+	</div>
+</div>
