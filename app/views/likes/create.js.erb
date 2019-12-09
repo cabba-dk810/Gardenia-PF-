@@ -1,0 +1,2 @@
+// #likes_buttons_<%= @post_garden.id %>この部分のHTMLだけrenderで部分的に更新する処理
+$('#likes_buttons_<%= @post_garden.id %>').html("<%= j(render partial: 'likes/like', locals: {post_garden: @post_garden}) %>");
