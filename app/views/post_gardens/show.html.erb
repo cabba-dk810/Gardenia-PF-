@@ -1,0 +1,63 @@
+<div class="container">
+	<div class="row">
+
+		<div class="col-xs-12">
+
+			<div class="col-xs-5 col-xs-offset-1">
+				<!-- 画像切り替え用矢印 -->
+				<div class="change-btn-wrapper">
+	          		<div class="change-btn prev-btn"><i class="far fa-arrow-alt-circle-left"></i></div>
+	          		<div class="change-btn next-btn"><i class="far fa-arrow-alt-circle-right"></i></div>
+       			</div>
+
+       			<!-- data-indexでJsにデータを渡している。$('.slides').data('index')で値が取れる -->
+       			<div class="slides" data-index="<%= @post_garden.post_images.length %>">
+
+					<% @post_garden.post_images.each_with_index do |post_image, i| %>
+
+						<% if i == 0 %>
+							<div class="slide active">
+								<%= attachment_image_tag post_image, :garden_image, :fill, 400,400, format: 'jpg' %>
+							</div>
+						<% else %>
+							<div class="slide">
+								<%= attachment_image_tag post_image, :garden_image, :fill, 400,400, format: 'jpg' %>
+							</div>
+						<% end %>
+
+					<% end %>
+
+				</div>
+			</div>
+
+
+			<div class="col-xs-5 col-xs-offset-1">
+				<div class="profile-image-box">
+					<%= attachment_image_tag @user, :profile_image, :fill, 150,150, format: 'jpg' %>
+				</div>
+				<span class="profile-name"><%= @user.user_name %>
+
+				<% if @post_garden.user_id == current_user.id %>
+
+					<%= link_to new_open_garden_path(@post_garden.id) do %>
+						<div class="open-garden-input">
+							<span class="open-garden-input-text">公開する</span>
+						</div>
+					<% end %>
+
+				<% else %>
+
+					<%= link_to "#" do %>
+						<div class="add-follow">
+							<span class="add-follow-text">+　フォロー</span>
+						</div>
+					<% end %>
+
+				<% end %>
+
+			</div>
+
+		</div>
+
+	</div>
+</div>

@@ -47,3 +47,29 @@
   display: block;
   color: #fff;
 }
+
+/*庭を公開時の情報を初期設定で非表示にする*/
+/*#reservation_info{
+  display: none;
+}*/
+
+/*#reservation-day-input{
+  display: none;
+}*/
+
+.prev-btn{
+  cursor: pointer;
+  display: none;
+}
+
+.next-btn{
+  cursor: pointer;
+}
+
+.slide{
+  display: none;
+}
+
+.active{
+  display: block;
+}
