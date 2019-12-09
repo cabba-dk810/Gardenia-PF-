@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_08_092423) do
+ActiveRecord::Schema.define(version: 2019_12_09_045918) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -23,6 +23,13 @@ ActiveRecord::Schema.define(version: 2019_12_08_092423) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_admins_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "post_garden_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "open_days", force: :cascade do |t|
@@ -59,6 +66,7 @@ ActiveRecord::Schema.define(version: 2019_12_08_092423) do
     t.text "open_announce"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "likes_count"
   end
 
   create_table "post_images", force: :cascade do |t|

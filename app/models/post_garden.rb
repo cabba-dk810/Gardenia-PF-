@@ -6,15 +6,26 @@ class PostGarden < ApplicationRecord
 
 
 	belongs_to :user
+
 	has_many :post_images
 	accepts_nested_attributes_for :post_images, allow_destroy: true
 	accepts_attachments_for :post_images, attachment: :garden_image
+
 	has_many :planted_gardens
 	accepts_nested_attributes_for :planted_gardens, allow_destroy: true
+
 	has_many :open_days
+
+	has_many :likes, dependent: :destroy
 
 	# タグ付用記述
 	acts_as_taggable
+
+
+	# いいねが１投稿につき１人１回
+	def liked_by?(user_id)
+		likes.where(user_id: user_id).exists?
+	end
 
 
 end

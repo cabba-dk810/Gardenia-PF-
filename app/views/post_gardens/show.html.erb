@@ -1,9 +1,9 @@
 <div class="container">
-	<div class="row">
 
+	<div class="row">
 		<div class="col-xs-12">
 
-			<div class="col-xs-5 col-xs-offset-1">
+			<div class="col-xs-6">
 				<!-- 画像切り替え用矢印 -->
 				<div class="change-btn-wrapper">
 	          		<div class="change-btn prev-btn"><i class="far fa-arrow-alt-circle-left"></i></div>
@@ -31,12 +31,15 @@
 			</div>
 
 
+			<!-- 写真右の項目 -->
 			<div class="col-xs-5 col-xs-offset-1">
 				<div class="profile-image-box">
 					<%= attachment_image_tag @user, :profile_image, :fill, 150,150, format: 'jpg' %>
 				</div>
 				<span class="profile-name"><%= @user.user_name %>
 
+
+				<!-- 自ユーザならば、庭公開へのリンク、他ユーザならばフォローボタン -->
 				<% if @post_garden.user_id == current_user.id %>
 
 					<%= link_to new_open_garden_path(@post_garden.id) do %>
@@ -55,9 +58,15 @@
 
 				<% end %>
 
+				<!-- いいねボタン -->
+				<div id="likes_buttons_<%= @post_garden.id %>">
+					<%= render partial: 'likes/like', locals: {post_garden: @post_garden} %>
+				</div>
 			</div>
 
 		</div>
-
 	</div>
+
+	<div class="row">
+		<div class="col">
 </div>
