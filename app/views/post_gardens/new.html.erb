@@ -5,12 +5,12 @@
 
 			<!-- 画像投稿 -->
 			<div class="field">
-			<%= f.fields_for :post_images do |image| %>
-			<%= render 'post_image_fields', f: image %>
+			<%= f.fields_for :post_images do |post_image| %>
+				<%= render 'post_image_fields', f: post_image %>
 
-			<div class="links">
-				<%= link_to_add_association "追加", f, :post_images %>
-			</div>
+				<div class="links">
+					<%= link_to_add_association "追加", f, :post_images %>
+				</div>
 			<% end %>
 			</div>
 
@@ -69,26 +69,7 @@
 			</div>
 
 
-			<!-- 庭を公開するかどうか（ラジオボタン） -->
-			<div class="open_status_select">
-				<label><%= f.radio_button :open_status, "公開", :onchange => 'entryChange1(this)' %>  庭を公開する</label>
-			</div>
-			<div class="open_status_select">
-				<label><%= f.radio_button :open_status, "非公開", :onchange => 'entryChange1(this)' %>  公開しない</label>
-			</div>
 
-			<!--  庭を公開するかによる条件分岐 -->
-			<script>
-				function entryChange1(radio){
-				  if ( radio.value == "公開" ) {
-
-				  	// 庭を公開した場合
-				  	
-
-				  } else if ( radio.value == "非公開"){
-				  }
-				}
-				</script>
 
 
 			<div class="row">

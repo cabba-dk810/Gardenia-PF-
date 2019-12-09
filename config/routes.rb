@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   devise_for :admins
 
+
   # ユーザ用ルーティング
   devise_for :users
 
@@ -12,7 +13,7 @@ Rails.application.routes.draw do
   resources :post_gardens, only: [:new, :create, :show, :edit, :update, :destroy]
   root to: 'post_gardens#index'
   get 'post_gardens/about' => 'post_gardens#about', as: 'about'
-  get 'post_gardens/new_open_garden' => 'post_gardens#new_open_garden', as: 'new_open_garden'
+  get 'post_gardens/:id/new_open_garden' => 'post_gardens#new_open_garden', as: 'new_open_garden'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

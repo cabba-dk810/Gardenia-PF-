@@ -1,0 +1,95 @@
+<!-- 庭を公開するかどうか（ラジオボタン） -->
+<div class="open_status_select">
+<label><%= f.radio_button :open_status, "非公開", :onchange => 'openEntry(this)' %>  公開しない</label>
+</div>
+<div class="open_status_select">
+<label><%= f.radio_button :open_status, "公開",  :onchange => 'openEntry(this)' %>  庭を公開する</label>
+</div>
+
+
+<!-- 以下、オープンガーデンの詳細設定 -->
+<div id="reservation_info">
+	<span class="reservation-title-text">オープンガーデンの詳細設定</span>
+
+
+<p>-----</p>
+	<!-- 日程の設定fullcalendar使用 -->
+	<div class="row">
+		<div class="col-xs-8 col-xs-offset-2">
+			<div id='calendar'></div>
+
+			<div id="reservation-day-input">
+				<%= f.fields_for :open_days do |i| %>
+					<div class="field">
+						<h4 class="reservation-day-title">時間選択</h4>
+						<label class="reservation-open-text">開場時間</label>
+						<%= i.datetime_select :start_time, :use_month_numbers => true, :minute_step => 30, class:"col-auto form-control form-control-lg w-100" ,:include_blank => true %>
+					</div>
+
+					<div class="field">
+						<label class="reservation-close-text">閉場時間</label>
+						<%= i.datetime_select :end_time, :use_month_numbers => true, :minute_step => 30, class:"col-auto form-control form-control-lg w-100" ,:include_blank => true %>
+					</div>
+				<% end %>
+		</div>
+	</div>
+
+<p>-----</p>
+
+	<!-- 最大人数 -->
+	<div class="field">
+		<label class="max-number-text">最大人数</label>
+		<%= f.number_field :open_max_number, class:"col-auto form-control form-control-lg w-100" %>
+	</div>
+
+
+	<!-- 入場料 -->
+	<div class="field">
+		<label class="entrance-fee-text">入場料</label>
+		<%= f.text_field :open_entrance_fee, class:"col-auto form-control form-control-lg w-100" %>円
+	</div>
+
+
+	<!-- 郵便番号 -->
+	<div class="field">
+		<label class="postal_code-text">郵便番号</label>
+		<%= f.text_field :open_postal_code, class:"col-auto form-control form-control-lg w-100" %>
+	</div>
+
+
+	<!-- 県 -->
+	<div class="field">
+		<label class="prefecture-text">県</label>
+		<%= f.select :open_prefecture, User.prefectures.keys.to_a, class:"col-auto form-control form-control-lg w-100" %>
+	</div>
+
+
+	<!-- 住所 -->
+	<div class="field">
+		<label class="address-text">住所</label>
+		<%= f.text_field :open_address, class:"col-auto form-control form-control-lg w-100" %>
+	</div>
+
+
+	<!-- <div id="map" width="500px" height="500px"></div> -->
+
+<!-- 					<script>
+	var MyLatLng = new google.maps.LatLng(35.6811673, 139.7670516);
+	var Options = {
+	 zoom: 15,      //地図の縮尺値
+	 center: MyLatLng,    //地図の中心座標
+	 mapTypeId: 'roadmap'   //地図の種類
+	};
+	var map = new google.maps.Map(document.getElementById('map'), Options);
+	</script> -->
+
+
+
+	<!-- 注意事項 -->
+	<div class="field">
+		<label class="address-text">メッセージ・注意事項</label>
+		<%= f.text_area :open_announce, class:"col-auto form-control form-control-lg w-100" %>
+	</div>
+
+
+</div>

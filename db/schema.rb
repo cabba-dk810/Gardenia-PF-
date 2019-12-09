@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_05_094729) do
+ActiveRecord::Schema.define(version: 2019_12_08_092423) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -23,6 +23,14 @@ ActiveRecord::Schema.define(version: 2019_12_05_094729) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_admins_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
+  end
+
+  create_table "open_days", force: :cascade do |t|
+    t.integer "post_garden_id"
+    t.time "start_time"
+    t.time "end_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "planted_gardens", force: :cascade do |t|
@@ -93,10 +101,6 @@ ActiveRecord::Schema.define(version: 2019_12_05_094729) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.string "last_name"
-    t.string "first_name"
-    t.string "last_furigana"
-    t.string "first_furigana"
     t.string "postal_code"
     t.integer "prefecture"
     t.integer "status"
@@ -106,9 +110,8 @@ ActiveRecord::Schema.define(version: 2019_12_05_094729) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "profile_image_id"
+    t.string "user_name"
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["first_name"], name: "index_users_on_first_name"
-    t.index ["last_name"], name: "index_users_on_last_name"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
