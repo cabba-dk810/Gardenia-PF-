@@ -47,29 +47,27 @@ $(function(){
 $(function(){
   // var calenderHTML = "";
   $('#calendar').fullCalendar({
-
      header:{
       left:"prev,today,next", //ヘッダー左側
       center: 'title', //ヘッダー中央
       right: 'month,agendaWeek,agendaDay' //ヘッダー右側
       },
 
-
         dayClick: function(date, jsEvent, view){
           // カレンダー空白部分クリック時イベント
           // $('#reservation-day-input').show();
 
           // カレンダーを選択した日付が入るように設定
-          $('#post_garden_open_days_start_time_1i').val(date.format( 'YYYY' ));
-          $('#post_garden_open_days_start_time_2i').val(Number(date.format('MM')));
-          $('#post_garden_open_days_start_time_3i').val(Number(date.format( 'DD' )));
-          $('#post_garden_open_days_start_time_4i').val("09");
-          $('#post_garden_open_days_start_time_5i').val("00");
-          $('#post_garden_open_days_end_time_1i').val(date.format( 'YYYY' ));
-          $('#post_garden_open_days_end_time_2i').val(Number(date.format( 'MM' )));
-          $('#post_garden_open_days_end_time_3i').val(Number(date.format( 'DD' )));
-          $('#post_garden_open_days_end_time_4i').val("17");
-          $('#post_garden_open_days_end_time_5i').val("00");
+          $('#open_day_start_time_1i').val(date.format( "YYYY" ));
+          $('#open_day_start_time_2i').val(Number(date.format("MM")));
+          $('#open_day_start_time_3i').val(Number(date.format( "DD" )));
+          $('#open_day_start_time_4i').val("09");
+          $('#open_day_start_time_5i').val("00");
+          $('#open_day_end_time_1i').val(date.format( "YYYY" )).to_s;
+          $('#open_day_end_time_2i').val(Number(date.format( "MM" )));
+          $('#open_day_end_time_3i').val(Number(date.format( "DD" )));
+          $('#open_day_end_time_4i').val("17");
+          $('#open_day_end_time_5i').val("00");
 
           // calenderHTML = $('#reservation-day-input')[0].innerHTML;
           // console.log(calenderHTML)
@@ -79,4 +77,5 @@ $(function(){
 
   });
 });
+
 

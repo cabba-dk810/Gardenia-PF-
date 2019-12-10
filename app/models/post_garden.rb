@@ -30,4 +30,5 @@ class PostGarden < ApplicationRecord
 	end
 
 
+
 end

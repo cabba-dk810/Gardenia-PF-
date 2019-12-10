@@ -1,11 +1,15 @@
 <% if post_garden.liked_by?(current_user) %>
-	<%= link_to post_garden_like_path(post_garden.id), method: :delete, remote: true do %>
+
+	<%= link_to likes_post_garden_path(post_garden.id), method: :delete, remote: true do %>
 		<i class="fa fa-heart" aria-hidden="true" style="color: red;"></i>
-		<%= post_garden.likes_count %>人にいいねされています
+		<%= post_garden.reload.likes_count %>人にいいねされています
 	<% end %>
+
 <% else %>
-	<%= link_to post_garden_likes_path(post_garden), method: :post, remote: true do %>
+
+	<%= link_to likes_post_garden_path(post_garden.id), method: :post, remote: true do %>
 		<i class="fa fa-heart-o" aria-hidden="true"></i>
-		<%= post_garden.likes_count %>人にいいねされています
+		<%= post_garden.reload.likes_count %>人にいいねされています
 	<% end %>
+
 <% end %>

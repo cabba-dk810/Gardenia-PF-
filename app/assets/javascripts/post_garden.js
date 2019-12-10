@@ -1,17 +1,25 @@
-// 庭公開時に追加で情報を入力させる時に使用
-function openEntry(radio){
+// 庭公開時に追加で情報を入力させる時に使用（下記コード。参考に）
 
-  $('#reservation_info').hide();
+        // <div class="open_status_select">
+        // <label><%= f.radio_button :open_status, "非公開", :onchange => 'openEntry(this)' %>  公開しない</label>
+        // </div>
+        // <div class="open_status_select">
+        // <label><%= f.radio_button :open_status, "公開",  :onchange => 'openEntry(this)' %>  庭を公開する</label>
+        // </div>
 
-  // 庭を公開しない
-  if ( radio.value == "公開" ) {
-    $('#reservation_info').show();
+// function openEntry(radio){
 
-    // 庭を公開する場合
-  } else{
-    $('#reservation_info').hide();
-  }
-}
+//   $('#reservation_info').hide();
+
+//   // 庭を公開しない
+//   if ( radio.value == "公開" ) {
+//     $('#reservation_info').show();
+
+//     // 庭を公開する場合
+//   } else{
+//     $('#reservation_info').hide();
+//   }
+// }
 
 
 
