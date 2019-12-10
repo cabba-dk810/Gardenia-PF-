@@ -18,13 +18,15 @@ class PostGarden < ApplicationRecord
 
 	has_many :likes, dependent: :destroy
 
+	has_many :post_comments, dependent: :destroy
+
 	# タグ付用記述
 	acts_as_taggable
 
 
 	# いいねが１投稿につき１人１回
-	def liked_by?(user_id)
-		likes.where(user_id: user_id).exists?
+	def liked_by?(user)
+		likes.where(user_id: user.id).exists?
 	end
 
 
