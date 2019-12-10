@@ -1,6 +1,18 @@
 <div class="container">
 
 	<div class="row">
+
+		
+		<% if @post_garden.open_status == "公開" %>
+			<div class="open-status-box">
+				<span class="open-status-text">公開中</span>
+			</div>
+		<% else %>
+			<div class="open-status-box">
+				<span class="open-status-text">非公開</span>
+			</div>
+		<% end %>
+
 		<div class="col-xs-10 col-xs-offset-1">
 
 			<div class="col-xs-6">
@@ -32,37 +44,90 @@
 
 
 			<!-- 写真右の項目 -->
-			<div class="col-xs-5 col-xs-offset-1">
-				<div class="profile-image-box">
-					<%= attachment_image_tag @user, :profile_image, :fill, 150,150, format: 'jpg' %>
-				</div>
-				<span class="profile-name"><%= @user.user_name %>
+
+			<!-- 投稿者、フォロー追加ボタン -->
+				<div class="col-xs-5 col-xs-offset-1">
+
+					<div class="post-place">
+						<span class="post-place-text"><%= @post_garden.place %></span>
+					</div>
+
+					<div class="profile-image-box">
+						<%= attachment_image_tag @user, :profile_image, :fill, 150,150, format: 'jpg' %>
+					</div>
+					<span class="profile-name"><%= @user.user_name %></span>
 
 
-				<!-- 自ユーザならば、庭公開へのリンク、他ユーザならばフォローボタン -->
-				<% if @post_garden.user_id == current_user.id %>
+					<!-- 自ユーザならば、庭公開へのリンク、他ユーザならばフォローボタン -->
+					<% if @user.id == current_user.id && @post_garden.open_status == "非公開" %>
 
-					<%= link_to new_open_garden_path(@post_garden.id) do %>
-						<div class="open-garden-input">
-							<span class="open-garden-input-text">公開する</span>
+						<%= link_to new_open_garden_path(@post_garden.id) do %>
+							<div class="open-garden-input">
+								<span class="open-garden-input-text">公開する</span>
+							</div>
+						<% end %>
+
+					<% elsif @user.id == current_user.id && @post_garden.open_status == "公開" %>
+
+						<%= link_to new_open_garden_path(@post_garden.id) do %>
+							<div class="open-garden-input">
+								<span class="open-garden-input-text">公開情報を編集する</span>
+							</div>
+						<% end %>
+
+					<% else %>
+
+						<%= link_to "#" do %>
+							<div class="add-follow">
+								<span class="add-follow-text">+　フォロー</span>
+							</div>
+						<% end %>
+
+					<% end %>
+
+			<!-- 使った庭木 -->
+			<div class="row">
+				<div class="col-xs-5 col-xs-offset-1">
+
+					<div class="post-planted-garden">
+						<span class="post-planted-garden-title">使用した庭木</span>
+					</div>
+
+					<% @post_garden.planted_gardens.each do |planted_garden| %>
+						<div class="post-planted-gardens">
+							<span class="post-planted-garden-text"><%= planted_garden.plant_name %></span>
+							<span class="post-planted-garden-number"><%= planted_garden.plant_number %></span>
 						</div>
 					<% end %>
 
-				<% else %>
-
-					<%= link_to "#" do %>
-						<div class="add-follow">
-							<span class="add-follow-text">+　フォロー</span>
-						</div>
-					<% end %>
-
-				<% end %>
-
-				<!-- いいねボタン -->
-				<div id="likes_buttons_<%= @post_garden.id %>">
-					<%= render partial: 'likes/like', locals: {post_garden: @post_garden} %>
 				</div>
 			</div>
+
+			<!-- タグ -->
+			<div class="row">
+				<div class="col-xs-5 col-xs-offset-1">
+
+					<div class="post-tag">
+						<span class="post-tag-title">タグ</span>
+					</div>
+
+					<% @post_garden.tag_list.each do |tag| %>
+						<div class="post-tags">
+							<span class="post-tag-text"><%= tag %></span>
+						</div>
+					<% end %>
+					
+				</div>
+
+			</div>
+
+
+
+			<!-- いいねボタン -->
+			<div id="likes_buttons_<%= @post_garden.id %>">
+				<%= render partial: 'likes/like', locals: {post_garden: @post_garden} %>
+			</div>
+
 
 		</div>
 	</div>
@@ -105,4 +170,22 @@
 
 		</div>
 	</div>
+
+
+	<!-- 予約用カレンダーの表示 -->
+	<div class="col-xs-3 col-xs-offset-1">
+		
+		<% if @user.id == current_user.id %>
+
+
+		<% elsif @post_garden.open_status == "公開" %>
+
+
+		<% else %>
+
+
+		<% end %>
+
+	</div>
+
 </div>
