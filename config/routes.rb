@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
   resources :post_gardens, only: [:new, :create, :show, :edit, :update, :destroy] do
     resources :likes, only: [:create, :destroy]
+    resources :post_comments, only: [:create, :destroy]
   end
   root to: 'post_gardens#index'
   get 'post_gardens/about' => 'post_gardens#about', as: 'about'

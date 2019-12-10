@@ -34,6 +34,7 @@ class PostGardensController < ApplicationController
 	def show
 		@post_garden = PostGarden.find(params[:id])
 		@user = User.find_by(id: @post_garden.user_id)
+		@post_comment = PostComment.new
 	end
 
 	def edit
