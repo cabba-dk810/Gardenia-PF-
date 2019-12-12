@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
 	def show
 		@user = User.find(params[:id])
-		@post_gardens = PostGarden.where(user_id: current_user.id)
+		@post_gardens = PostGarden.where(user_id: @user.id)
+		@relationship = Relationship.new
 	end
 
 	def confirm
@@ -24,9 +25,13 @@ class UsersController < ApplicationController
 	end
 
 	def follower
+		@user = User.find(params[:id])
+		@followers = Relationship.where(follow_id: params[:id])
 	end
 
 	def following
+		@user = User.find(params[:id])
+		@followings = Relationship.where(user_id: params[:id])
 	end
 
 

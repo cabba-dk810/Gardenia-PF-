@@ -61,6 +61,12 @@
 					<!-- 自ユーザならば、庭公開へのリンク、他ユーザならばフォローボタン -->
 					<% if @user.id == current_user.id && @post_garden.open_status == "非公開" %>
 
+						<%= link_to edit_post_garden_path(@post_garden.id) do %>
+							<div class="edit-post-garden">
+								<span class="edit-post-garden-text">基本情報を編集する</span>
+							</div>
+						<% end %>
+
 						<%= link_to new_open_garden_path(@post_garden.id) do %>
 							<div class="open-garden-input">
 								<span class="open-garden-input-text">公開する</span>
@@ -69,17 +75,15 @@
 
 					<% elsif @user.id == current_user.id && @post_garden.open_status == "公開" %>
 
-						<%= link_to new_open_garden_path(@post_garden.id) do %>
-							<div class="open-garden-input">
-								<span class="open-garden-input-text">公開情報を編集する</span>
+						<%= link_to edit_post_garden_path(@post_garden.id) do %>
+							<div class="edit-post-garden">
+								<span class="edit-post-garden-text">基本情報を編集する</span>
 							</div>
 						<% end %>
 
-					<% else %>
-
-						<%= link_to "#" do %>
-							<div class="add-follow">
-								<span class="add-follow-text">+　フォロー</span>
+						<%= link_to new_open_garden_path(@post_garden.id) do %>
+							<div class="open-garden-input">
+								<span class="open-garden-input-text">公開情報を編集する</span>
 							</div>
 						<% end %>
 
@@ -150,7 +154,7 @@
 					<%= post_comment.comment_content %>
 
 					<% if post_comment.user_id == current_user.id %>
-						<div class="cart-item-delete">
+						<div class="comment-delete">
 							<%= link_to "削除", post_garden_post_comment_path(post_comment.id), method: :delete %>
 						</div>
 					<% end %>

@@ -1,0 +1,21 @@
+<div class="container">
+	<div class="row">
+
+		<div class="col-xs-4">
+			<div class="samuneiru-position">
+				<%= attachment_image_tag @user, :profile_image, :fill, 150, 150, format: 'jpg', fallback: "no_image.jpg" %>
+			</div>
+		</div>
+
+	</div>
+
+	<!-- フォロワー一覧 -->
+	<div class="row">
+		<div class="col-xs-10 col-xs-offset-1">
+			<% @followings.each do |following| %>
+				<%= following.follow.user_name %>
+
+			<% end %>
+		</div>
+	</div>
+</div>
