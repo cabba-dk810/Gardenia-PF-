@@ -5,7 +5,10 @@ Rails.application.routes.draw do
   # ユーザ用ルーティング
   devise_for :users
 
-  resources :users, only: [:show, :edit, :update]
+  resources :users, only: [:show, :edit, :update] do
+    get 'users/following', to: 'users#following', on: :member
+    get 'users/follower', to: 'users#follower', on: :member
+  end
   get 'users/:id/exit' => 'users#exit', as: 'exit'
   get 'users/:id/follower' => 'users#follower', as: 'follower'
   get 'users/:id/following' => 'users#following', as: 'following'
@@ -22,5 +25,10 @@ Rails.application.routes.draw do
   patch 'post_gardens/:id/delete_open_info' => 'post_gardens#delete_open_info', as: 'delete_open_info'
 
   resources :open_days, only: [:create, :update, :destroy]
+  resources :new_open_garden
+
+  resources :relationships, only: [:create]
+  # post 'relationships/:id' => 'relationships#create', as: 'follow'
+  delete 'relationships/:id' => 'relationships#destroy', as: 'unfollow'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

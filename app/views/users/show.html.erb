@@ -1,6 +1,6 @@
 <div class="container">
 	<div class="row">
-		<h2>マイページ</h2>
+		<h2><%= @user.user_name %></h2>
 			<div class="col-xs-4">
 				<div class="samuneiru-position">
 				<%= attachment_image_tag @user, :profile_image, :fill, 150, 150, format: 'jpg', fallback: "no_image.jpg" %>
@@ -8,7 +8,30 @@
 			</div>
 
 			<div class="col-xs-6">
+
+				<% unless current_user == @user %>
+					<% if current_user.following?(@user) %>
+						<%= form_for(current_user.relationships.find_by(follow_id: @user.id), url: unfollow_path(@user.id), html: { method: :delete }) do |f| %>
+							<%= hidden_field_tag :follow_id, @user.id %>
+							<%= f.submit 'フォロー解除', class:"btn btn-danger btn-block" %>
+						<% end %>
+					<% else %>
+						<%= form_for(@relationship) do |f| %>
+							<%= hidden_field_tag :follow_id, @user.id %>
+							<%= f.submit '+ フォロー', class:"btn btn-primary btn-block" %>
+						<% end %>
+					<% end %>
+				<% end %>
+
 				<%= link_to "会員情報編集", edit_user_path(current_user.id) %>
+
+
+				<div class="follow-index">
+					<span class="follower-text"><%= link_to "フォロワー", follower_path(params[:id]) %></span>
+					<span class="following-text"><%= link_to "フォロー中", following_path(params[:id]) %></span>
+				</div>
+
+
 			</div>
 	</div>
 

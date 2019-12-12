@@ -1,10 +1,10 @@
-<div class="nested-fields well well-compact">
-	<div class="form-group">
-
-		<div class="col-xs-3">
+<div class="col-xs-3">
+	<div class="nested-fields well well-compact">
+		<div class="form-group">
 
 			<%= f.attachment_field :garden_image, direct: true, class:"garden_image_field", id: "file" %>
-		</div>
+			<%= link_to_remove_association "削除", f %>
 
+		</div>
 	</div>
 </div>

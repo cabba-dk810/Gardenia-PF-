@@ -12,30 +12,62 @@
 			<!-- 日程の設定fullcalendar使用 -->
 			<div id='calendar'></div>
 
-			<div id="reservation-day-input">
+			
 
-				<%= form_for @open_day do |f| %>
 
-					<%= f.hidden_field :post_garden_id,  :value => params[:id] %>
+				<!-- 予定の追加 -->
+				<div id="reservation-day-create">
+					<%= form_for @open_day do |f| %>
 
-					<div class="field">
-						<h4 class="reservation-day-title">時間選択</h4>
-						<label class="reservation-open-text">開場時間</label>
-						<%= f.datetime_select :start_time, :use_month_numbers => true, :minute_step => 30, class:"col-auto form-control form-control-lg w-100" ,:include_blank => true %>
-					</div>
+						<%= f.hidden_field :post_garden_id,  :value => params[:id] %>
 
-					<div class="field">
-						<label class="reservation-close-text">閉場時間</label>
-						<%= f.datetime_select :end_time, :use_month_numbers => true, :minute_step => 30, class:"col-auto form-control form-control-lg w-100" ,:include_blank => true %>
-					</div>
+						<div class="field">
+							<h4 class="reservation-day-title">時間選択</h4>
+							<label class="reservation-open-text">開場時間</label>
+							<%= f.datetime_select :start_time, :use_month_numbers => true, :minute_step => 30, class:"col-auto form-control form-control-lg w-100" ,:include_blank => true %>
+						</div>
 
-					<%= f.submit "追加" %>
+						<div class="field">
+							<label class="reservation-close-text">閉場時間</label>
+							<%= f.datetime_select :end_time, :use_month_numbers => true, :minute_step => 30, class:"col-auto form-control form-control-lg w-100" ,:include_blank => true %>
+						</div>
 
-				<% end %>
-			</div>
+						<%= f.submit "追加" %>
+
+						<div class="close-create">
+							<span class="close-create-text">閉じる</span>
+						</div>
+
+					<% end %>
+				</div>
+
+				<!-- 既に入力されているイベントの表示 -->
+				<div id="reservation-day-update">
+					<%= form_for @open_day_up do |f| %>
+
+						<%= f.hidden_field :post_garden_id,  :value => params[:id] %>
+
+						<div class="field">
+							<h4 class="reservation-day-title">時間選択</h4>
+							<label class="reservation-open-text">開場時間</label>
+							<%= f.datetime_select :start_time, :use_month_numbers => true, :minute_step => 30, class:"col-auto form-control form-control-lg w-100" %>
+						</div>
+
+ 						<div class="field">
+							<label class="reservation-close-text">閉場時間</label>
+							<%= f.datetime_select :end_time, :use_month_numbers => true, :minute_step => 30, class:"col-auto form-control form-control-lg w-100" %>
+						</div>
+
+						<%= f.submit "更新" %>
+
+						<div class="close-update">
+							<span class="close-update-text">閉じる</span>
+						</div>
+
+					<% end %>
+				</div>
 		</div>
 	</div>
-			<p>-----</p>
 
 
 	<div class="row">
