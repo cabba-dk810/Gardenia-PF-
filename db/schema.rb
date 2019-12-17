@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_11_055811) do
+ActiveRecord::Schema.define(version: 2019_12_16_075736) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -68,13 +68,15 @@ ActiveRecord::Schema.define(version: 2019_12_11_055811) do
     t.integer "status"
     t.string "open_postal_code"
     t.integer "open_prefecture"
-    t.string "open_address"
+    t.string "address"
     t.integer "open_max_number"
     t.integer "open_entrance_fee"
     t.text "open_announce"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "likes_count"
+    t.float "latitude"
+    t.float "longitude"
   end
 
   create_table "post_images", force: :cascade do |t|
@@ -92,6 +94,22 @@ ActiveRecord::Schema.define(version: 2019_12_11_055811) do
     t.index ["follow_id"], name: "index_relationships_on_follow_id"
     t.index ["user_id", "follow_id"], name: "index_relationships_on_user_id_and_follow_id", unique: true
     t.index ["user_id"], name: "index_relationships_on_user_id"
+  end
+
+  create_table "reservations", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "post_garden_id"
+    t.datetime "r_start_datetime"
+    t.datetime "r_end_datetime"
+    t.string "reservation_name"
+    t.integer "reservation_num"
+    t.text "reservation_message"
+    t.string "postal_code"
+    t.string "reservation_address"
+    t.integer "entrance_fee"
+    t.text "announce"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "taggings", force: :cascade do |t|

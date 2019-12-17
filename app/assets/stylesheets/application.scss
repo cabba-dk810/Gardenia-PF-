@@ -22,4 +22,42 @@
 
 
 @import "bootstrap-sprockets";
-@import "bootstrap"
+@import "bootstrap";
+
+
+/*header画面*/
+.logo{
+	margin-top: 10px;
+}
+
+.logo-leaf{
+	font-size: 50px;
+	color: #02A553;
+}
+
+.logo-text{
+	font-size: 50px;
+	color: #02A553;
+	font-family: 'Amatic SC', cursive;
+	margin-left: 10px;
+}
+
+.index-profile-image{
+	border-radius: 50%;
+}
+
+.popular-post-index{
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.new-post-index{
+	display: flex;
+	flex-wrap: wrap;
+}
+
+#map{
+	height: 500px;
+	width: 900px;
+}
+

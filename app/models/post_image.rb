@@ -3,5 +3,5 @@ class PostImage < ApplicationRecord
 
 	attachment :garden_image
 
-	validates :garden_image_id, presence: true
+#	validates :garden_image_id, presence: true
 end

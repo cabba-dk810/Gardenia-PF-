@@ -2,7 +2,7 @@
 
 	<div class="row">
 
-		
+
 		<% if @post_garden.open_status == "公開" %>
 			<div class="open-status-box">
 				<span class="open-status-text">公開中</span>
@@ -40,46 +40,203 @@
 					<% end %>
 
 				</div>
+
+				<!-- いいねボタン -->
+				<div id="likes_buttons_<%= @post_garden.id %>">
+					<%= render partial: 'likes/like', locals: {post_garden: @post_garden} %>
+				</div>
+
+
 			</div>
 
 
 			<!-- 写真右の項目 -->
 
-			<!-- 投稿者、フォロー追加ボタン -->
-				<div class="col-xs-5 col-xs-offset-1">
+			<!-- 投稿者情報 -->
+			<div class="col-xs-5 col-xs-offset-1">
 
-					<div class="post-place">
-						<span class="post-place-text"><%= @post_garden.place %></span>
+				<!-- 場所 -->
+				<div class="post-place">
+					<span class="post-place-text"><%= @post_garden.place %></span>
+				</div>
+
+				<div class="profile-image-box">
+					<%= attachment_image_tag @user, :profile_image, :fill, 150,150, format: 'jpg', class:"index-profile-image" %>
+				</div>
+				<span class="profile-name"><%= @user.user_name %></span>
+
+
+				<!-- 自ユーザならば、投稿の編集 -->
+				<% if @user.id == current_user.id %>
+
+					<%= link_to edit_post_garden_path(@post_garden.id) do %>
+						<div class="edit-post-garden">
+							<span class="edit-post-garden-text">基本情報を編集する</span>
+						</div>
+					<% end %>
+
+				<% end %>
+
+				<!-- 使った庭木 -->
+				<div class="row">
+					<div class="col-xs-5 col-xs-offset-1">
+
+						<div class="post-planted-garden">
+							<span class="post-planted-garden-title">使用した庭木</span>
+						</div>
+
+						<% @post_garden.planted_gardens.each do |planted_garden| %>
+							<div class="post-planted-gardens">
+								<span class="post-planted-garden-text"><%= planted_garden.plant_name %></span>
+								<span class="post-planted-garden-number"><%= planted_garden.plant_number %></span>
+							</div>
+						<% end %>
+
+					</div>
+				</div>
+
+				<!-- タグ -->
+				<div class="row">
+					<div class="col-xs-5 col-xs-offset-1">
+
+						<div class="post-tag">
+							<span class="post-tag-title">タグ</span>
+						</div>
+
+						<% @post_garden.tag_list.each do |tag| %>
+							<div class="post-tags">
+								<span class="post-tag-text"><%= tag %></span>
+							</div>
+						<% end %>
+
 					</div>
 
-					<div class="profile-image-box">
-						<%= attachment_image_tag @user, :profile_image, :fill, 150,150, format: 'jpg' %>
+				</div>
+
+				<!-- 面積 -->
+				<div class="row">
+					<div class="col-xs-5 col-xs-offset-1">
+
+						<div class="post-area-title">
+							<span class="post-area-title-text">面積</span>
+						</div>
+
+						<div class="post-area">
+							<span class="post-area-text"><%= @post_garden.area %></span>
+						</div>
+
 					</div>
-					<span class="profile-name"><%= @user.user_name %></span>
+				</div>
 
 
-					<!-- 自ユーザならば、庭公開へのリンク、他ユーザならばフォローボタン -->
+				<!-- 経費 -->
+				<div class="row">
+					<div class="col-xs-5 col-xs-offset-1">
+
+						<div class="post-expence-title">
+							<span class="post-expence-title-text">経費</span>
+						</div>
+
+						<div class="post-expence">
+							<span class="post-expence-text"><%= @post_garden.price %>円</span>
+						</div>
+
+					</div>
+				</div>
+
+
+
+			</div>
+		</div>
+
+
+		<!-- 写真より下の項目 -->
+
+			<!-- 問題点 -->
+			<div class="row">
+
+				<div class="col-xs-6">
+
+					<div class="post-problem-title">
+						<span class="post-problem-title-text">困ったこと</span>
+					</div>
+
+					<div class="post-problem">
+						<span class="post-problem-text"><%= @post_garden.problem %></span>
+					</div>
+
+				</div>
+			</div>
+
+
+				<!-- 解決策 -->
+				<div class="row">
+					<div class="col-xs-6">
+
+						<div class="post-solution-title">
+							<span class="post-solution-title-text">解決策</span>
+						</div>
+
+						<div class="post-solution">
+							<span class="post-solution-text"><%= @post_garden.solution %></span>
+						</div>
+
+					</div>
+				</div>
+
+
+				<!-- コメント欄 -->
+				<div class="row">
+					<div class="col-xs-6">
+
+						<!-- コメント表示 -->
+						<% @post_garden.post_comments.each do |post_comment| %>
+
+						<div class="row">
+							<div class="col-xs-2">
+								<%= attachment_image_tag post_comment.user, :profile_image, :fill, 150,150, format: 'jpg' %>
+							</div>
+
+							<div class="col-xs-6">
+								<%= post_comment.user.user_name %>
+								<%= post_comment.comment_content %>
+
+								<% if post_comment.user_id == current_user.id %>
+									<div class="comment-delete">
+										<%= link_to "削除", post_garden_post_comment_path(post_comment.id), method: :delete %>
+									</div>
+								<% end %>
+							</div>
+						</div>
+
+						<% end %>
+
+						<!-- コメント入力 -->
+						<%= form_for @post_comment, url: post_garden_post_comments_path(@post_garden) do |f| %>
+
+
+							<%= f.text_area :comment_content, class:"form-control" %>
+							<%= f.submit "コメントする", class:"btn btn-lg mt-20 pull-right" %>
+
+						<% end %>
+
+					</div>
+
+				</div>
+
+				<!-- 予約用カレンダーの表示 -->
+				<div class="col-xs-4 col-xs-offset-7 reserve-box">
+
+					<div class="">
+						<span class="">オープンガーデンに予約する</span>
+					</div>
+
+
 					<% if @user.id == current_user.id && @post_garden.open_status == "非公開" %>
 
-						<%= link_to edit_post_garden_path(@post_garden.id) do %>
-							<div class="edit-post-garden">
-								<span class="edit-post-garden-text">基本情報を編集する</span>
-							</div>
-						<% end %>
-
-						<%= link_to new_open_garden_path(@post_garden.id) do %>
-							<div class="open-garden-input">
-								<span class="open-garden-input-text">公開する</span>
-							</div>
-						<% end %>
-
-					<% elsif @user.id == current_user.id && @post_garden.open_status == "公開" %>
-
-						<%= link_to edit_post_garden_path(@post_garden.id) do %>
-							<div class="edit-post-garden">
-								<span class="edit-post-garden-text">基本情報を編集する</span>
-							</div>
-						<% end %>
+						<div class="">
+							<span class="">ただいま公開しておりません</span>
+						</div>
 
 						<%= link_to new_open_garden_path(@post_garden.id) do %>
 							<div class="open-garden-input">
@@ -87,109 +244,55 @@
 							</div>
 						<% end %>
 
-					<% end %>
+					<% elsif @user.id == current_user.id && @post_garden.open_status == "公開" %>
 
-			<!-- 使った庭木 -->
-			<div class="row">
-				<div class="col-xs-5 col-xs-offset-1">
-
-					<div class="post-planted-garden">
-						<span class="post-planted-garden-title">使用した庭木</span>
-					</div>
-
-					<% @post_garden.planted_gardens.each do |planted_garden| %>
-						<div class="post-planted-gardens">
-							<span class="post-planted-garden-text"><%= planted_garden.plant_name %></span>
-							<span class="post-planted-garden-number"><%= planted_garden.plant_number %></span>
+						<div class="">
+							<span class="">ただいま公開中です</span>
 						</div>
-					<% end %>
 
-				</div>
-			</div>
+						<%= link_to new_open_garden_path(@post_garden.id) do %>
+							<div class="open-garden-input">
+								<span class="open-garden-input-text">公開情報を編集する</span>
+							</div>
+						<% end %>
 
-			<!-- タグ -->
-			<div class="row">
-				<div class="col-xs-5 col-xs-offset-1">
+					<% elsif @user.id != current_user.id && @post_garden.open_status == "非公開" %>
 
-					<div class="post-tag">
-						<span class="post-tag-title">タグ</span>
-					</div>
-
-					<% @post_garden.tag_list.each do |tag| %>
-						<div class="post-tags">
-							<span class="post-tag-text"><%= tag %></span>
+						<div class="">
+							<span class="">ただいま公開しておりません</span>
 						</div>
-					<% end %>
-					
-				</div>
-
-			</div>
 
 
+					<% elsif @user.id != current_user.id && @post_garden.open_status == "公開" %>
 
-			<!-- いいねボタン -->
-			<div id="likes_buttons_<%= @post_garden.id %>">
-				<%= render partial: 'likes/like', locals: {post_garden: @post_garden} %>
-			</div>
-
-
-		</div>
-	</div>
-
-
-	<!-- コメント欄 -->
-	<div class="row">
-		<div class="col-xs-8">
-
-			<!-- コメント表示 -->
-			<% @post_garden.post_comments.each do |post_comment| %>
-
-			<div class="row">
-				<div class="col-xs-2">
-					<%= attachment_image_tag post_comment.user, :profile_image, :fill, 150,150, format: 'jpg' %>
-				</div>
-
-				<div class="col-xs-6">
-					<%= post_comment.user.user_name %>
-					<%= post_comment.comment_content %>
-
-					<% if post_comment.user_id == current_user.id %>
-						<div class="comment-delete">
-							<%= link_to "削除", post_garden_post_comment_path(post_comment.id), method: :delete %>
+						<div class="">
+							<span class="">予約日を選択する</span>
 						</div>
-					<% end %>
+
+						<div id='calendar_reservation'></div>
+
+
+						<div id="reservation-day-decided">
+
+						<div class="field">
+							<label class="reservation-open-text">選択された日付</label>
+							<input type="datetime-local" use_month_numbers="true" minute_step="30" class="col-auto form-control form-control-lg w-100" id="reservation-select">
+						</div>
+
+						<div class="close-decided">
+							<span class="close-create-text">閉じる</span>
+						</div>
+
 				</div>
-			</div>
 
-			<% end %>
+						<!-- <div class="">
+							<%= link_to "予約へ進む", new_reservation_path %></span>
+						</div> -->
 
-			<!-- コメント入力 -->
-			<%= form_for @post_comment, url: post_garden_post_comments_path(@post_garden) do |f| %>
+					<% end %>
 
+				</div>
 
-				<%= f.text_area :comment_content, class:"form-control" %>
-				<%= f.submit "コメントする", class:"btn btn-lg mt-20 pull-right" %>
-
-			<% end %>
-
-		</div>
-	</div>
-
-
-	<!-- 予約用カレンダーの表示 -->
-	<div class="col-xs-3 col-xs-offset-1">
-		
-		<% if @user.id == current_user.id %>
-
-
-		<% elsif @post_garden.open_status == "公開" %>
-
-
-		<% else %>
-
-
-		<% end %>
 
 	</div>
-
 </div>
