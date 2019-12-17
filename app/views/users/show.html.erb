@@ -39,41 +39,28 @@
 	<div class="row">
 		<div class="col-xs-10">
 
-			<%= @post_gardens.each_slice(4) do |post_garden1,post_garden2,post_garden3,post_garden4| %>
+			<% @post_gardens.each do |post_garden| %>
 
-				<% if post_garden1 != nil %>
-					<%= link_to post_garden_path(post_garden1.id) do %>
-						<%= attachment_image_tag post_garden1.post_images[0], :garden_image, :fill, 250,250, format: 'jpg' %>
+				<div class="col-xs-3">
+					<%= link_to post_garden_path(post_garden.id) do %>
+						<%= attachment_image_tag post_garden.post_images[0], :garden_image, :fill, 200,200, format: 'jpg' %>
 					<% end %>
 
-					<%= post_garden1.post_content %>
-				<% end %>
-
-				<% if post_garden2 != nil %>
-					<%= link_to post_garden_path(post_garden2.id) do %>
-						<%= attachment_image_tag post_garden2.post_images[0], :garden_image, :fill, 250,250, format: 'jpg' %>
+					<%= link_to user_path(post_garden.user.id) do %>
+						<%= attachment_image_tag post_garden.user, :profile_image, :fill, 30,30, format: 'jpg', class:"index-profile-image" %>
+						<%= post_garden.user.user_name %>
 					<% end %>
 
-					<%= post_garden2.post_content %>
-				<% end %>
-
-				<% if post_garden3 != nil %>
-					<%= link_to post_garden_path(post_garden3.id) do %>
-						<%= attachment_image_tag post_garden3.post_images[0], :garden_image, :fill, 250,250, format: 'jpg' %>
-					<% end %>
-
-					<%= post_garden3.post_content %>
-				<% end %>
-
-				<% if post_garden4 != nil %>
-					<%= link_to post_garden_path(post_garden4.id) do %>
-						<%= attachment_image_tag post_garden4.post_images[0], :garden_image, :fill, 250,250, format: 'jpg' %>
-					<% end %>
-
-					<%= post_garden4.post_content %>
-				<% end %>
-
+					<div class="tags-list-index">
+						<% post_garden.tag_list.each do |tag| %>
+							<div class="post-tags">
+								<span class="post-tag-text"><%= tag %></span>
+							</div>
+						<% end %>
+					</div>
+				</div>
 
 			<% end %>
 		</div>
+	</div>
 </div>

@@ -1,25 +1,40 @@
-// 庭公開時に追加で情報を入力させる時に使用（下記コード。参考に）
+$(function(){
+  // var calenderHTML = "";
+  // console.log(#{@post_garden.id});
 
-        // <div class="open_status_select">
-        // <label><%= f.radio_button :open_status, "非公開", :onchange => 'openEntry(this)' %>  公開しない</label>
-        // </div>
-        // <div class="open_status_select">
-        // <label><%= f.radio_button :open_status, "公開",  :onchange => 'openEntry(this)' %>  庭を公開する</label>
-        // </div>
+  $('#calendar_reservation').fullCalendar({
+    events: '/post_gardens/3/new_open_garden.json',
+    timeFormat: "HH:mm",
 
-// function openEntry(radio){
+     header:{
+      left:"prev,today,next", //ヘッダー左側
+      center: 'title', //ヘッダー中央
+      right: 'month,agendaWeek,agendaDay' //ヘッダー右側
+      },
 
-//   $('#reservation_info').hide();
+      eventClick: function(event, jsEvent, view, info){
 
-//   // 庭を公開しない
-//   if ( radio.value == "公開" ) {
-//     $('#reservation_info').show();
+        $('#reservation-day-decided').show();
 
-//     // 庭を公開する場合
-//   } else{
-//     $('#reservation_info').hide();
-//   }
-// }
+        $('#reservation-select').val(event.start.format( 'YYYY/MM/DD' ));
+        // alert('Clicked on: ' + date.start.format( 'YYYY/MM/DD/HH:mm' ) + '-' + date.end.format( 'YYYY/MM/DD/HH:mm' ));
+    }
+
+
+  });
+
+  // カレンダーから日付選択画面を閉じる
+  $(function(){
+    $('.close-decided').click(function(){
+      $('#reservation-day-decided').hide();
+    });
+
+
+  });
+
+
+});
+
 
 
 
@@ -43,9 +58,22 @@ $(function(){
 
     if (slideIndex == 0){
       $('.prev-btn').hide();
-    }else if (slideIndex == $('.slides').data('index') - 1){
+    }
+    if (slideIndex == $('.slides').data('index') - 1){
       $('.next-btn').hide();
     }
 
   });
+
+  // １枚しか投稿していない場合でも、ボタンが表示されない設定
+  var slideIndex = $('.slide').index($('.active'));
+
+    if (slideIndex == 0){
+      $('.prev-btn').hide();
+    }
+    if (slideIndex == $('.slides').data('index') - 1){
+      $('.next-btn').hide();
+    }
+
+
 });

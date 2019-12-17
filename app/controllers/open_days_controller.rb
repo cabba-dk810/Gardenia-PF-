@@ -12,6 +12,12 @@ class OpenDaysController < ApplicationController
 	end
 
 	def update
+		p 'params確認'
+		p params
+		# @open_day_updates = OpenDay.find_by(post_garden_id: PostGarden.find(params[:id]))
+		@open_day_updates = OpenDay.find_by(post_garden_id: PostGarden.find_by(post_garden_id: params[:post_garden_id],
+																			   start_time: parsms[:start_time],
+																			   end_time: params[:end_time]))
 	end
 
 	def destroy
