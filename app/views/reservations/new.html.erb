@@ -1,5 +1,196 @@
-<%= form_for @reservation do |f| %>
+<div class="container">
+	<div class="row">
 
-<%= f.submit "予約を確定する" %>
+		<div class="reservation-new-title">
+			<span class="reservation-new-title-text">オープンガーデンの予約をする</span>
+		</div>
 
-<% end %>
+		<%= form_for @reservation do |f| %>
+
+			<%= f.hidden_field :post_garden_id, :value => params[:id] %>
+			<%= f.hidden_field :user_id, :value => current_user.id %>
+
+			<div class="reservation-new-date">
+				<span class="reservation-new-date-text">希望日時を選択する</span>
+
+				<div class="row">
+					<div class="col-xs-8 col-xs-offset-2">
+						<div id="calendar-reservation"></div>
+					</div>
+				</div>
+
+				<!-- どの投稿のカレンダーか判別するため、idをjqueryに渡している -->
+				<div class="params_num_reservation" data-params="<%= @post_garden.id %>"></div>
+
+				<div class="row">
+					<div class="col-xs-3 col-xs-offset-3">
+
+						<%= f.hidden_field :id %>
+
+						<div class="field">
+							<label class="reservation-go-text">予約時間</label><br>
+							<%= f.datetime_select :r_start_datetime, :use_month_numbers => true, :minute_step => 30, class:"col-auto form-control form-control-lg w-100", :include_blank => true %>
+						</div>
+					</div>
+
+					<div class="col-xs-3">
+						<div class="field">
+							<label class="reservation-back-text">終了時間</label><br>
+							<%= f.datetime_select :r_end_datetime, :use_month_numbers => true, :minute_step => 30, class:"col-auto form-control form-control-lg w-100" ,:include_blank => true %>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+
+			<div class="reservation-new-info">
+
+				<!-- 予約者名と人数 -->
+				<div class="row">
+
+					<div class="col-xs-4 col-xs-offset-1">
+						<div class="field">
+							<label class="reservation-name">予約者名</label><br>
+							<%= f.text_field :reservation_name, class:"col-auto form-control form-control-lg w-100" %>
+						</div>
+					</div>
+
+					<div class="col-xs-4 col-xs-offset-1">
+						<div class="field">
+							<label class="reservation-num">予約人数（最大人数<%= @post_garden.open_max_number %>人）</label><br>
+							<%= f.number_field :reservation_num, class:"col-auto form-control form-control-lg w-100" %>
+						</div>
+					</div>
+				</div>
+
+
+				<!-- 予約メッセージ -->
+				<div class="row">
+
+					<div class="col-xs-9 col-xs-offset-1">
+						<div class="field">
+							<label class="reservation-message">予約メッセージ</label><br>
+							<%= f.text_area :reservation_message, class:"col-auto form-control form-control-lg w-100", placeholder:"何かお伝えしたいことがございましたら、ご記入ください・" %>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<!-- 予約内容確認事項 -->
+			<div class="reservation-content-confirm">
+
+				<div class="row">
+
+					<div class="col-xs-9 col-xs-offset-1">
+
+						<div class="reservation-content">
+							<span class="reservation-content-text">ご予約予定のオープンガーデンは以下の通りです。</span>
+						</div>
+
+
+						<!-- 住所 -->
+						<div class="field">
+							<label class="reservation-content-address">住所</label><br>
+							〒<%= @post_garden.open_postal_code %><br>
+							<%= @post_garden.address %>
+						</div>
+
+						<%= f.hidden_field :postal_code,  :value => @post_garden.open_postal_code %>
+						<%= f.hidden_field :reservation_address,  :value => @post_garden.address %>
+
+					</div>
+
+				</div>
+
+
+				<div class="row">
+					<div class="col-xs-10 col-xs-offset-2">
+
+						<div id="map"></div>
+
+							<script>
+								var map;
+								var tokyo = {lat: 35.6811673, lng: 139.7670516};
+
+								function initMap(){
+
+									var map = new google.maps.Map(document.getElementById('map'), {
+						          	zoom: 15
+						          	// center: marker
+						      		});
+						      		var latlng = new google.maps.LatLng(<%= @post_garden.latitude %>, <%= @post_garden.longitude %>);
+						      		map.setCenter(latlng);
+
+									(function(){
+										var contentString = '<%= attachment_image_tag @post_garden.post_images[0], :garden_image, :fill, 100, 100, format: 'jpg' %>' + '<br><br><br>' + '<strong>住所</strong>' + '<br>' + '〒<%= @post_garden.open_postal_code %>' + '<br>' + '<%= @post_garden.address %>' + '<br>' + '<strong>投稿者</strong>' + '<br>' + '<%= @post_garden.user.user_name %>' + '<br>' + '<strong>使用している庭木</strong>' + '<br>' + '<% @post_garden.planted_gardens.each do |planted_garden| %><%= planted_garden.plant_name %><% end %>'+ '<br>' + '<%= @post_garden.tag_list %>' + '<br>' + '<%= link_to post_garden_path(@post_garden.id) do %><span class="link">詳細へ</span><% end %>';
+										var infowindow = new google.maps.InfoWindow({
+											content: contentString,
+											maxWidth: 1000,
+										});
+
+										var marker = new google.maps.Marker({
+											position:{lat: <%= @post_garden.latitude %>, lng: <%= @post_garden.longitude %>},
+											map: map,
+											title: contentString
+											});
+
+										marker.addListener('click', function(){
+											infowindow.open(map, marker);
+										});
+									})();
+								};
+							</script>
+					</div>
+
+				</div>
+
+
+				<div class="row">
+					<div class="col-xs-10 col-xs-offset-1">
+
+						<!-- 入場料 -->
+						<div class="field">
+							<label class="reservation-content-entrance-fee">入場料</label><br>
+							<%= @post_garden.open_entrance_fee %>
+						</div>
+
+						<%= f.hidden_field :entrance_fee,  :value => @post_garden.open_entrance_fee %>
+
+					</div>
+
+				</div>
+
+
+				<div class="row">
+					<div class="col-xs-10 col-xs-offset-1">
+
+						<!-- 注意事項 -->
+						<div class="field">
+							<label class="reservation-content-entrance-fee">注意事項</label><br>
+							<%= @post_garden.open_announce %>
+						</div>
+
+						<%= f.hidden_field :announce,  :value => @post_garden.open_announce %>
+
+					</div>
+
+				</div>
+
+
+			</div>
+
+			<div class="row">
+				<div class="col-xs-6 col-xs-offset-3">
+					<span class="final-confirm">以上の内容でよろしければ、確定ボタンを押してください</span>
+					<div class="reservation-confirm">
+						<%= f.submit "予約を確定する" %>
+					</div>
+				</div>
+			</div>
+
+		<% end %>
+
+	</div>
+</div>
