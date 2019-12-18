@@ -61,6 +61,9 @@ class PostGardensController < ApplicationController
 		@post_comment = PostComment.new
 
 		@reservation = Reservation.new
+
+		# イベント取得用
+		@open_days = OpenDay.where(post_garden_id: params[:id])
 	end
 
 	def edit
@@ -88,11 +91,8 @@ class PostGardensController < ApplicationController
 		@post_garden = PostGarden.find(params[:id])
 		@open_day = OpenDay.new
 
-		@open_day_updates = OpenDay.find_by(post_garden_id: PostGarden.find(params[:id]))
-		# find_by(post_garden_id: @post_garden.id, start_time: )
-		# @open_day_up.start_time = DateTime.parse(params[:open_day]["start_time(1i)"] + "-" + params[:open_day]["start_time(2i)"] + "-" + params[:open_day]["start_time(3i)"] + " " + params[:open_day]["start_time(4i)"] + ":" + params[:open_day]["start_time(5i)"]).to_s
-		# @open_day_up.end_time = DateTime.parse(params[:open_day]["end_time(1i)"] + "-" + params[:open_day]["end_time(2i)"] + "-" + params[:open_day]["end_time(3i)"] + " " + params[:open_day]["end_time(4i)"] + ":" + params[:open_day]["end_time(5i)"]).to_s
-		# @open_day = OpenDay.new(post_garden_id: params[:open_day][:post_garden_id], start_time: @open_day.start_time, end_time: @open_day.end_time)
+		# idの情報は、更新を押した時に得られる。まだ取得できないので、空でインスタンスを作成しておく
+		@open_day_updates = OpenDay.new
 
 		# イベント取得用
 		@open_days = OpenDay.where(post_garden_id: params[:id])
