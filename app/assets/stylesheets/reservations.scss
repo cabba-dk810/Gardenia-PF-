@@ -1,3 +1,29 @@
 // Place all the styles related to the reservations controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+/*予約時に日付のセレクトボックスを無効に*/
+select#reservation_r_start_datetime_1i{
+	pointer-events : none;
+}
+
+select#reservation_r_start_datetime_2i{
+	pointer-events : none;
+}
+
+select#reservation_r_start_datetime_3i{
+	pointer-events : none;
+}
+
+select#reservation_r_end_datetime_1i{
+	pointer-events : none;
+}
+
+select#reservation_r_end_datetime_2i{
+	pointer-events : none;
+}
+
+select#reservation_r_end_datetime_3i{
+	pointer-events : none;
+}

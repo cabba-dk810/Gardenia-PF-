@@ -20,6 +20,7 @@ class User < ApplicationRecord
   has_many :post_gardens, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :post_comments, dependent: :destroy
+  has_many :reservations
 
   # フォロー機能のアソシエーション
   has_many :relationships

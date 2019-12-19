@@ -1,0 +1,31 @@
+<div class="container">
+	<div class="row">
+
+		<div class="reservation-new-title">
+			<span class="reservation-new-title-text">キャンセルを確定するには、キャンセル理由をご記入の上、下部の「キャンセル」ボタンを押してください</san>
+		</div>
+
+
+		<div class="row">
+			<div class="col-xs-6 col-xs-offset-3">
+				<div class="reservation-confirm">
+
+					<!-- リクエストステータスを"キャンセル"に変更 -->
+					<%= form_for @reservation, url:reservation_path, method: :patch do |f| %>
+
+						<%= f.hidden_field :request_status, :value => "キャンセル" %>
+
+						<div class="field">
+							<label class="reservation-cancel-reason">キャンセル理由</label><br>
+							<%= f.text_area :cancel_reason, class:"col-auto form-control form-control-lg w-100" %>
+						</div>
+
+						<%= f.submit "リクエストをお断りする", "data-confirm" => "リクエストを断ります。よろしいですか？" %>
+					<% end %>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+</div>

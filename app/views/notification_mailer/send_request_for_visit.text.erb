@@ -1,0 +1,54 @@
+<%= @user.user_name %>　様
+
+
+オープンガーデンの予約リクエストを送信しました。
+
+
+予約はまだ確定しておりません。
+<%= @reservation.post_garden.user.user_name %>様がリクエストを処理するまでお待ちください。
+
+
+
+【予約内容】
+
+・予約名
+　<%= @reservation.reservation_name %>
+
+
+・予約時間
+　<%= @reservation.r_start_datetime %>〜<%= @reservation.r_end_datetime %>
+
+
+・人数
+　<%= @reservation.reservation_num %>人
+
+
+・予約メッセージ
+　<%= @reservation.reservation_message %>
+
+
+・入場料
+　<%= @reservation.entrance_fee %>
+
+
+・お庭の投稿者
+　<%= @reservation.post_garden.user.user_name %>　様
+
+
+・住所
+　〒<%= @reservation.postal_code %>
+　　<%= @reservation.reservation_address %>
+
+
+・見学にあたっての注意事項
+　<%= @reservation.announce %>
+
+
+
+予約内容はこちらからご確認ください。
+<%= @url %>
+
+
+===================================
+Gardenia運営事務局
+Email xxx@gmail.com
