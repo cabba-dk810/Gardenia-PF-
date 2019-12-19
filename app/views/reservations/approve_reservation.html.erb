@@ -1,0 +1,180 @@
+<div class="container">
+	<div class="row">
+
+		<div class="reservation-new-title">
+			<span class="reservation-new-title-text">オープンガーデンの予約リクエスト</san>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-8 col-xs-offset-2">
+				<div id="calendar-reservation"></div>
+			</div>
+		</div>
+
+		<!-- どの投稿のカレンダーか判別するため、idをjqueryに渡している -->
+		<div class="params_num_reservation" data-params="<%= @reservation.post_garden.id %>"></div>
+
+		<div class="row">
+			<div class="col-xs-3 col-xs-offset-3">
+
+				<div class="field">
+					<label class="reservation-go-text">予約時間</label><br>
+					<%= @reservation.r_start_datetime.strftime("%Y年%m月%d日 %H時%M分") %>
+				</div>
+			</div>
+
+			<div class="col-xs-3">
+				<div class="field">
+					<label class="reservation-back-text">終了時間</label><br>
+					<%= @reservation.r_end_datetime.strftime("%Y年%m月%d日 %H時%M分") %>
+				</div>
+			</div>
+
+		</div>
+
+
+		<!-- 予約者名と人数 -->
+		<div class="row">
+
+			<div class="col-xs-4 col-xs-offset-1">
+				<div class="field">
+					<label class="reservation-name">予約者名</label><br>
+					<%= @reservation.reservation_name %>
+				</div>
+			</div>
+
+			<div class="col-xs-4 col-xs-offset-1">
+				<div class="field">
+					<label class="reservation-num">予約人数（最大人数<%= @reservation.post_garden.open_max_number %>人）</label><br>
+					<%= @reservation.reservation_num %>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- 予約メッセージ -->
+		<div class="row">
+
+			<div class="col-xs-9 col-xs-offset-1">
+				<div class="field">
+					<label class="reservation-message">予約メッセージ</label><br>
+					<%= @reservation.reservation_message %>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- 予約内容確認事項 -->
+
+		<div class="row">
+
+			<div class="col-xs-9 col-xs-offset-1">
+
+				<div class="reservation-content">
+					<span class="reservation-content-text">ご予約リクエストを受けたオープンガーデンはこちらです。</span>
+				</div>
+
+
+				<!-- 住所 -->
+				<div class="field">
+					<label class="reservation-content-address">住所</label><br>
+					〒<%= @reservation.postal_code %><br>
+					<%= @reservation.reservation_address %>
+				</div>
+
+			</div>
+
+		</div>
+
+
+		<div class="row">
+			<div class="col-xs-10 col-xs-offset-2">
+
+				<div id="map"></div>
+
+					<script>
+						var map;
+						var tokyo = {lat: 35.6811673, lng: 139.7670516};
+
+						function initMap(){
+
+							var map = new google.maps.Map(document.getElementById('map'), {
+				          	zoom: 15
+				          	// center: marker
+				      		});
+				      		var latlng = new google.maps.LatLng(<%= @reservation.post_garden.latitude %>, <%= @reservation.post_garden.longitude %>);
+				      		map.setCenter(latlng);
+
+							(function(){
+								var contentString = '<%= attachment_image_tag @reservation.post_garden.post_images[0], :garden_image, :fill, 100, 100, format: 'jpg' %>' + '<br><br><br>' + '<strong>住所</strong>' + '<br>' + '〒<%= @reservation.postal_code %>' + '<br>' + '<%= @reservation.reservation_address %>' + '<br>' + '<strong>投稿者</strong>' + '<br>' + '<%= @reservation.owner_name %>' + '<br>' + '<strong>使用している庭木</strong>' + '<br>' + '<% @reservation.post_garden.planted_gardens.each do |planted_garden| %><%= planted_garden.plant_name %><% end %>'+ '<br>' + '<%= @reservation.post_garden.tag_list %>' + '<br>' + '<%= link_to post_garden_path(@reservation.post_garden.id) do %><span class="link">詳細へ</span><% end %>';
+								var infowindow = new google.maps.InfoWindow({
+									content: contentString,
+									maxWidth: 1000,
+								});
+
+								var marker = new google.maps.Marker({
+									position:{lat: <%= @reservation.post_garden.latitude %>, lng: <%= @reservation.post_garden.longitude %>},
+									map: map,
+									title: contentString
+									});
+
+								marker.addListener('click', function(){
+									infowindow.open(map, marker);
+								});
+							})();
+						};
+					</script>
+			</div>
+
+		</div>
+
+
+		<div class="row">
+			<div class="col-xs-10 col-xs-offset-1">
+
+				<!-- 入場料 -->
+				<div class="field">
+					<label class="reservation-content-entrance-fee">入場料</label><br>
+					<%= @reservation.entrance_fee %>
+				</div>
+
+
+			</div>
+
+		</div>
+
+
+		<div class="row">
+			<div class="col-xs-10 col-xs-offset-1">
+
+				<!-- 注意事項 -->
+				<div class="field">
+					<label class="reservation-content-entrance-fee">注意事項</label><br>
+					<%= @reservation.announce %>
+				</div>
+
+			</div>
+
+		</div>
+
+
+		<div class="row">
+			<div class="col-xs-6 col-xs-offset-3">
+				<div class="reservation-confirm">
+
+					<!-- リクエストステータスを"承認"に変更 -->
+					<%= form_for @reservation, url:reservation_path, method: :patch do |f| %>
+						<%= f.hidden_field :request_status, :value => "承認" %>
+						<%= f.submit "リクエストを承認する", data: {confirm: "リクエストを承認します。よろしいですか？"} %>
+					<% end %>
+
+					<!-- キャンセル画面へ -->
+					<%= link_to "キャンセル画面へ", cancel_reason_path(@reservation.id) %>
+
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+</div>

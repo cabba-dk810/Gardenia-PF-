@@ -31,8 +31,15 @@ Rails.application.routes.draw do
   # post 'relationships/:id' => 'relationships#create', as: 'follow'
   delete 'relationships/:id' => 'relationships#destroy', as: 'unfollow'
 
-  resources :reservations, only: [:index, :create, :show, :edit, :update, :destroy]
+  resources :reservations, only: [:create, :show, :edit, :update, :destroy]
   get 'reservations/new/:id' => 'reservations#new', as: 'new_reservation'
   get 'done' => 'reservations#done', as: 'done'
+  get 'accept_reservations/:id' => 'reservations#accept_reservations', as: 'accept_reservations'
+  get 'request_reservations/:id' => 'reservations#request_reservations', as: 'request_reservations'
+  get 'approve_reservation/:id' => 'reservations#approve_reservation', as: 'approve_reservation'
+  get 'approved/:id' => 'reservations#approved', as: 'approved'
+  get 'cancel_reason/:id' => 'reservations#cancel_reason', as: 'cancel_reason'
+  get 'canceled/:id' => 'reservations#canceled', as: 'canceled'
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
