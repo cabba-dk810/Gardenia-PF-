@@ -1,0 +1,25 @@
+<div class="container">
+	<div class="row">
+
+		<div class="col-xs-6 col-xs-offset-3">
+
+			<div class="exit-title">
+				<h3 class="exit-title-text">退会する</h3>
+			</div>
+
+			<h5 class="exit-message">下記の登録情報が消え、すべてご利用できなくなります。</h5>
+  	  		<ul class="exit-list">
+		  	    <li>会員情報</li>
+		  	    <li>お気に入り</li>
+		  	    <li>庭の投稿</li>
+		  	    <li>庭の予約</li>
+  			</ul>
+
+
+  			<div class="exit-confirm">
+  				<%= link_to '退会する', user_registration_path, method: :delete, class: "btn btn-danger", "data-confirm" => "Gardeniaを退会します。よろしいですか？" %>
+  			</div>
+
+  		</div>
+	</div>
+</div>
