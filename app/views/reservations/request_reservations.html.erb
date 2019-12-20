@@ -1,8 +1,59 @@
 <div class="container">
 	<div class="row">
 
-		<div class="request-reservations-index-title">
-			<span class="request-reservations-index-title-text">予約済みのオープンガーデン一覧</span>
+		<div class="accept-reservations-index-title">
+			<span class="accept-reservations-index-title-text">公開中の庭の見学希望一覧</span>
+		</div>
+
+
+		<div class="col-xs-8 col-xs-offset-2">
+			<% @reservations.each do |reservation| %>
+
+				<% if reservation.request_status == "未受付" %>
+
+					<div class="panel panel-danger">
+
+				<% elsif reservation.request_status == "承認" %>
+
+					<div class="panel panel-success">
+
+				<% elsif reservation.request_status == "キャンセル" %>
+
+					<div class="panel panel-warning">
+
+				<% end %>
+
+					<div class="panel-heading">
+						予約者名：<%= reservation.reservation_name %>様
+						利用アカウント：<%= attachment_image_tag reservation.post_garden.user, :profile_image, :fill, 20,20, format: 'jpg' %>
+						<%= reservation.post_garden.user.user_name %>
+						予約リクエスト送信日：<%= reservation.created_at.strftime("%Y年%m月%d日 %H時%M分") %>
+					</div>
+
+					<div class="panel-body">
+						<h4 class="panel-title">
+							<%= reservation.r_start_datetime.strftime("%Y年%m月%d日 %H時%M分") %>〜<%= reservation.r_end_datetime.strftime("%Y年%m月%d日 %H時%M分") %>
+						</h4>
+
+						<div class="panel-content">
+							<%= link_to post_garden_path(reservation.post_garden.id) do %>
+								<%= attachment_image_tag reservation.post_garden.post_images[0], :garden_image, :fill, 50,50, format: 'jpg' %>
+							<% end %>
+
+							<%= reservation.reservation_num %>人
+							<%= reservation.reservation_message %>
+						</div>
+
+
+						<div class="detail-reservation">
+							<%= link_to "詳細", reservation_path(reservation.id) %>
+						</div>
+
+					</div>
+				</div>
+
+
+			<% end %>
 		</div>
 	</div>
 </div>
