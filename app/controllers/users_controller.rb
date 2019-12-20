@@ -3,6 +3,9 @@ class UsersController < ApplicationController
 		@user = User.find(params[:id])
 		@post_gardens = PostGarden.where(user_id: @user.id)
 		@relationship = Relationship.new
+
+		@visit_requests = Reservation.where(user_id: current_user.id).where(request_status: "承認")
+		@accept_requests = Reservation.where(owner_id: current_user.id).where(request_status: "承認")
 	end
 
 	def confirm
@@ -10,6 +13,9 @@ class UsersController < ApplicationController
 
 	def edit
 		@user = User.find(params[:id])
+
+		@visit_requests = Reservation.where(user_id: current_user.id).where(request_status: "承認")
+		@accept_requests = Reservation.where(owner_id: current_user.id).where(request_status: "承認")
 	end
 
 	def update

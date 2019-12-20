@@ -1,35 +1,31 @@
 <div class="container">
 	<div class="row">
 
-		<div class="post-delete">
-			<%= link_to "削除", post_garden_path(@post_garden.id), method: :delete,"data-confirm" => "投稿に関連する情報も全て削除されます。よろしいですか？" %>
+		<div class="row">
+			<% @post_garden.post_images.each do |post_image| %>
+				<%= form_for (post_image), url:post_garden_path, method: :patch do |f| %>
+
+					<div class="col-xs-3">
+						<%= attachment_image_tag post_image, :garden_image, :fill, 150, 150, format: 'jpg', fallback: "no_image.jpg" %>
+						<%= f.attachment_field :garden_image %>
+
+						<%= f.submit "更新" %>
+					</div>
+
+				<% end %>
+			<% end %>
 		</div>
 
 		<%= form_for(@post_garden) do |f| %>
 
-			<!-- 画像投稿 -->
-			<div class="field">
-
-				<!-- 投稿済の画像を表示 -->
-				<div class="row">
-					<% @post_garden.post_images.each do |post_image| %>
-						<div class="col-xs-3">
-							<%= attachment_image_tag post_image, :garden_image, :fill, 150, 150, format: 'jpg', fallback: "no_image.jpg" %>
-						</div>
-					<% end %>
-				</div>
-
-				<div class="row">
-					<%= f.fields_for :post_images do |post_image| %>
-						<%= render 'post_image_fields', f: post_image %>
-					<% end %>
-				</div>
-
-				<div class="links">
-					<%= link_to_add_association "追加", f, :post_images %>
-				</div>
-
+			<%= f.fields_for :post_images do |post_image| %>
+				<%= render 'post_image_fields', f: post_image %>
+			<% end %>
+			<div class="links">
+				<%= link_to_add_association "追加", f, :post_images %>
 			</div>
+
+			<!-- 画像投稿 -->
 
 			<!-- 投稿内容 -->
 			<div class="field">
@@ -96,5 +92,9 @@
 
 
 		<% end %>
+
+		<div class="post-delete">
+			<%= link_to "削除", post_garden_path(@post_garden.id), method: :delete,"data-confirm" => "投稿に関連する情報も全て削除されます。よろしいですか？" %>
+		</div>
 	</div>
 </div>

@@ -33,10 +33,21 @@ class ReservationsController < ApplicationController
 	def update
 		@reservation = Reservation.find(params[:id])
 		@user = User.find_by(id: @reservation.user_id)
+
+		before_reservation_num = @reservation.reservation_num
+		before_reservation_r_start_datetime = @reservation.r_start_datetime
+		before_reservation_r_end_datetime = @reservation.r_end_datetime
+
 		@reservation.update(reservation_params)
 
+		# もし、人数、日付が変わっていたら、
+		if before_reservation_num != @reservation.reservation_num || before_reservation_r_start_datetime != @reservation.r_start_datetime || before_reservation_r_end_datetime != @reservation.r_end_datetime
+			@reservation.update_attributes(request_status: 0)
+			ReservationChangeMailer.send_request_for_visit(@user, @reservation).deliver
+			ReservationChangeMailer.recieve_request_for_visit(@user, @reservation).deliver
+			redirect_to request_reservations_path(current_user.id)
 		# 予約リクエスト承認時のメール
-		if @reservation.request_status == "承認"
+		elsif @reservation.request_status == "承認"
 			RequestApproveMailer.send_request_for_visit(@user, @reservation).deliver
 			RequestApproveMailer.recieve_request_for_visit(@user, @reservation).deliver
 			redirect_to accept_reservations_path(current_user.id)
@@ -53,6 +64,7 @@ class ReservationsController < ApplicationController
 	end
 
 	def request_reservations
+		@reservations = Reservation.where(user_id: current_user.id).order(created_at: "DESC")
 	end
 
 	def accept_reservations
@@ -72,6 +84,7 @@ class ReservationsController < ApplicationController
 	end
 
 	def canceled
+		@reservation = Reservation.find(params[:id])
 	end
 
 

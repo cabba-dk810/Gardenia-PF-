@@ -75,6 +75,7 @@ class PostGardensController < ApplicationController
 		# @post_garden.latitude = Geocoder.coordinates(@post_garden.address[0])
 		# @post_garden.longitude = Geocoder.coordinates(@post_garden.address[1])
 		if @post_garden.update(post_garden_params)
+			binding.pry
 			redirect_to post_garden_path(params[:id])
 		else
 			render 'edit'
