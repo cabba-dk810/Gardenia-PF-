@@ -79,3 +79,7 @@ gem 'acts-as-taggable-on'
 gem 'fullcalendar-rails'
 gem 'momentjs-rails'
 gem 'geocoder'
+
+group :production do
+  gem 'mysql2'
+end
