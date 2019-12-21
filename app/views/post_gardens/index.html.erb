@@ -2,9 +2,7 @@
 	<div class="row">
 
 		<!-- サイドメニュー -->
-		<div class="col-xs-2">
-
-		</div>
+		<%= render 'layouts/sidemenu' %>
 
 
 		<!-- ログインしている場合 -->
@@ -16,7 +14,7 @@
 				<div class="post-title">
 					<span class="following-post-garden">みんなの投稿</span>
 				</div>
-				<div class="popular-post-index">
+				<div class="following-post-index">
 
 					<% @order_following_posts.each do |order_following_post| %>
 
@@ -51,7 +49,7 @@
 					<span class="most-like-post-garden">人気のの投稿</span>
 				</div>
 
-				<div class="new-post-index">
+				<div class="popular-post-index">
 
 					<% @rank_orders.each do |rank_order| %>
 
@@ -196,5 +194,6 @@
 
 	</div>
 </div>
+
 <!-- Google map API用 -->
-    <script async defer src="http://maps.google.com/maps/api/js?key=AIzaSyC7O7F_8ZRZ99gdEmoYwfe8xa2JwQszfuo&callback=initMap&language=ja"></script>
+<script async defer src="http://maps.google.com/maps/api/js?key=AIzaSyC7O7F_8ZRZ99gdEmoYwfe8xa2JwQszfuo&callback=initMap&language=ja"></script>

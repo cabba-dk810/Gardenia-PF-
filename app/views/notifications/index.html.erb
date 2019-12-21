@@ -1,0 +1,83 @@
+<div class="container">
+	<div class="row">
+		<div class="col-xs-4 col-xs-offset-4">
+			<h4 class="notification-title">通知</h4>
+
+			<% notifications = @notifications.where.not(visitor_id: current_user.id) %>
+
+			<% if notifications.any? %>
+				<div class="notification-content">
+					<% notifications.each do |notification| %>
+
+						<div class="col-xs-6.mx-auto">
+							<div class="form-inline">
+								<span>
+									<%= link_to user_path(notification.visitor_id) do %>
+										<%= attachment_image_tag notification.visitor, :profile_image, :fill, 30,30, format: 'jpg' %>
+										<strong><%= notification.visitor.user_name %></strong>
+									<% end %>
+									<%= 'さんが' %>
+
+									<% case notification.action %>
+									<% when 'follow' then %>
+										<%= 'あなたをフォローしました' %>
+
+									<% when 'like' then %>
+										<%= link_to 'あなたの投稿', post_garden_path(notification.post_garden.id), style: "font-weight:bold;" %>
+										<%= "にいいねしました" %>
+
+									<% when 'comment' then %>
+										<% if notification.post_garden.user_id == notification.visited_id %>
+											<%= link_to "あなたの投稿", post_garden_path(notification.post_garden.id), style: "font-weight: bold;" %>
+										<% else %>
+											<span>
+												<%= link_to post_garden_path(notification.post_garden.id) do %>
+													<%= attachment_image_tag visited, :profile_image, :fill, 30,30, format: 'jpg' %>
+													<strong>
+														<%= notification.post_garden.user.user_name + 'さんの投稿' %>
+													</strong>
+												<% end %>
+											</span>
+										<% end %>
+
+										<%= "にコメントしました" %>
+										<p class="text-muted mb-0">
+											<%= PostComment.find_by(id: notification.post_comment_id)&.comment_content %>
+										</p>
+
+									<% when 'reservation_request' then %>
+										<%= "あなたに" %>
+										<%= link_to '予約リクエスト', approve_reservation_path(notification.reservation.id), style: "font-weight:bold;" %>
+										<%= "を送信しました。" %>
+
+									<% when 'reservation_approve' then %>
+										<%= "あなたの" %>
+										<%= link_to '予約リクエスト', reservation_path(notification.reservation_id), style: "font-weight:bold;" %>
+										<%= "を承認しました" %>
+
+									<% when 'reservation_change' then %>
+										<%= "予約の変更を希望しています。" %>
+										<%= link_to '予約リクエスト', approve_reservation_path(notification.reservation.id), style: "font-weight:bold;" %>
+										<%= "が再度送られていますので、変更内容を確認してください" %>
+
+									<% when 'reservation_cancel' then %>
+										<%= "予約をキャンセルしました。" %>
+										<%= link_to 'こちら', canceled_path(notification.reservation.id), style: "font-weight:bold;" %>
+										<%= "からキャンセル内容を確認してください" %>
+
+									<% end %>
+								</span>
+
+								<div class="small text-muted text-right">
+									<%= time_ago_in_words(notification.created_at).upcase + " ago" %>
+								</div>
+							</div>
+						</div>
+					<% end %>
+				</div>
+			<% else %>
+				<p>通知はありません</p>
+			<% end %>
+		</div>
+	</div>
+</div>

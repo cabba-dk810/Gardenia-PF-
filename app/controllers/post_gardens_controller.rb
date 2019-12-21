@@ -38,7 +38,7 @@ class PostGardensController < ApplicationController
 		@following_posts = []
 		# フォローしている人１人ずつに対して
 		@followings.each do |follow|
-			posts = PostGarden.where(user_id: follow.user_id)
+			posts = PostGarden.where(user_id: follow.follow_id)
 			@following_posts.concat(posts)
 		end
 		# フォローしているユーザの全投稿を並び替える
@@ -72,10 +72,7 @@ class PostGardensController < ApplicationController
 
 	def update
 		@post_garden = PostGarden.find(params[:id])
-		# @post_garden.latitude = Geocoder.coordinates(@post_garden.address[0])
-		# @post_garden.longitude = Geocoder.coordinates(@post_garden.address[1])
 		if @post_garden.update(post_garden_params)
-			binding.pry
 			redirect_to post_garden_path(params[:id])
 		else
 			render 'edit'
