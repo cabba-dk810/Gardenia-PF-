@@ -41,5 +41,7 @@ Rails.application.routes.draw do
   get 'cancel_reason/:id' => 'reservations#cancel_reason', as: 'cancel_reason'
   get 'canceled/:id' => 'reservations#canceled', as: 'canceled'
 
+  resources :notifications, only: :index
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

@@ -4,6 +4,8 @@ class PostCommentsController < ApplicationController
 		@post_comment = current_user.post_comments.new(post_comment_params)
 		@post_comment.post_garden_id = post_garden.id
 		@post_comment.save
+		# コメントの通知
+		post_garden.create_notification_comment!(current_user, @post_comment.id)
 		redirect_to post_garden_path(post_garden)
 	end
 

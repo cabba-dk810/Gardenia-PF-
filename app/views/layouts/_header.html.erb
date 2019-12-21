@@ -52,6 +52,15 @@
                             <span class="home"> マイページ</span>
                         <% end %>
 
+                        <%= link_to(notifications_path) do %>
+                            <% if unchecked_notifications.any? %>
+                                <span class="notification"> 通知</span>
+                                <i class="fas fa-circle n-circle fa-stack-1x"></i>
+                            <% else %>
+                                <span class="notification"> 通知</span>
+                            <% end %>
+                        <% end %>
+
                         <%= link_to new_post_garden_path do %>
                             <span class="contact"> 新規投稿</span>
                         <% end %>
