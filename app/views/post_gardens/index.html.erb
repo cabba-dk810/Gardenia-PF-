@@ -4,155 +4,176 @@
 		<!-- サイドメニュー -->
 		<%= render 'layouts/sidemenu' %>
 
+		<div class="col-xs-10 side-menu-left-line">
 
-		<!-- ログインしている場合 -->
-		<% if user_signed_in? %>
+			<!-- ログインしている場合 -->
+			<% if user_signed_in? %>
 
-			<div class="col-xs-10  side-menu-left-line">
-
-				<!-- フォローしている人の投稿順 -->
-				<div class="post-title">
-					<span class="following-post-garden">みんなの投稿</span>
-				</div>
-				<div class="following-post-index">
-
-					<% @order_following_posts.each do |order_following_post| %>
-
-						<div class="col-xs-3">
-							<%= link_to post_garden_path(order_following_post.id) do %>
-								<%= attachment_image_tag order_following_post.post_images[0], :garden_image, :fill, 200,200, format: 'jpg' %>
-							<% end %>
-
-							<%= link_to user_path(order_following_post.user.id) do %>
-								<%= attachment_image_tag order_following_post.user, :profile_image, :fill, 30,30, format: 'jpg', class:"index-profile-image" %>
-								<%= order_following_post.user.user_name %>
-							<% end %>
-
-							<div class="tags-list-index">
-								<% order_following_post.tag_list.each do |tag| %>
-									<div class="post-tags">
-										<span class="post-tag-text"><%= tag %></span>
-									</div>
-								<% end %>
-							</div>
+				<div class="row">
+					<% if @following_posts.any? %>
+						<!-- フォローしている人の投稿順 -->
+						<div class="following-post-title">
+							<span class="following-post-text"><strong>みんなの投稿</strong></span>
 						</div>
 
-					<% end %>
-				</div>
-			</div>
+						<% @order_following_posts.each do |order_following_post| %>
 
-
-			<div class="col-xs-10 col-xs-offset-2  side-menu-left-line">
-
-				<!-- 人気のの投稿順 -->
-				<div class="post-title">
-					<span class="most-like-post-garden">人気のの投稿</span>
-				</div>
-
-				<div class="popular-post-index">
-
-					<% @rank_orders.each do |rank_order| %>
-
-						<div class="col-xs-3">
-							<%= link_to post_garden_path(rank_order.id) do %>
-								<%= attachment_image_tag rank_order.post_images[0], :garden_image, :fill, 200,200, format: 'jpg' %>
-							<% end %>
-
-							<%= link_to user_path(rank_order.user.id) do %>
-								<%= attachment_image_tag rank_order.user, :profile_image, :fill, 30,30, format: 'jpg', class:"index-profile-image" %>
-								<%= rank_order.user.user_name %>
-							<% end %>
-
-							<div class="tags-list-index">
-								<% rank_order.tag_list.each do |tag| %>
-									<div class="post-tags">
-										<span class="post-tag-text"><%= tag %></span>
-									</div>
+							<div class="col-xs-3">
+								<%= link_to post_garden_path(order_following_post.id) do %>
+									<%= attachment_image_tag order_following_post.post_images[0], :garden_image, :fill, 200,200, format: 'jpg', class:"index-post-image" %>
 								<% end %>
+
+								<div class="post-index">
+									<div class="index-profile-image-position">
+										<%= link_to user_path(order_following_post.user.id), class:"profile-image-link" do %>
+											<%= attachment_image_tag order_following_post.user, :profile_image, :fill, 30,30, format: 'jpg', class:"index-profile-image" %>
+											<span class="profile-image-name"><%= order_following_post.user.user_name %></span>
+										<% end %>
+									</div>
+
+									<div class="tags-list-index">
+										<% order_following_post.tag_list.each do |tag| %>
+											<!-- コントローラにパラメータを渡すtag_nameには、idではなくタグの名前を渡す必要がある -->
+											<%= link_to search_result_path(tag_name: tag), class:"tag-label-link" do %>
+												<span class="post-tag-text"><%= tag %></span>
+											<% end %>
+										<% end %>
+									</div>
+								</div>
 							</div>
+
+						<% end %>
+
+					<% else %>
+						<div class="following-post-title">
+							<span class="following-post-text"><strong>みんなの投稿</strong></span>
 						</div>
 
+						<div class="not-yet-follow">
+							<p class="not-yet-follow-text">まだ誰もフォローしていません。</p>
+						</div>
 					<% end %>
 				</div>
-			</div>
-
-
-		<!-- ログインしていない場合 -->
-		<% else %>
-
-			<div class="col-xs-10 side-menu-left-line">
 
 				<!-- 人気の投稿順 -->
-				<div class="post-title">
-					<span class="most-like-post-garden">人気の投稿</span>
-				</div>
+				<div class="row">
+					<div class="popular-post-title">
+						<span class="popular-post-text"><strong>人気の投稿</strong></span>
+					</div>
 
-				<div class="popular-post-index">
+					<div class="popular-post-index">
 
-					<% @rank_orders.each do |rank_order| %>
+						<% @rank_orders.each do |rank_order| %>
 
-						<div class="col-xs-3">
-							<%= link_to post_garden_path(rank_order.id) do %>
-								<%= attachment_image_tag rank_order.post_images[0], :garden_image, :fill, 200,200, format: 'jpg' %>
-							<% end %>
-
-							<%= link_to user_path(rank_order.user.id) do %>
-								<%= attachment_image_tag rank_order.user, :profile_image, :fill, 30,30, format: 'jpg', class:"index-profile-image" %>
-								<%= rank_order.user.user_name %>
-							<% end %>
-
-							<div class="tags-list-index">
-								<% rank_order.tag_list.each do |tag| %>
-									<div class="post-tags">
-										<span class="post-tag-text"><%= tag %></span>
-									</div>
+							<div class="col-xs-3">
+								<%= link_to post_garden_path(rank_order.id) do %>
+									<%= attachment_image_tag rank_order.post_images[0], :garden_image, :fill, 200,200, format: 'jpg', class:"index-post-image" %>
 								<% end %>
+
+								<div class="post-index">
+									<div class="index-profile-image-position">
+										<%= link_to user_path(rank_order.user.id) do %>
+											<%= attachment_image_tag rank_order.user, :profile_image, :fill, 30,30, format: 'jpg', class:"index-profile-image" %>
+											<span class="profile-image-name"><%= rank_order.user.user_name %></span>
+										<% end %>
+									</div>
+
+
+									<div class="tags-list-index">
+										<% rank_order.tag_list.each do |tag| %>
+											<span class="post-tag-text"><%= tag %></span>
+										<% end %>
+									</div>
+								</div>
 							</div>
-						</div>
 
-					<% end %>
+						<% end %>
+					</div>
 				</div>
-			</div>
 
 
-			<div class="col-xs-10 col-xs-offset-2 side-menu-left-line">
+			<!-- ログインしていない場合 -->
+			<% else %>
+
+				<!-- 人気の投稿順 -->
+				<div class="row">
+					<div class="logout-popular-post-title">
+						<span class="popular-post-text"><strong>人気の投稿</strong></span>
+					</div>
+
+					<div class="popular-post-index">
+
+						<% @rank_orders.each do |rank_order| %>
+
+							<div class="col-xs-3">
+								<%= link_to post_garden_path(rank_order.id) do %>
+									<%= attachment_image_tag rank_order.post_images[0], :garden_image, :fill, 200,200, format: 'jpg', class:"index-post-image" %>
+								<% end %>
+
+								<div class="post-index">
+									<div class="index-profile-image-position">
+										<%= link_to user_path(rank_order.user.id) do %>
+											<%= attachment_image_tag rank_order.user, :profile_image, :fill, 30,30, format: 'jpg', class:"index-profile-image" %>
+											<span class="profile-image-name"><%= rank_order.user.user_name %></span>
+										<% end %>
+									</div>
+
+									<div class="tags-list-index">
+										<% rank_order.tag_list.each do |tag| %>
+											<span class="post-tag-text"><%= tag %></span>
+										<% end %>
+									</div>
+								</div>
+							</div>
+
+						<% end %>
+					</div>
+				</div>
+
 
 				<!-- 新着の投稿順 -->
-				<div class="post-title">
-					<span class="new-post-garden">新着の投稿</span>
-				</div>
-				<div class="new-post-index">
+				<div class="row">
+					<div class="new-post-title">
+						<span class="new-post-title"><strong>新着の投稿</strong></span>
+					</div>
+					<div class="new-post-index">
 
-					<% @post_gardens.each do |post_garden| %>
+						<% @post_gardens.each do |post_garden| %>
 
-						<div class="col-xs-3">
-							<%= link_to post_garden_path(post_garden.id) do %>
-								<%= attachment_image_tag post_garden.post_images[0], :garden_image, :fill, 200,200, format: 'jpg' %>
-							<% end %>
-
-							<%= link_to user_path(post_garden.user.id) do %>
-								<%= attachment_image_tag post_garden.user, :profile_image, :fill, 30,30, format: 'jpg', class:"index-profile-image" %>
-								<%= post_garden.user.user_name %>
-							<% end %>
-
-							<div class="tags-list-index">
-								<% post_garden.tag_list.each do |tag| %>
-									<div class="post-tags">
-										<span class="post-tag-text"><%= tag %></span>
-									</div>
+							<div class="col-xs-3">
+								<%= link_to post_garden_path(post_garden.id) do %>
+									<%= attachment_image_tag post_garden.post_images[0], :garden_image, :fill, 200,200, format: 'jpg', class:"index-post-image" %>
 								<% end %>
+
+								<div class="post-index">
+									<div class="index-profile-image-position">
+										<%= link_to user_path(post_garden.user.id) do %>
+											<%= attachment_image_tag post_garden.user, :profile_image, :fill, 30,30, format: 'jpg', class:"index-profile-image" %>
+											<span class="profile-image-name"><%= post_garden.user.user_name %></span>
+										<% end %>
+									</div>
+
+									<div class="tags-list-index">
+										<% post_garden.tag_list.each do |tag| %>
+											<span class="post-tag-text"><%= tag %></span>
+										<% end %>
+									</div>
+								</div>
 							</div>
-						</div>
-
-					<% end %>
+						<% end %>
+					</div>
 				</div>
-			</div>
 
-		<% end %>
+			<% end %>
 
+		</div>
 
 		<!-- 地図の表示 -->
 		<div class="col-xs-10 col-xs-offset-2 side-menu-left-line">
+
+			<div class="map-title">
+				<span class="map-text"><strong>全国で公開中のお庭</strong></span>
+			</div>
 
 			<div id="map"></div>
 
