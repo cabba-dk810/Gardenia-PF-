@@ -8,7 +8,7 @@
 		<!-- ログインしている場合 -->
 		<% if user_signed_in? %>
 
-			<div class="col-xs-10">
+			<div class="col-xs-10  side-menu-left-line">
 
 				<!-- フォローしている人の投稿順 -->
 				<div class="post-title">
@@ -42,7 +42,7 @@
 			</div>
 
 
-			<div class="col-xs-10 col-xs-offset-2">
+			<div class="col-xs-10 col-xs-offset-2  side-menu-left-line">
 
 				<!-- 人気のの投稿順 -->
 				<div class="post-title">
@@ -80,7 +80,7 @@
 		<!-- ログインしていない場合 -->
 		<% else %>
 
-			<div class="col-xs-10">
+			<div class="col-xs-10 side-menu-left-line">
 
 				<!-- 人気の投稿順 -->
 				<div class="post-title">
@@ -115,7 +115,7 @@
 			</div>
 
 
-			<div class="col-xs-10 col-xs-offset-2">
+			<div class="col-xs-10 col-xs-offset-2 side-menu-left-line">
 
 				<!-- 新着の投稿順 -->
 				<div class="post-title">
@@ -152,7 +152,7 @@
 
 
 		<!-- 地図の表示 -->
-		<div class="col-xs-10 col-xs-offset-2">
+		<div class="col-xs-10 col-xs-offset-2 side-menu-left-line">
 
 			<div id="map"></div>
 

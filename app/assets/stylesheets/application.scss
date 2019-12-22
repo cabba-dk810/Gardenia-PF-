@@ -48,6 +48,33 @@ header{
 	margin-left: 10px;
 }
 
+/*サイドメニュー*/
+.side-title{
+	margin-top: 30px;
+	margin-bottom: 20px;
+	text-align: center;
+	font-size: 16px;
+	color: #584c27;
+}
+
+.icon-side{
+	margin-left: 5px;
+}
+
+.tag-label{
+	color: #242424;
+	background-color: #e7e2cd;
+	border-radius: 5px;
+	font-size: 14px;
+	border-color: #dacfaf;
+	line-height: 40px;
+	padding: 6px 10px 6px 10px;
+	margin-right: 5px;
+}
+
+.tag-label-link{
+	text-decoration: none !important;
+}
 
 
 /*フッター用*/
