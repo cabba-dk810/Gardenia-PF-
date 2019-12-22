@@ -47,12 +47,26 @@ class PostGardensController < ApplicationController
 
 		# 公開している庭一覧（Googlemapにピンを立てる）
 		@open_gardens = PostGarden.where(open_status: 1)
+
+		# よく使うタグを取ってくる（デフォルトで20件）
+		@tags = ActsAsTaggableOn::Tag.most_used
 	end
+
 
 	def search_result
 		# 検索パラメータはapplicationcontrollerでも設定済
 		@search = PostGarden.ransack(params[:q])
-	    @post_gardens = @search.result(distinct: true)
+		@post_gardens = PostGarden.all
+	    # よく使うタグを取ってくる（デフォルトで20件）
+		@tags = ActsAsTaggableOn::Tag.most_used
+
+		# タグをクリックしたときの検索結果
+	    if params[:tag_name]
+	    	# @post_gardens = PostGarden.where(tag_list: params[:tag_name])
+	    	@post_gardens = @post_gardens.tagged_with("#{params[:tag_name]}")
+	    else
+	    	@post_gardens = @search.result(distinct: true)
+	    end
 	end
 
 	def show
@@ -107,7 +121,6 @@ class PostGardensController < ApplicationController
 	end
 
 	def about
-
 	end
 
 	private
