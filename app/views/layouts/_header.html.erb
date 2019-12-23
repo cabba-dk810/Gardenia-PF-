@@ -3,8 +3,8 @@
         <div class="row">
 
             <div class="logo col-xs-3">
-                <%= link_to root_path do %>
-                    <i class="fab fa-pagelines logo-leaf"></i>
+                <%= link_to root_path, class:"logo-leaf" do %>
+                    <i class="fab fa-pagelines"></i>
                     <span class="logo-text"><b>Gardenia</b></span>
                 <% end %>
             </div>
@@ -12,18 +12,21 @@
             <div class="col-xs-3">
                 <!-- 検索ボックス -->
                 <%= search_form_for @search, url: search_result_path do |f| %>
-                <%= f.search_field :post_content_or_place_or_problem_or_solution_or_tags_name_or_planted_gardens_plant_name_cont, class:"search_field", placeholder: '検索ワードを入力' %>
 
-                <span class="actions">
-                    <%= f.button :type => "submit", class:'btn btn-primary' do %>
-                    <i class="fas fa-search"></i>
-                    <% end %>
-                </span>
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <%= f.button :type => "submit", class:"btn btn-default" do %>
+                                <i class="fas fa-search"></i>
+                            <% end %>
+                        </span>
 
+                        <%= f.search_field :post_content_or_place_or_problem_or_solution_or_tags_name_or_planted_gardens_plant_name_cont, class:"search_field", placeholder: '場所、庭木、キーワードで検索', class:"form-control search-box" %>
+                    </div>
                 <% end %>
             </div>
 
-            <div class="col-xs-5 col-xs-offset-1">
+            <div class="col-xs-5 col-xs-offset-1 header-nav">
+
             <!-- 管理者でログインした場合 -->
                 <% if admin_signed_in? %>
                     <div class="admin_user-box col-xs-6 col-xs-offset-6">
@@ -40,55 +43,55 @@
                 <!-- ユーザでログインした場合 -->
                 <% elsif user_signed_in?%>
 
-                    <span class="current_user"><%= current_user.user_name %>さん</span>
+                    <div class="header-top">
+                    <span class="header-current_user"><u><%= current_user.user_name %>さん</u> </span>
 
-                    <div class="header-menu">
-
-                        <%= link_to about_path do %>
-                            <span class="about-gardenia"> Gardeniaとは？</span>
-                        <% end %>
-
-                        <%= link_to(user_path(current_user.id)) do %>
-                            <span class="home"> マイページ</span>
-                        <% end %>
-
-                        <%= link_to(notifications_path) do %>
+                        <%= link_to notifications_path, class:"header-link" do %>
                             <% if unchecked_notifications.any? %>
                                 <span class="notification"> 通知</span>
                                 <i class="fas fa-circle n-circle fa-stack-1x"></i>
                             <% else %>
-                                <span class="notification"> 通知</span>
+                                <span class="header-menu"><i class="fas fa-bell"></i></span>
                             <% end %>
                         <% end %>
 
-                        <%= link_to new_post_garden_path do %>
-                            <span class="contact"> 新規投稿</span>
-                        <% end %>
-
-                        <%= link_to(destroy_user_session_path, method: :delete) do %>
-                            <span class="signout"> サインアウト</span>
-                        <% end %>
-
                     </div>
+
+                    <span class="header-margin">
+                        <%= link_to "Gardeniaとは？", about_path, class:"header-menu" %>
+                    </span>
+
+                    <span class="header-margin">
+                        <%= link_to "マイページ", user_path(current_user.id), class:"header-menu" %>
+                    </span>
+
+                    <span class="header-margin">
+                        <%= link_to "新規投稿", new_post_garden_path, class:"header-menu" %>
+                    </span>
+
+                    <span class="header-margin">
+                        <%= link_to "サインアウト", destroy_user_session_path, method: :delete, class:"header-menu" %>
+                    </span>
 
 
                     <!-- ログインしていない場合 -->
                 <% else %>
 
-                    <% link_to about_path do %>
-                        <span class="about-gardenia"> Gardeniaとは？</span>
-                    <% end %>
+                    <div class="before-login-header">
+                        <span class="header-margin">
+                            <%= link_to "Gardeniaとは？", about_path, class:"header-menu" %>
+                        </span>
 
-                    <%= link_to(new_user_registration_path) do %>
-                        <span class="signup"> 新規登録</span>
-                    <% end %>
+                        <span class="header-margin">
+                            <%= link_to "新規登録", new_user_registration_path, class:"header-menu" %>
+                        </span>
 
-                    <%= link_to(new_user_session_path) do %>
-                        <span class="signin"> ログイン</span>
-                    <% end %>
+                        <span class="header-margin">
+                            <%= link_to "ログイン", new_user_session_path, class:"header-menu" %>
+                        </span>
+                    </div>
 
                 <% end %>
-
             </div>
         </div>
     </div>

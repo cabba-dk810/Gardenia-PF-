@@ -24,11 +24,12 @@ Rails.application.routes.draw do
   get 'search_result' => 'post_gardens#search_result', as: 'search_result'
   patch 'post_gardens/:id/delete_open_info' => 'post_gardens#delete_open_info', as: 'delete_open_info'
 
+  resources :post_images, only: [:destroy]
+
   resources :open_days, only: [:create, :update, :destroy]
-  resources :new_open_garden
+  # resources :new_open_garden
 
   resources :relationships, only: [:create]
-  # post 'relationships/:id' => 'relationships#create', as: 'follow'
   delete 'relationships/:id' => 'relationships#destroy', as: 'unfollow'
 
   resources :reservations, only: [:create, :show, :edit, :update, :destroy]
@@ -43,5 +44,4 @@ Rails.application.routes.draw do
 
   resources :notifications, only: :index
 
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

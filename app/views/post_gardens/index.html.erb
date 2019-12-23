@@ -35,7 +35,7 @@
 										<% order_following_post.tag_list.each do |tag| %>
 											<!-- コントローラにパラメータを渡すtag_nameには、idではなくタグの名前を渡す必要がある -->
 											<%= link_to search_result_path(tag_name: tag), class:"tag-label-link" do %>
-												<span class="post-tag-text"><%= tag %></span>
+												<span class="post-tag-text"><%= tag %>　></span>
 											<% end %>
 										<% end %>
 									</div>
@@ -81,7 +81,9 @@
 
 									<div class="tags-list-index">
 										<% rank_order.tag_list.each do |tag| %>
-											<span class="post-tag-text"><%= tag %></span>
+											<%= link_to search_result_path(tag_name: tag), class:"tag-label-link" do %>
+												<span class="post-tag-text"><%= tag %>　></span>
+											<% end %>
 										<% end %>
 									</div>
 								</div>
@@ -120,7 +122,9 @@
 
 									<div class="tags-list-index">
 										<% rank_order.tag_list.each do |tag| %>
-											<span class="post-tag-text"><%= tag %></span>
+											<%= link_to search_result_path(tag_name: tag), class:"tag-label-link" do %>
+												<span class="post-tag-text"><%= tag %>　></span>
+											<% end %>
 										<% end %>
 									</div>
 								</div>
@@ -155,7 +159,9 @@
 
 									<div class="tags-list-index">
 										<% post_garden.tag_list.each do |tag| %>
-											<span class="post-tag-text"><%= tag %></span>
+											<%= link_to search_result_path(tag_name: tag), class:"tag-label-link" do %>
+												<span class="post-tag-text"><%= tag %>　></span>
+											<% end %>
 										<% end %>
 									</div>
 								</div>
@@ -191,7 +197,7 @@
 						// 複数の住所をもとにマーカーを立てる
 						<% @open_gardens.each do |open_garden| %>
 							(function(){
-								var contentString = '<%= attachment_image_tag open_garden.post_images[0], :garden_image, :fill, 100, 100, format: 'jpg' %>' + '<br><br><br>' + '<strong>投稿者</strong>' + '<br>' + '<%= open_garden.user.user_name %>' + '<br>' + '<strong>使用している庭木</strong>' + '<br>' + '<% open_garden.planted_gardens.each do |planted_garden| %><%= planted_garden.plant_name %><% end %>' + '</p>' + '<br>' + '<p>' + 'タグ<%= open_garden.tag_list %>' + '</p>' + '<br>' + '<p>' + '<%= link_to post_garden_path(open_garden.id) do %><span class="link">詳細へ</span><% end %>' + '</p>';
+								var contentString = '<div class="row">' + '<div class="col-xs-6">' + '<%= attachment_image_tag open_garden.post_images[0], :garden_image, :fill, 100, 100, format: 'jpg', class:"index-post-image" %>' + '</div>' + '<div class="col-xs-6">' + '<strong>投稿者</strong>' + '<br>' + '<%= open_garden.user.user_name %>' + '<br>' + '<% open_garden.tag_list.each do |tag| %>' + '<span class="post-tag-text"><%= tag %></span>' + '<% end %>' + '<p>' + '<%= link_to post_garden_path(open_garden.id) do %><span class="btn btn-primary btn-sm">詳細へ</span><% end %>' + '</p>' + '</div>';
 								var infowindow = new google.maps.InfoWindow({
 									content: contentString
 								});
