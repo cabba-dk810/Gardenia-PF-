@@ -24,6 +24,8 @@ Rails.application.routes.draw do
   get 'search_result' => 'post_gardens#search_result', as: 'search_result'
   patch 'post_gardens/:id/delete_open_info' => 'post_gardens#delete_open_info', as: 'delete_open_info'
 
+  resources :likes, only: [:index]
+
   resources :post_images, only: [:destroy]
 
   resources :open_days, only: [:create, :update, :destroy]
