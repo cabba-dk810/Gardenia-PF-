@@ -1,79 +1,154 @@
 <div class="container">
 	<div class="row">
 		
-		<div class="col-xs-3">
-			<div class="samuneiru-position">
-			<%= attachment_image_tag @user, :profile_image, :fill, 150, 150, format: 'jpg', fallback: "no_image.jpg" %>
+		<div class="col-xs-2">
+			<div class="mp-samuneiru-position">
+			<%= attachment_image_tag @user, :profile_image, :fill, 150, 150, format: 'jpg', fallback: "no_image.jpg", class:"index-profile-image" %>
 			</div>
+
 		</div>
 
 		<div class="col-xs-5">
 
-			<h4><%= @user.user_name %></h4>
+			<div class="mp-info">
 
-			<% unless current_user == @user %>
-				<% if current_user.following?(@user) %>
-					<%= form_for(current_user.relationships.find_by(follow_id: @user.id), url: unfollow_path(@user.id), html: { method: :delete }) do |f| %>
-						<%= hidden_field_tag :follow_id, @user.id %>
-						<%= f.submit 'フォロー解除', class:"btn btn-danger btn-block" %>
-					<% end %>
-				<% else %>
-					<%= form_for(@relationship) do |f| %>
-						<%= hidden_field_tag :follow_id, @user.id %>
-						<%= f.submit '+ フォロー', class:"btn btn-primary btn-block" %>
+				<!-- 他のユーザのページだったら、フォローボタンを設置 -->
+				<% unless current_user == @user %>
+					<% if current_user.following?(@user) %>
+						<%= form_for(current_user.relationships.find_by(follow_id: @user.id), url: unfollow_path(@user.id), html: { method: :delete }) do |f| %>
+							<%= hidden_field_tag :follow_id, @user.id %>
+							<%= f.submit 'フォロー解除', class:"btn btn-danger follow-button-position" %>
+						<% end %>
+					<% else %>
+						<%= form_for(@relationship) do |f| %>
+							<%= hidden_field_tag :follow_id, @user.id %>
+							<%= f.submit '+ フォロー', class:"btn btn-primary follow-button-position" %>
+						<% end %>
 					<% end %>
 				<% end %>
-			<% end %>
-
-			<%= link_to "会員情報編集", edit_user_path(current_user.id) %>
 
 
-			<div class="follow-index">
-				<span class="follower-text"><%= link_to "フォロワー", follower_path(params[:id]) %></span>
-				<span class="following-text"><%= link_to "フォロー中", following_path(params[:id]) %></span>
+				<span class="mp-user-info">
+					<strong><%= @user.user_name %></strong>
+				</span>
+
+				<!-- 自ユーザならば、投稿の編集 -->
+				<% if @user.id == current_user.id %>
+					<span class="mp-edit-user">
+						<%= link_to "会員情報編集", edit_user_path(@user.id), class:"btn btn-primary btn-sm" %>
+					</span>
+				<% end %>
+
+
+				<div class="follow-index">
+					<span class="post-num">投稿<%= @user.post_gardens.count %>件</span>
+
+					<span class="follower-text">
+						<%= link_to follower_path(params[:id]), class:"follow-link" do %>
+							フォロワー<%= @relationship_followers.count %>人
+						<% end %>
+					</span>
+
+					<span class="following-text">
+						<%= link_to following_path(params[:id]), class:"follow-link" do %>
+							<%= @relationship_followings.count %>人をフォロー中
+						<% end %>
+					</span>
+				</div>
+
+				<div class="mp-place-box">
+					<span class="mp-place-text"><%= @user.prefecture %></span>
+				</div>
+
+				<div class="mp-profile-content">
+					<span class="mp-profile-content-text"><%= @user.profile_text %></span>
+				</div>
+
+
+				<div class="like-reservation-index">
+					<div class="row">
+						<div class="col-xs-4">
+							<span class="like-index btn btn-default"><%= link_to "いいねした庭園", likes_path, class:"mp-link" %></span>
+						</div>
+
+						<% if current_user == @user %>
+							<div class="col-xs-4">
+								<span class="reservation-request-index btn btn-default"><%= link_to "予約済の庭園一覧", request_reservations_path, class:"mp-link" %></span>
+							</div>
+
+							<div class="col-xs-4">
+								<span class="reservation-accept-index btn btn-default"><%= link_to "庭園の見学予約", accept_reservations_path, class:"mp-link" %></span>
+							</div>
+						<% end %>
+					</div>
+				</div>
+
 			</div>
-
-
-			<div class="reservation-index">
-				<span class="reservation-request-index"><%= link_to "予約したオープンガーデン一覧", request_reservations_path %></span>
-				<span class="reservation-accept-index"><%= link_to "公開中したオープンガーデンへの見学予約", accept_reservations_path %></span>
-			</div>
-
 
 		</div>
 
-		<div class="col-xs-4">
 
-			<span class="reservation-new-date-text">マイスケジュール</span>
-			<div id="calendar-user"></div>
+		<!-- スケジュール管理 -->
+		<% if current_user == @user %>
+			<div class="col-xs-4 reserve-calendar-border">
 
-			<!-- どの投稿のカレンダーか判別するため、idをjqueryに渡している -->
-			<div class="params_num_user" data-params="<%= @user.id %>"></div>
-		</div>
+				<div class="reservation-new-event">
+					<span class="reservation-new-event-text"><strong><i class="far fa-calendar-alt"></i>予約カレンダー</strong></span>
+				</div>
+				<div id="calendar-user"></div>
+
+				<!-- どの投稿のカレンダーか判別するため、idをjqueryに渡している -->
+				<div class="params_num_user" data-params="<%= @user.id %>"></div>
+			</div>
+		<% else %>
+
+			<div class="col-xs-4 reserve-calendar-border">
+
+				<div class="reservation-new-event">
+					<span class="reservation-new-event-text"><strong><i class="far fa-calendar-alt"></i>予約カレンダー</strong></span>
+				</div>
+
+				<div class="not-yet-my-mp">
+					<span>他のユーザの予定は見ることができません</span>
+				</div>
+
+			</div>
+
+		<% end %>
 	</div>
 
 	<!-- 投稿一覧 -->
 	<div class="row">
 		<div class="col-xs-10">
 
+			<div class="mp-post-index">
+				<span class="mp-post-index-text"><strong><i class="fas fa-pen"></i>投稿一覧</strong></span>
+			</div>
+
 			<% @post_gardens.each do |post_garden| %>
 
+				<!-- cssはトップページ(post_garden indexと同じ) -->
 				<div class="col-xs-3">
 					<%= link_to post_garden_path(post_garden.id) do %>
-						<%= attachment_image_tag post_garden.post_images[0], :garden_image, :fill, 200,200, format: 'jpg' %>
+						<%= attachment_image_tag post_garden.post_images[0], :garden_image, :fill, 200,200, format: 'jpg', class:"index-post-image" %>
 					<% end %>
 
-					<%= link_to user_path(post_garden.user.id) do %>
-						<%= attachment_image_tag post_garden.user, :profile_image, :fill, 30,30, format: 'jpg', class:"index-profile-image" %>
-						<%= post_garden.user.user_name %>
-					<% end %>
+					<div class="post-index">
+						<div class="index-profile-image-position">
+							<%= link_to user_path(post_garden.user.id), class:"profile-image-link" do %>
+								<%= attachment_image_tag post_garden.user, :profile_image, :fill, 30,30, format: 'jpg', class:"index-profile-image" %>
+								<span class="profile-image-name"><%= post_garden.user.user_name %></span>
+							<% end %>
+						</div>
 
-					<div class="tags-list-index">
-						<% post_garden.tag_list.each do |tag| %>
-							<div class="post-tags">
-								<span class="post-tag-text"><%= tag %></span>
-							</div>
-						<% end %>
+						<div class="tags-list-index">
+							<% post_garden.tag_list.each do |tag| %>
+								<!-- コントローラにパラメータを渡すtag_nameには、idではなくタグの名前を渡す必要がある -->
+								<%= link_to search_result_path(tag_name: tag), class:"tag-label-link" do %>
+									<span class="post-tag-text"><%= tag %>　></span>
+								<% end %>
+							<% end %>
+						</div>
 					</div>
 				</div>
 

@@ -1,3 +1,111 @@
 // Place all the styles related to the users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+/*マイページ(show)*/
+.mp-samuneiru-position{
+	margin-top: 30px;
+	margin-left: 10px;
+}
+
+.mp-info{
+	margin-top: 30px;
+}
+
+.mp-user-info{
+	font-size: 22px;
+	margin-right: 25px;
+	line-height: 50px;
+}
+
+.mp-edit-user{
+	position: absolute;
+	line-height: 40px;
+}
+
+.follow-index{
+	margin-top: 15px;
+	font-size: 16px;
+}
+
+.follower-text{
+	margin-right: 20px;
+	margin-left: 30px;
+}
+
+.follow-link{
+	color: #242424;
+	text-decoration: none !important;
+}
+
+
+.mp-place-box{
+	margin-top: 15px;
+}
+
+.mp-place-text{
+	color: #242424;
+	border-radius: 13px;
+	font-size: 9px;
+	border: 1px solid #242424;
+	line-height: 40px;
+	padding: 4px 7px 4px 7px;
+
+}
+
+.mp-profile-content{
+	margin-top: 2px;
+	font-size: 13px;
+}
+
+.like-reservation-index{
+	margin-top: 40px;
+	margin-bottom: 100px;
+}
+
+.mp-link{
+	text-decoration: none !important;
+	color: #242424;
+}
+
+.reservation-new-event{
+	margin-left: 95px;
+	margin-bottom: 25px;
+	font-size: 21px;
+	color: #584c27;
+}
+
+.fa-calendar-alt{
+	margin-right: 10px;
+}
+
+
+.reserve-calendar-border{
+	border-left: 1px solid #e7e2cd;
+	margin-top: 30px;
+}
+
+
+.not-yet-my-mp{
+	margin-bottom: 30px;
+	margin-left: 45px;
+}
+
+.mp-post-index{
+	margin-left: 45px;
+	margin-bottom: 25px;
+	font-size: 21px;
+	color: #584c27;
+}
+
+.fa-pen{
+	margin-right: 10px;
+}
+
+.follow-button-position{
+	position: absolute;
+	margin-left: 145px;
+	margin-top: 5px;
+}
+
