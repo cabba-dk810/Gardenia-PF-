@@ -4,24 +4,9 @@
 
 		<div class="">
 
-			<% if @post_garden.open_status == "公開" %>
-				<div class="open-status-box">
-					<span class="open-status-text">公開中</span>
-				</div>
-			<% else %>
-				<div class="open-status-box">
-					<span class="open-status-text">非公開</span>
-				</div>
-			<% end %>
-
 			<div class="col-xs-10 col-xs-offset-1">
 
 				<div class="col-xs-6">
-					<!-- 画像切り替え用矢印 -->
-					<div class="change-btn-wrapper">
-		          		<div class="change-btn prev-btn"><i class="far fa-arrow-alt-circle-left"></i></div>
-		          		<div class="change-btn next-btn"><i class="far fa-arrow-alt-circle-right"></i></div>
-	       			</div>
 
 	       			<!-- data-indexでJsにデータを渡している。$('.slides').data('index')で値が取れる -->
 	       			<div class="slides" data-index="<%= @post_garden.post_images.length %>">
@@ -30,17 +15,23 @@
 
 							<% if i == 0 %>
 								<div class="slide active">
-									<%= attachment_image_tag post_image, :garden_image, :fill, 400,400, format: 'jpg' %>
+									<%= attachment_image_tag post_image, :garden_image, :fill, 400,400, format: 'jpg', class:"show-post-image" %>
 								</div>
 							<% else %>
 								<div class="slide">
-									<%= attachment_image_tag post_image, :garden_image, :fill, 400,400, format: 'jpg' %>
+									<%= attachment_image_tag post_image, :garden_image, :fill, 400,400, format: 'jpg', class:"show-post-image" %>
 								</div>
 							<% end %>
 
 						<% end %>
-
 					</div>
+
+
+					<!-- 画像切り替え用矢印 -->
+					<div class="change-btn-wrapper">
+		          		<span class="change-btn prev-btn"><i class="far fa-arrow-alt-circle-left"></i></span>
+		          		<span class="change-btn next-btn"><i class="far fa-arrow-alt-circle-right"></i></span>
+	       			</div>
 
 					<!-- いいねボタン -->
 					<div id="likes_buttons_<%= @post_garden.id %>">
@@ -54,61 +45,61 @@
 				<!-- 写真右の項目 -->
 
 				<!-- 投稿者情報 -->
-				<div class="col-xs-5 col-xs-offset-1">
+				<div class="col-xs-6">
 
 					<!-- 場所 -->
 					<div class="post-place">
 						<span class="post-place-text"><%= @post_garden.place %></span>
+
+						<!-- 自ユーザならば、投稿の編集 -->
+						<% if @user.id == current_user.id %>
+
+							<%= link_to "投稿の編集", edit_post_garden_path(@post_garden.id), class:"btn btn-primary edit-post-garden-text" %>
+
+						<% end %>
+
 					</div>
 
 					<div class="profile-image-box">
-						<%= attachment_image_tag @user, :profile_image, :fill, 150,150, format: 'jpg', class:"index-profile-image" %>
-					</div>
-					<span class="profile-name"><%= @user.user_name %></span>
-
-
-					<!-- 自ユーザならば、投稿の編集 -->
-					<% if @user.id == current_user.id %>
-
-						<%= link_to edit_post_garden_path(@post_garden.id) do %>
-							<div class="edit-post-garden">
-								<span class="edit-post-garden-text">基本情報を編集する</span>
-							</div>
+						<%= attachment_image_tag @user, :profile_image, :fill, 80,80, format: 'jpg', class:"show-profile-image" %>
+						<%= link_to user_path(@post_garden.user.id), class:"profile-link" do %>
+							<span class="show-profile-name"><strong><%= @user.user_name %></strong></span>
 						<% end %>
+					</div>
 
-					<% end %>
 
 					<!-- 使った庭木 -->
 					<div class="row">
-						<div class="col-xs-5 col-xs-offset-1">
+						<div class="col-xs-10">
 
 							<div class="post-planted-garden">
-								<span class="post-planted-garden-title">使用した庭木</span>
+								<span class="post-planted-garden-title"><i class="fas fa-tree"></i><strong>使用した庭木</strong></span>
 							</div>
 
-							<% @post_garden.planted_gardens.each do |planted_garden| %>
-								<div class="post-planted-gardens">
-									<span class="post-planted-garden-text"><%= planted_garden.plant_name %></span>
-									<span class="post-planted-garden-number"><%= planted_garden.plant_number %></span>
-								</div>
-							<% end %>
+							<div class="post-planted-garden-content">
+								<% @post_garden.planted_gardens.each do |planted_garden| %>
+									<span class="post-planted-garden-text"><%= planted_garden.plant_name %>  /</span>
+								<% end %>
+							</div>
 
 						</div>
 					</div>
 
 					<!-- タグ -->
 					<div class="row">
-						<div class="col-xs-5 col-xs-offset-1">
+						<div class="col-xs-10">
 
 							<div class="post-tag">
-								<span class="post-tag-title">タグ</span>
+								<span class="post-tag-title"><i class="fas fa-tag"></i><strong>タグ</strong></span>
 							</div>
 
-							<% @post_garden.tag_list.each do |tag| %>
-								<div class="post-tags">
-									<span class="post-tag-text"><%= tag %></span>
-								</div>
-							<% end %>
+							<div class="post-tag-content">
+								<% @post_garden.tag_list.each do |tag| %>
+									<%= link_to search_result_path(tag_name: tag), class:"tag-label-link" do %>
+										<span class="post-tag-text-show"><%= tag %>　></span>
+									<% end %>
+								<% end %>
+							</div>
 
 						</div>
 
@@ -116,29 +107,27 @@
 
 					<!-- 面積 -->
 					<div class="row">
-						<div class="col-xs-5 col-xs-offset-1">
-
-							<div class="post-area-title">
-								<span class="post-area-title-text">面積</span>
-							</div>
+						<div class="col-xs-5">
 
 							<div class="post-area">
+								<span class="post-area-title"><i class="fas fa-layer-group"></i><strong>面積</strong></span>
+							</div>
+
+							<div class="post-area-content">
 								<span class="post-area-text"><%= @post_garden.area %></span>
 							</div>
 
 						</div>
-					</div>
 
 
-					<!-- 経費 -->
-					<div class="row">
-						<div class="col-xs-5 col-xs-offset-1">
-
-							<div class="post-expence-title">
-								<span class="post-expence-title-text">経費</span>
-							</div>
+						<!-- 経費 -->
+						<div class="col-xs-5">
 
 							<div class="post-expence">
+								<span class="post-expence-title"><i class="fas fa-dollar-sign"></i><strong>経費</strong></span>
+							</div>
+
+							<div class="post-expence-content">
 								<span class="post-expence-text"><%= @post_garden.price %>円</span>
 							</div>
 
@@ -153,134 +142,160 @@
 
 			<!-- 写真より下の項目 -->
 
-				<!-- 問題点 -->
-				<div class="row">
+			<!-- 問題点 -->
+			<div class="row">
 
-					<div class="col-xs-8 col-xs-offset-1">
+				<div class="col-xs-6 col-xs-offset-1">
 
-						<div class="post-problem-title">
-							<span class="post-problem-title-text">困ったこと</span>
-						</div>
+					<div class="post-problem">
+						<span class="post-problem-title"><i class="fas fa-exclamation-triangle"></i><strong>困ったこと</strong></span>
+					</div>
 
-						<div class="post-problem">
-							<span class="post-problem-text"><%= @post_garden.problem %></span>
-						</div>
+					<div class="post-problem-content">
+						<span class="post-problem-text"><%= @post_garden.problem %></span>
+					</div>
 
+				</div>
+			</div>
+
+
+			<!-- 解決策 -->
+			<div class="row">
+				<div class="col-xs-6 col-xs-offset-1">
+
+					<div class="post-solution">
+						<span class="post-solution-title"><i class="far fa-lightbulb"></i><strong>解決策</strong></span>
+					</div>
+
+					<div class="post-solution-content">
+						<span class="post-solution-text"><%= @post_garden.solution %></span>
 					</div>
 				</div>
+			</div>
 
 
-					<!-- 解決策 -->
-					<div class="row">
-						<div class="col-xs-8 col-xs-offset-1">
+			<!-- コメント欄 -->
+			<div class="row">
+				<div class="top-line-of-comment"></div>
+				<div class="col-xs-6">
 
-							<div class="post-solution-title">
-								<span class="post-solution-title-text">解決策</span>
+					<p class="comment-title">コメント一覧</p>
+
+					<!-- コメント表示 -->
+					<% if @post_garden.post_comments.any? %>
+
+						<% @post_garden.post_comments.each do |post_comment| %>
+
+						<div class="row">
+							<div class="col-xs-2 col-xs-offset-2">
+								<div class="comment-image-position">
+									<%= attachment_image_tag post_comment.user, :profile_image, :fill, 60,60, format: 'jpg', class:"show-profile-image" %>
+								</div>
 							</div>
 
-							<div class="post-solution">
-								<span class="post-solution-text"><%= @post_garden.solution %></span>
-							</div>
+							<div class="col-xs-8">
+								<div class="comment-user-name">
+									<span class="comment-user-name-text"><strong><%= post_comment.user.user_name %></strong>
 
-						</div>
-					</div>
-
-
-					<!-- コメント欄 -->
-					<div class="row">
-						<div class="col-xs-6">
-
-							<!-- コメント表示 -->
-							<% @post_garden.post_comments.each do |post_comment| %>
-
-							<div class="row">
-								<div class="col-xs-2">
-									<%= attachment_image_tag post_comment.user, :profile_image, :fill, 150,150, format: 'jpg' %>
+										<% if post_comment.user_id == current_user.id %>
+											<%= link_to post_garden_post_comment_path(post_comment.id), method: :delete, class:"comment-delete" do %>
+												<i class="fas fa-trash-alt"></i>
+											<% end %>
+										<% end %>
+									</span>
 								</div>
 
-								<div class="col-xs-6">
-									<%= post_comment.user.user_name %>
+								<div class="comment-content">
 									<%= post_comment.comment_content %>
-
-									<% if post_comment.user_id == current_user.id %>
-										<div class="comment-delete">
-											<%= link_to "削除", post_garden_post_comment_path(post_comment.id), method: :delete %>
-										</div>
-									<% end %>
 								</div>
+
 							</div>
-
-							<% end %>
-
-							<!-- コメント入力 -->
-							<%= form_for @post_comment, url: post_garden_post_comments_path(@post_garden) do |f| %>
-
-
-								<%= f.text_area :comment_content, class:"form-control" %>
-								<%= f.submit "コメントする", class:"btn btn-lg mt-20 pull-right" %>
-
-							<% end %>
-
 						</div>
 
-						<!-- 予約用カレンダーの表示 -->
-						<div class="col-xs-4 reserve-box">
+						<% end %>
 
-							<div class="">
-								<span class="">庭の見学に行く</span>
+					<% else %>
+
+						<span class="not-yet-comment">まだコメントはありません</span>
+
+					<% end %>
+
+					<!-- コメント入力 -->
+					<div class="row">
+						<div class="col-xs-8 col-xs-offset-4">
+							<div class="comment-input">
+								<%= form_for @post_comment, url: post_garden_post_comments_path(@post_garden) do |f| %>
+
+									<%= f.text_area :comment_content, class:"form-control", placeholder:"コメントしよう！" %>
+
+									<div class="comment-button">
+										<%= f.submit "コメントする", class:"btn btn-primary pull-right" %>
+									</div>
+
+								<% end %>
 							</div>
-
-							<% if @user.id == current_user.id && @post_garden.open_status == "非公開" %>
-
-								<div class="">
-									<span class="">ただいま公開しておりません</span>
-								</div>
-
-								<%= link_to new_open_garden_path(@post_garden.id) do %>
-									<div class="open-garden-input">
-										<span class="open-garden-input-text">公開情報を編集する</span>
-									</div>
-								<% end %>
-
-							<% elsif @user.id == current_user.id && @post_garden.open_status == "公開" %>
-
-								<div class="">
-									<span class="">ただいま公開中です</span>
-								</div>
-
-								<%= link_to new_open_garden_path(@post_garden.id) do %>
-									<div class="open-garden-input">
-										<span class="open-garden-input-text">公開情報を編集する</span>
-									</div>
-								<% end %>
-
-							<% elsif @user.id != current_user.id && @post_garden.open_status == "非公開" %>
-
-								<div class="">
-									<span class="">ただいま公開しておりません</span>
-								</div>
-
-
-							<% elsif @user.id != current_user.id && @post_garden.open_status == "公開" %>
-
-								<div class="">
-									<span class="">公開日の確認</span>
-								</div>
-
-								<div id='calendar_reservation'></div>
-
-								<!-- どの投稿のカレンダーか判別するため、idをjqueryに渡している -->
-								<div class="params_num_show" data-params="<%= @post_garden.id %>"></div>
-
-								<div class="">
-									<%= link_to '予約画面へ進む', new_reservation_path(@post_garden) %>
-								</div>
-
-							<% end %>
-
 						</div>
-
 					</div>
+
+				</div>
+
+				<!-- 予約用カレンダーの表示 -->
+				<div class="col-xs-4 reserve-box">
+
+					<% if @post_garden.open_status == "公開" %>
+						<div class="open-status-box">
+							<span class="open-status-text">公開中</span>
+						</div>
+					<% else %>
+						<div class="not-open-status-box">
+							<span class="not-open-status-text">非公開</span>
+						</div>
+					<% end %>
+
+
+					<% if @user.id == current_user.id && @post_garden.open_status == "非公開" %>
+
+						<div class="not-yet-open">
+							<span class="not-yet-open-text">ただいま公開しておりません</span>
+						</div>
+
+						<div class="edit-open-garden">
+							<%= link_to '公開情報の編集　>', new_open_garden_path(@post_garden.id), class:"btn btn-success" %>
+						</div>
+
+					<% elsif @user.id == current_user.id && @post_garden.open_status == "公開" %>
+
+						<div class="open-now">
+							<span class="open-now-text">ただいま公開中です</span>
+						</div>
+
+						<div class="edit-open-garden">
+							<%= link_to '公開情報の編集　>', new_open_garden_path(@post_garden.id), class:"btn btn-success" %>
+						</div>
+
+					<% elsif @user.id != current_user.id && @post_garden.open_status == "非公開" %>
+
+						<div class="not-yet-open">
+							<span class="not-yet-open-text">ただいま公開しておりません</span>
+						</div>
+
+
+					<% elsif @user.id != current_user.id && @post_garden.open_status == "公開" %>
+
+						<div id='calendar_reservation'></div>
+
+						<!-- どの投稿のカレンダーか判別するため、idをjqueryに渡している -->
+						<div class="params_num_show" data-params="<%= @post_garden.id %>"></div>
+
+						<div class="to-reservation-page">
+							<%= link_to '予約画面へ進む', new_reservation_path(@post_garden), class:"btn btn-primary" %>
+						</div>
+
+					<% end %>
+
+				</div>
+
+			</div>
 
 		</div>
 	</div>

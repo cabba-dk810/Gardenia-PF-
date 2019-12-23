@@ -66,3 +66,67 @@ $(function(){
     }
 
 });
+
+
+// fadein outさせる用
+// $(function(){
+
+//     $('.change-btn-wrapper').hover(function(){
+//         $('.next-btn').fadeIn();
+//         $('.prev-btn').fadeIn();
+
+//         var slideIndex = $('.slide').index($('.active'));
+// console.log("---slideIndex---");
+// console.log(slideIndex);
+
+//         if (slideIndex == 0){
+//             $('.prev-btn').hide();
+//             $('.next-btn').fadeIn();
+//         }
+
+//         if (slideIndex == $('.slides').data('index') - 1){
+//             $('.next-btn').hide();
+//             $('.prev-btn').fadeIn();
+//         }
+
+//         $('.change-btn').click(function(){
+// console.log("---click---");
+//             var $displaySlide = $('.active');
+// console.log($displaySlide);
+
+//             $displaySlide.removeClass('active');
+
+//             if ($(this).hasClass('next-btn')){
+//                 $displaySlide.next('div').addClass('active');
+// console.log("---next active---");
+
+//             } else{
+//                 $displaySlide.prev('div').addClass('active');
+// console.log("---prev active---");
+
+//             }
+
+//         });
+
+//     },function(){
+//         $('.prev-btn').fadeOut();
+//         $('.next-btn').fadeOut();
+//     }
+//     );
+
+//     // １枚しか投稿していない場合でも、ボタンが表示されない設定
+//     var slideIndex = $('.slide').index($('.active'));
+
+//     if (slideIndex == 0){
+//         $('.prev-btn').hide();
+//         $('.next-btn').fadeIn();
+//     }
+
+//     if (slideIndex == $('.slides').data('index') - 1){
+//         $('.next-btn').hide();
+//         $('.prev-btn').fadeIn();
+//     }
+
+
+// });
+

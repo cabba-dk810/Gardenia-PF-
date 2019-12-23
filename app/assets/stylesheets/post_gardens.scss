@@ -1,3 +1,6 @@
+
+
+
 /*aboutページ*/
 
 .background-image{
@@ -103,6 +106,15 @@
 }
 
 
+
+
+
+
+
+
+
+
+
 /*index（トップページ）*/
 .side-menu-left-line{
   border-left: 1px solid #e7e2cd;
@@ -156,6 +168,9 @@
 
 .tags-list-index{
   margin-top: 8px;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .post-tag-text{
@@ -166,7 +181,7 @@
   border: 1px solid #dacfaf;
   line-height: 40px;
   padding: 5px 9px 5px 9px;
-  margin-left: 8px;
+  margin-right: 8px;
 }
 
 .popular-post-title{
@@ -219,6 +234,373 @@
   margin-top: 30px;
   margin-left: 30px;
 }
+
+
+
+
+
+
+
+
+
+/*投稿詳細ページshow*/
+
+.show-post-image{
+  border-radius: 4px;
+  margin-top: 40px;
+}
+
+.change-btn-wrapper{
+  margin-bottom: 40px;
+}
+
+.change-btn{
+  font-size: 25px;
+}
+
+.prev-btn{
+  position: absolute;
+  margin-left: 20px;
+}
+
+.next-btn{
+  position: absolute;
+  margin-left: 360px;
+}
+
+.like-button{
+  font-size: 18px;
+}
+
+.like-link{
+  text-decoration: none !important;
+}
+
+.like-text{
+  margin-left: 10px;
+  font-size: 12px;
+}
+
+.post-place{
+  margin-top: 15px;
+}
+
+.post-place-text{
+  color: #242424;
+  border-radius: 13px;
+  font-size: 13px;
+  border: 1px solid #242424;
+  line-height: 40px;
+  padding: 6px 11px 6px 11px;
+}
+
+.show-profile-image{
+  margin-top: 10px;
+  margin-left: 10px;
+  border-radius: 50%;
+}
+
+.show-profile-name{
+  margin-left: 20px;
+  font-size: 17px;
+  color: #242424;
+}
+
+.profile-link{
+  text-decoration: none !important;
+}
+
+.edit-post-garden-text{
+  margin-left: 170px;
+}
+
+.post-planted-garden{
+  margin-top: 35px;
+  margin-left: 10px;
+  margin-bottom: 7px;
+  width: 100%;
+  height: 25px;
+  color: #242424;
+  background-color: #e7e2cd;
+  border-radius: 5px;
+  font-size: 12px;
+  border-color: #dacfaf;
+}
+
+.post-planted-garden-title{
+  line-height: 25px;
+  margin-left: 15px;
+}
+
+.fa-tree{
+  margin-right: 5px;
+}
+
+.post-planted-garden-content{
+  width: 80%;
+  margin: 0 auto;
+  font-size: 12px;
+}
+
+
+.post-tag{
+  margin-top: 20px;
+  margin-left: 10px;
+  width: 100%;
+  height: 25px;
+  color: #242424;
+  background-color: #e7e2cd;
+  border-radius: 5px;
+  font-size: 12px;
+  border-color: #dacfaf;
+}
+
+.post-tag-title{
+  line-height: 25px;
+  margin-left: 15px;
+}
+
+.fa-tag{
+  margin-right: 5px;
+}
+
+.post-tag-text-show{
+  color: #242424;
+  background-color: #f7f5ee;
+  border-radius: 9px;
+  font-size: 11px;
+  border: 1px solid #dacfaf;
+  line-height: 40px;
+  padding: 4px 7px 4px 7px;
+  margin-left: 6px;
+  margin-top: 3px;
+}
+
+.post-tag-content{
+  width: 85%;
+  margin: 0 auto;
+}
+
+.post-area{
+  margin-top: 20px;
+  margin-left: 10px;
+  margin-bottom: 5px;
+  width: 100%;
+  height: 25px;
+  color: #242424;
+  background-color: #e7e2cd;
+  border-radius: 5px;
+  font-size: 12px;
+  border-color: #dacfaf;
+}
+
+.post-area-title{
+  line-height: 25px;
+  margin-left: 15px;
+}
+
+.fa-layer-group{
+  margin-right: 5px;
+}
+
+.post-area-content{
+  width: 70%;
+  margin: 0 auto;
+}
+
+.post-expence{
+  margin-top: 20px;
+  margin-left: 10px;
+  margin-bottom: 5px;
+  width: 100%;
+  height: 25px;
+  color: #242424;
+  background-color: #e7e2cd;
+  border-radius: 5px;
+  font-size: 12px;
+  border-color: #dacfaf;
+}
+
+.post-expence-title{
+  line-height: 25px;
+  margin-left: 15px;
+}
+
+.fa-dollar-sign{
+  margin-right: 5px;
+}
+
+.post-expence-content{
+  width: 70%;
+  margin: 0 auto;
+}
+
+.post-problem{
+  margin-top: 20px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+  height: 25px;
+  color: #242424;
+  background-color: #e7e2cd;
+  border-radius: 5px;
+  font-size: 12px;
+  border-color: #dacfaf;
+}
+
+.post-problem-title{
+  line-height: 25px;
+  margin-left: 15px;
+}
+
+.fa-exclamation-triangle{
+  margin-right: 5px;
+}
+
+.post-problem-content{
+  width: 90%;
+  margin: 0 auto;
+}
+
+.post-solution{
+  margin-top: 20px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+  height: 25px;
+  color: #242424;
+  background-color: #e7e2cd;
+  border-radius: 5px;
+  font-size: 12px;
+  border-color: #dacfaf;
+}
+
+.post-solution-title{
+  line-height: 25px;
+  margin-left: 15px;
+}
+
+.fa-lightbulb{
+  margin-right: 5px;
+}
+
+.post-solution-content{
+  width: 90%;
+  margin: 0 auto;
+}
+
+
+.top-line-of-comment{
+  border-top: 1px solid #e7e2cd;
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 30px;
+  margin-bottom: 50px;
+}
+
+.comment-title{
+  font-size: 19px;
+  color: #584c27;
+  margin-left: 115px;
+  margin-bottom: 30px;
+}
+
+.not-yet-comment{
+  margin-left: 115px;
+}
+
+.comment-image-position{
+  margin-left: 10px;
+  margin-bottom: 30px;
+}
+
+.comment-user-name{
+  margin-top: 15px;
+}
+
+.comment-delete{
+  margin-left: 260px;
+}
+
+.comment-content{
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.comment-input{
+  margin-top: 50px;
+}
+
+.comment-button{
+  margin-top: 10px;
+}
+
+
+
+.reserve-box{
+  border-left: 1px solid #e7e2cd;
+  margin-top: 30px;
+  margin-right: 100px;
+}
+
+.open-status-box{
+  height: 45px;
+  width: 100px;
+  background-color: #02A553;
+  margin: 0 auto;
+  text-align: center;
+  border-radius: 3px;
+}
+
+.open-status-text{
+  color: white;
+  font-size: 22px;
+  line-height: 45px;
+}
+
+.not-open-status-box{
+  height: 45px;
+  width: 100px;
+  background-color: #6D3D1E;
+  margin: 0 auto;
+  text-align: center;
+  border-radius: 3px;
+}
+
+.not-open-status-text{
+  color: white;
+  font-size: 22px;
+  line-height: 45px;
+}
+
+.not-yet-open{
+  margin: 20px 0;
+  text-align: center;
+}
+
+.open-now{
+  margin: 20px 0;
+  text-align: center;
+}
+
+.edit-open-garden{
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 50px;
+  margin-left: 10px;
+}
+
+#calendar_reservation{
+  margin-top: 50px;
+}
+
+.to-reservation-page{
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 50px;
+  margin-left: 10px;
+}
+
 
 /*画像投稿のデザイン*/
 
