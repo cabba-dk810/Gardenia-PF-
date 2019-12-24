@@ -1,8 +1,10 @@
 <div class="container">
 	<div class="row">
 
-		<div class="reservation-new-title">
-			<span class="reservation-new-title-text">オープンガーデンの予約をする</span>
+		<div class="col-xs-8 col-xs-offset-2">
+			<div class="reservation-new-title">
+				<span class="reservation-new-title-text"><strong><i class="fas fa-book"></i>庭園の見学予約をする</strong></span>
+			</div>
 		</div>
 
 		<%= form_for @reservation do |f| %>
@@ -12,32 +14,30 @@
 			<%= f.hidden_field :owner_id, :value => @post_garden.user.id %>
 			<%= f.hidden_field :owner_name, :value => @post_garden.user.user_name %>
 
-			<div class="reservation-new-date">
-				<span class="reservation-new-date-text">希望日時を選択する</span>
 
-				<div class="row">
-					<div class="col-xs-8 col-xs-offset-2">
-						<div id="calendar-reservation"></div>
-					</div>
+			<div class="col-xs-8 col-xs-offset-2">
+				<div class="reservation-new-date">
+					<label class="reservation-new-date-text">◯ 希望日時を選択する（時間のみプルダウンからご指定ください）</label>
 				</div>
+
+				<div id="calendar-reservation"></div>
 
 				<!-- どの投稿のカレンダーか判別するため、idをjqueryに渡している -->
 				<div class="params_num_reservation" data-params="<%= @post_garden.id %>"></div>
 
-				<div class="row">
-					<div class="col-xs-3 col-xs-offset-3">
+				<div class="row reserve-date-select-position">
 
+					<div class="col-xs-5">
 						<%= f.hidden_field :id %>
-
 						<div class="field">
-							<label class="reservation-go-text">予約時間</label><br>
+							<label class="reservation-go-text">・ 開始時間</label><br>
 							<%= f.datetime_select :r_start_datetime, :use_month_numbers => true, :minute_step => 30, class:"col-auto form-control form-control-lg w-100", :include_blank => true, disabled_year: true %>
 						</div>
 					</div>
 
-					<div class="col-xs-3">
+					<div class="col-xs-5 col-xs-offset-1">
 						<div class="field">
-							<label class="reservation-back-text">終了時間</label><br>
+							<label class="reservation-back-text">・ 終了時間</label><br>
 							<%= f.datetime_select :r_end_datetime, :use_month_numbers => true, :minute_step => 30, class:"col-auto form-control form-control-lg w-100" ,:include_blank => true %>
 						</div>
 					</div>
@@ -46,21 +46,20 @@
 			</div>
 
 
-			<div class="reservation-new-info">
+			<div class="col-xs-8 col-xs-offset-2 reservation-new-info">
 
 				<!-- 予約者名と人数 -->
 				<div class="row">
-
-					<div class="col-xs-4 col-xs-offset-1">
+					<div class="col-xs-4">
 						<div class="field">
-							<label class="reservation-name">予約者名</label><br>
+							<label class="reservation-name">◯ 予約者名</label><br>
 							<%= f.text_field :reservation_name, class:"col-auto form-control form-control-lg w-100" %>
 						</div>
 					</div>
 
-					<div class="col-xs-4 col-xs-offset-1">
+					<div class="col-xs-3">
 						<div class="field">
-							<label class="reservation-num">予約人数（最大人数<%= @post_garden.open_max_number %>人）</label><br>
+							<label class="reservation-num">◯ 予約人数(最大人数<%= @post_garden.open_max_number %>人)</label><br>
 							<%= f.number_field :reservation_num, class:"col-auto form-control form-control-lg w-100" %>
 						</div>
 					</div>
@@ -70,10 +69,10 @@
 				<!-- 予約メッセージ -->
 				<div class="row">
 
-					<div class="col-xs-9 col-xs-offset-1">
-						<div class="field">
-							<label class="reservation-message">予約メッセージ</label><br>
-							<%= f.text_area :reservation_message, class:"col-auto form-control form-control-lg w-100", placeholder:"何かお伝えしたいことがございましたら、ご記入ください・" %>
+					<div class="col-xs-10">
+						<div class="reservation-message-position">
+							<label class="reservation-message">◯ 予約メッセージ</label><br>
+							<%= f.text_area :reservation_message, class:"col-auto form-control form-control-lg w-100", placeholder:"何かお伝えしたいことがございましたら、ご記入ください。" %>
 						</div>
 					</div>
 				</div>
@@ -85,18 +84,10 @@
 
 				<div class="row">
 
-					<div class="col-xs-9 col-xs-offset-1">
+					<div class="col-xs-8 col-xs-offset-1">
 
 						<div class="reservation-content">
-							<span class="reservation-content-text">ご予約予定のオープンガーデンは以下の通りです。</span>
-						</div>
-
-
-						<!-- 住所 -->
-						<div class="field">
-							<label class="reservation-content-address">住所</label><br>
-							〒<%= @post_garden.open_postal_code %><br>
-							<%= @post_garden.address %>
+							<span class="reservation-content-text">◯ ご見学予定のお庭は以下の通りです。</span>
 						</div>
 
 						<%= f.hidden_field :postal_code,  :value => @post_garden.open_postal_code %>
@@ -108,7 +99,7 @@
 
 
 				<div class="row">
-					<div class="col-xs-10 col-xs-offset-2">
+					<div class="col-xs-10 col-xs-offset-1">
 
 						<div id="map"></div>
 
@@ -126,7 +117,7 @@
 						      		map.setCenter(latlng);
 
 									(function(){
-										var contentString = '<%= attachment_image_tag @post_garden.post_images[0], :garden_image, :fill, 100, 100, format: 'jpg' %>' + '<br><br><br>' + '<strong>住所</strong>' + '<br>' + '〒<%= @post_garden.open_postal_code %>' + '<br>' + '<%= @post_garden.address %>' + '<br>' + '<strong>投稿者</strong>' + '<br>' + '<%= @post_garden.user.user_name %>' + '<br>' + '<strong>使用している庭木</strong>' + '<br>' + '<% @post_garden.planted_gardens.each do |planted_garden| %><%= planted_garden.plant_name %><% end %>'+ '<br>' + '<%= @post_garden.tag_list %>' + '<br>' + '<%= link_to post_garden_path(@post_garden.id) do %><span class="link">詳細へ</span><% end %>';
+										var contentString =  '<div class="row">' + '<div class="col-xs-4">' + '<%= attachment_image_tag @post_garden.post_images[0], :garden_image, :fill, 100, 100, format: 'jpg', class:"index-post-image" %>' + '</div>' + '<div class="col-xs-8">' + '<strong>投稿者</strong>' + '<br>' + '<%= @post_garden.user.user_name %>' + '<br>' + '<strong>住所</strong>' + '<br>' + '〒<%= @post_garden.open_postal_code %>' + '<br>' + '<%= @post_garden.address %>' + '<br>' + '<% @post_garden.tag_list.each do |tag| %>' + '<span class="post-tag-text"><%= tag %></span>' + '<% end %>' + '<p>' + '<%= link_to post_garden_path(@post_garden.id) do %><span class="btn btn-primary btn-sm">詳細へ</span><% end %>' + '</p>' + '</div>';;
 										var infowindow = new google.maps.InfoWindow({
 											content: contentString,
 											maxWidth: 1000,
@@ -150,28 +141,30 @@
 
 
 				<div class="row">
-					<div class="col-xs-10 col-xs-offset-1">
+					<div class="col-xs-10 col-xs-offset-1 reservation-info">
+
+						<!-- 住所 -->
+						<div class="field">
+							<label class="reservation-content-address">・住所</label>
+							<span class="reservation-content-postal-code-text">〒<%= @post_garden.open_postal_code %></span>
+							<span class="reservation-content-address-text"><%= @post_garden.address %></span>
+						</div>
 
 						<!-- 入場料 -->
 						<div class="field">
-							<label class="reservation-content-entrance-fee">入場料</label><br>
-							<%= @post_garden.open_entrance_fee %>
+							<label class="reservation-content-entrance-fee">・入場料</label>
+							<span class="reservation-content-entrance-fee-text"><%= @post_garden.open_entrance_fee %>円</span>
 						</div>
 
 						<%= f.hidden_field :entrance_fee,  :value => @post_garden.open_entrance_fee %>
 
-					</div>
-
-				</div>
-
-
-				<div class="row">
-					<div class="col-xs-10 col-xs-offset-1">
 
 						<!-- 注意事項 -->
 						<div class="field">
-							<label class="reservation-content-entrance-fee">注意事項</label><br>
-							<%= @post_garden.open_announce %>
+							<label class="reservation-content-announce">・注意事項</label><br>
+							<div class="reservation-content-announce-text">
+								<%= @post_garden.open_announce %>
+							</div>
 						</div>
 
 						<%= f.hidden_field :announce,  :value => @post_garden.open_announce %>
@@ -187,7 +180,7 @@
 				<div class="col-xs-6 col-xs-offset-3">
 					<span class="final-confirm">以上の内容でよろしければ、予約リクエスト送信ボタンを押してください</span>
 					<div class="reservation-confirm">
-						<%= f.submit "予約リクエストを送信する" %>
+						<%= f.submit "予約リクエストを送信する", class:"btn btn-primary" %>
 					</div>
 				</div>
 			</div>

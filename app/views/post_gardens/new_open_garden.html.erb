@@ -1,14 +1,13 @@
 <div class="container">
 	<div class="row">
 
-		<div class="col-xs-10 col-xs-offset-1">
+		<div class="col-xs-8 col-xs-offset-2">
 
 		<!-- 以下、オープンガーデンの詳細設定 -->
-			<div id="reservation_info">
-				<span class="reservation-title-text">オープンガーデンの詳細設定</span>
+			<div class="reservation_info">
+				<span class="reservation-title-text"><strong><i class="fas fa-door-closed"></i>公開情報の設定</strong></span>
 			</div>
 
-			<p>-----</p>
 			<!-- 日程の設定fullcalendar使用 -->
 			<div id='calendar'></div>
 
@@ -16,139 +15,166 @@
 			<div class="params_num" data-params="<%= @post_garden.id %>"></div>
 
 				<!-- 予定の追加 -->
-				<div id="reservation-day-create">
-					<%= form_for @open_day do |f| %>
+				<div id="reservation-day-create" class="modal fade">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<%= form_for @open_day do |f| %>
 
-						<%= f.hidden_field :post_garden_id,  :value => params[:id] %>
+								<%= f.hidden_field :post_garden_id,  :value => params[:id] %>
 
-						<div class="field">
-							<h4 class="reservation-day-title">時間選択</h4>
-							<label class="reservation-open-text">開場時間</label>
-							<%= f.datetime_select :start_time, :use_month_numbers => true, :minute_step => 30, class:"col-auto form-control form-control-lg w-100" ,:include_blank => true %>
+
+								<div class="modal-header">
+									<h4 class="reservation-day-title">時間選択</h4>
+								</div>
+
+								<div class="modal-body">
+									<div class="field">
+										<label class="reservation-open-text">開場時間</label>
+										<%= f.datetime_select :start_time, :use_month_numbers => true, :minute_step => 30, :include_blank => true %>
+									</div>
+
+									<div class="field">
+										<label class="reservation-close-text">閉場時間</label>
+										<%= f.datetime_select :end_time, :use_month_numbers => true, :minute_step => 30, :include_blank => true %>
+									</div>
+
+									<%= f.submit "追加", class:"btn btn-primary btn-sm modal-button-position" %>
+								</div>
+
+							<% end %>
 						</div>
-
-						<div class="field">
-							<label class="reservation-close-text">閉場時間</label>
-							<%= f.datetime_select :end_time, :use_month_numbers => true, :minute_step => 30, class:"col-auto form-control form-control-lg w-100" ,:include_blank => true %>
-						</div>
-
-						<%= f.submit "追加" %>
-
-						<div class="close-create">
-							<span class="close-create-text">閉じる</span>
-						</div>
-
-					<% end %>
+					</div>
 				</div>
 
 				<!-- 既に入力されているイベントの表示 -->
-				<div id="reservation-day-update">
-					<%= form_for @open_day_updates, url:open_day_path, method: :patch do |f| %>
+				<div id="reservation-day-update" class="modal fade">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+									<h4 class="reservation-day-title">時間再選択</h4>
+								</div>
 
-						<!-- open_dayのidを持ってくる（fullcalendarに持たせてある） -->
-						<%= f.hidden_field :id %>
+							<div class="modal-body">
+								<%= form_for @open_day_updates, url:open_day_path, method: :patch do |f| %>
 
-						<div class="field">
-							<h4 class="reservation-day-title">時間選択</h4>
-							<label class="reservation-open-text">開場時間</label>
-							<%= f.datetime_select :start_time, :use_month_numbers => true, :minute_step => 30, class:"col-auto form-control form-control-lg w-100" %>
+									<!-- open_dayのidを持ってくる（fullcalendarに持たせてある） -->
+									<%= f.hidden_field :id %>
+
+									<div class="field">
+										<label class="reservation-open-text">開場時間</label>
+										<%= f.datetime_select :start_time, :use_month_numbers => true, :minute_step => 30 %>
+									</div>
+
+			 						<div class="field">
+										<label class="reservation-close-text">閉場時間</label>
+										<%= f.datetime_select :end_time, :use_month_numbers => true, :minute_step => 30 %>
+									</div>
+
+									<%= f.submit "更新", class:"btn btn-success btn-sm modal-button-position" %>
+
+								<% end %>
+
+								<span id="reservation-day-destroy">
+									<%= form_for @open_day, url:open_day_path, method: :delete do |f| %>
+										<%= f.hidden_field :id %>
+									    <%= f.submit "削除", class:"btn btn-danger btn-sm modal-button-position" %>
+									<% end %>
+								</span>
+
+							</div>
+
 						</div>
-
- 						<div class="field">
-							<label class="reservation-close-text">閉場時間</label>
-							<%= f.datetime_select :end_time, :use_month_numbers => true, :minute_step => 30, class:"col-auto form-control form-control-lg w-100" %>
-						</div>
-
-						<%= f.submit "更新" %>
-
-					<% end %>
-
-				</div>
-
-				<div id="reservation-day-destroy">
-					<%= form_for(@open_day, url:open_day_path, method: :delete) do |f| %>
-						<%= f.hidden_field :id %>
-					    <p><%= f.submit "削除" %></p>
-					<% end %>
-
-					<div class="close-update">
-							<span class="close-update-text">閉じる</span>
 					</div>
-
 				</div>
+
 		</div>
 	</div>
 
 
-	<div class="row">
-		<div class="">
+	<div class="row new-open-info-position">
+		<div class="col-xs-10 col-xs-offset-1">
 
 			<%= form_for @post_garden, url: post_garden_path do |f| %>
 
 			<!-- 庭を公開するかどうか -->
 				<%= f.hidden_field :open_status,  :value => "公開" %>
 
-					<!-- 最大人数 -->
-					<div class="field">
-						<label class="max-number-text">最大人数</label>
-						<%= f.number_field :open_max_number, class:"col-auto form-control form-control-lg w-100" %>
-					</div>
+					<div class="new-open-background">
+
+						<!-- 最大人数 -->
+						<div class="row">
+							<div class="col-xs-2 col-xs-offset-1">
+								<label class="max-number-text">最大人数（人）</label>
+								<%= f.number_field :open_max_number, class:"form-control", min:1 %>
+							</div>
 
 
-					<!-- 入場料 -->
-					<div class="field">
-						<label class="entrance-fee-text">入場料</label>
-						<%= f.text_field :open_entrance_fee, class:"col-auto form-control form-control-lg w-100" %>円
-					</div>
+							<!-- 入場料 -->
+							<div class="col-xs-3 col-xs-offset-1">
+								<label class="entrance-fee-title">入場料（円）</label>
+								<span class="entrance-fee-text"><%= f.text_field :open_entrance_fee, class:"form-control" %></span>
+							</div>
+
+						</div>
 
 
-					<!-- 郵便番号 -->
-					<div class="field">
-						<label class="postal_code-text">郵便番号</label>
-						<%= f.text_field :open_postal_code, class:"col-auto form-control form-control-lg w-100" %>
-					</div>
+						<!-- 郵便番号 -->
+						<div class="row">
+							<div class="col-xs-4  col-xs-offset-1 new-open-postal-code-position">
+								<label class="postal_code-text">郵便番号</label>
+								<%= f.text_field :open_postal_code, class:"col-auto form-control form-control-lg w-100" %>
+							</div>
+						</div>
 
 
-					<!-- 県 -->
-					<div class="field">
-						<label class="prefecture-text">県</label>
-						<%= f.select :open_prefecture, PostGarden.open_prefectures.keys.to_a, class:"col-auto form-control form-control-lg w-100" %>
-					</div>
+						<!-- 県 -->
+						<div class="row">
+							<div class="col-xs-2 col-xs-offset-1">
+								<label class="prefecture-text">県</label>
+								<%= f.select :open_prefecture, PostGarden.open_prefectures.keys.to_a, class:"col-auto form-control form-control-lg w-100" %>
+							</div>
+						</div>
 
 
-					<!-- 住所 -->
-					<div class="field">
-						<label class="address-text">住所</label>
-						<%= f.text_field :address, class:"col-auto form-control form-control-lg w-100" %>
-					</div>
+						<!-- 住所 -->
+						<div class="row new-open-address-position">
+							<div class="col-xs-8 col-xs-offset-1">
+								<label class="address-text">住所</label>
+								<%= f.text_field :address, class:"col-auto form-control form-control-lg w-100" %>
+							</div>
+						</div>
 
-					<!-- 注意事項 -->
-					<div class="field">
-						<label class="address-text">メッセージ・注意事項</label>
-						<%= f.text_area :open_announce, class:"col-auto form-control form-control-lg w-100" %>
+						<!-- 注意事項 -->
+						<div class="row">
+							<div class="col-xs-10 col-xs-offset-1">
+								<label class="address-text">メッセージ・注意事項</label>
+								<%= f.text_area :open_announce, class:"col-auto form-control form-control-lg w-100" %>
+							</div>
+						</div>
+
 					</div>
 
 					<div class="row">
 
 						<% if @post_garden.open_status == "非公開" %>
 
-							<div class="col-xs-">
+							<div class="col-xs-2 col-xs-offset-5">
 								<div class="active">
-									<%= f.submit "公開する" %>
+									<%= f.submit "公開する", class:"btn btn-primary" %>
 								</div>
 							</div>
 
 						<% else @post_garden.open_status == "公開" %>
 
-							<div class="col-xs-3 col-xs-offset-3">
+							<div class="col-xs-3 col-xs-offset-5">
 								<div class="active">
-									<%= f.submit "更新する" %>
+									<%= f.submit "更新する", class:"btn btn-success" %>
 								</div>
 							</div>
 
-							<div class="col-xs-3 col-xs-offset-3">
+							<div class="col-xs-3 col-xs-offset-1">
 								<div class="active">
-									<%= link_to "公開を停止する", delete_open_info_path(params[:id]), method: :patch, "data-confirm" => "選択している日付は全て削除されます。非公開にしますか？" %>
+									<%= link_to "公開を停止する", delete_open_info_path(params[:id]), method: :patch, "data-confirm" => "非公開にしますか？", class:"btn btn-danger" %>
 								</div>
 							</div>
 

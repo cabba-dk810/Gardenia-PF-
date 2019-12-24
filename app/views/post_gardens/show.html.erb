@@ -2,7 +2,6 @@
 
 	<div class="row position-adjust">
 
-
 		<div class="col-xs-10 col-xs-offset-1">
 
 			<div class="col-xs-6">
@@ -51,10 +50,12 @@
 					<span class="post-place-text"><%= @post_garden.place %></span>
 
 					<!-- 自ユーザならば、投稿の編集 -->
-					<% if @user.id == current_user.id %>
+					<% if user_signed_in? %>
+						<% if @user.id == current_user.id %>
 
-						<%= link_to "投稿の編集", edit_post_garden_path(@post_garden.id), class:"btn btn-primary edit-post-garden-text" %>
+							<%= link_to "投稿の編集", edit_post_garden_path(@post_garden.id), class:"btn btn-primary edit-post-garden-text" %>
 
+						<% end %>
 					<% end %>
 
 				</div>
@@ -196,9 +197,11 @@
 							<div class="comment-user-name">
 								<span class="comment-user-name-text"><strong><%= post_comment.user.user_name %></strong>
 
-									<% if post_comment.user_id == current_user.id %>
-										<%= link_to post_garden_post_comment_path(post_comment.id), method: :delete, class:"comment-delete" do %>
-											<i class="fas fa-trash-alt"></i>
+									<% if user_signed_in? %>
+										<% if post_comment.user_id == current_user.id %>
+											<%= link_to post_garden_post_comment_path(post_comment.id), method: :delete, class:"comment-delete" do %>
+												<i class="fas fa-trash-alt"></i>
+											<% end %>
 										<% end %>
 									<% end %>
 								</span>
@@ -220,21 +223,23 @@
 				<% end %>
 
 				<!-- コメント入力 -->
-				<div class="row">
-					<div class="col-xs-8 col-xs-offset-4">
-						<div class="comment-input">
-							<%= form_for @post_comment, url: post_garden_post_comments_path(@post_garden) do |f| %>
+				<% if user_signed_in? %>
+					<div class="row">
+						<div class="col-xs-8 col-xs-offset-4">
+							<div class="comment-input">
+								<%= form_for @post_comment, url: post_garden_post_comments_path(@post_garden) do |f| %>
 
-								<%= f.text_area :comment_content, class:"form-control", placeholder:"コメントしよう！" %>
+									<%= f.text_area :comment_content, class:"form-control", placeholder:"コメントしよう！" %>
 
-								<div class="comment-button">
-									<%= f.submit "コメントする", class:"btn btn-primary pull-right" %>
-								</div>
+									<div class="comment-button">
+										<%= f.submit "コメントする", class:"btn btn-primary pull-right" %>
+									</div>
 
-							<% end %>
+								<% end %>
+							</div>
 						</div>
 					</div>
-				</div>
+				<% end %>
 
 			</div>
 
@@ -252,43 +257,59 @@
 				<% end %>
 
 
-				<% if @user.id == current_user.id && @post_garden.open_status == "非公開" %>
+				<% if user_signed_in? %>
+					<% if @user.id == current_user.id && @post_garden.open_status == "非公開" %>
 
-					<div class="not-yet-open">
-						<span class="not-yet-open-text">ただいま公開しておりません</span>
-					</div>
+						<div class="not-yet-open">
+							<span class="not-yet-open-text">ただいま公開しておりません</span>
+						</div>
 
-					<div class="edit-open-garden">
-						<%= link_to '公開情報の編集　>', new_open_garden_path(@post_garden.id), class:"btn btn-success" %>
-					</div>
+						<div class="edit-open-garden">
+							<%= link_to '公開情報の編集　>', new_open_garden_path(@post_garden.id), class:"btn btn-success" %>
+						</div>
 
-				<% elsif @user.id == current_user.id && @post_garden.open_status == "公開" %>
+					<% elsif @user.id == current_user.id && @post_garden.open_status == "公開" %>
 
-					<div class="open-now">
-						<span class="open-now-text">ただいま公開中です</span>
-					</div>
+						<div class="open-now">
+							<span class="open-now-text">ただいま公開中です</span>
+						</div>
 
-					<div class="edit-open-garden">
-						<%= link_to '公開情報の編集　>', new_open_garden_path(@post_garden.id), class:"btn btn-success" %>
-					</div>
+						<div class="edit-open-garden">
+							<%= link_to '公開情報の編集　>', new_open_garden_path(@post_garden.id), class:"btn btn-success" %>
+						</div>
 
-				<% elsif @user.id != current_user.id && @post_garden.open_status == "非公開" %>
+					<% elsif @user.id != current_user.id && @post_garden.open_status == "非公開" %>
 
-					<div class="not-yet-open">
-						<span class="not-yet-open-text">ただいま公開しておりません</span>
-					</div>
+						<div class="not-yet-open">
+							<span class="not-yet-open-text">ただいま公開しておりません</span>
+						</div>
 
 
-				<% elsif @user.id != current_user.id && @post_garden.open_status == "公開" %>
+					<% elsif @user.id != current_user.id && @post_garden.open_status == "公開" %>
 
-					<div id='calendar_reservation'></div>
+						<div id='calendar_reservation'></div>
 
-					<!-- どの投稿のカレンダーか判別するため、idをjqueryに渡している -->
-					<div class="params_num_show" data-params="<%= @post_garden.id %>"></div>
+						<!-- どの投稿のカレンダーか判別するため、idをjqueryに渡している -->
+						<div class="params_num_show" data-params="<%= @post_garden.id %>"></div>
 
-					<div class="to-reservation-page">
-						<%= link_to '予約画面へ進む', new_reservation_path(@post_garden), class:"btn btn-primary" %>
-					</div>
+						<div class="to-reservation-page">
+							<%= link_to '予約画面へ進む', new_reservation_path(@post_garden), class:"btn btn-primary" %>
+						</div>
+
+					<% end %>
+
+				<!-- 非ログイン時の表示 -->
+				<% else %>
+
+					<% if @post_garden.open_status == "非公開" %>
+						<div class="not-yet-open">
+							<span class="not-yet-open-text">ただいま公開しておりません</span>
+						</div>
+					<% elsif @post_garden.open_status == "公開" %>
+						<div id='calendar_reservation'></div>
+						<!-- どの投稿のカレンダーか判別するため、idをjqueryに渡している -->
+						<div class="params_num_show" data-params="<%= @post_garden.id %>"></div>
+					<% end %>
 
 				<% end %>
 

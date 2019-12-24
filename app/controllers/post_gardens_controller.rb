@@ -116,6 +116,10 @@ class PostGardensController < ApplicationController
 		# 日程を全て削除
 		@open_days = OpenDay.where(post_garden_id: @post_garden.id)
 
+		@open_days.each do |open_day|
+			open_day.destroy
+		end
+
 		@post_garden.update_attributes(open_status: 0)
 		redirect_to post_garden_path(params[:id])
 	end

@@ -4,6 +4,22 @@
 
 
 /*予約時に日付のセレクトボックスを無効に*/
+.reservation-new-title{
+	margin-left: 5px;
+	color: #584c27;
+	font-size: 21px;
+	margin-bottom: 35px;
+	margin-top: 30px;
+}
+
+.fa-book{
+	margin-right: 10px;
+}
+
+.reservation-new-date{
+	margin-bottom: 20px;
+}
+
 select#reservation_r_start_datetime_1i{
 	pointer-events : none;
 }
@@ -27,3 +43,53 @@ select#reservation_r_end_datetime_2i{
 select#reservation_r_end_datetime_3i{
 	pointer-events : none;
 }
+
+.reserve-date-select-position{
+	margin-top: 30px;
+}
+
+.reservation-new-info{
+	background-color: #f7f5ee;
+	border-radius: 10px;
+	margin-top: 20px;
+	padding-top: 25px;
+	padding-bottom: 30px;
+	margin-bottom: 100px;
+}
+
+.reservation-message-position{
+	margin-top: 15px;
+}
+
+.reservation-info{
+	background-color: #f7f5ee;
+	border-radius: 10px;
+	margin-top: 40px;
+	padding-top: 25px;
+	padding-bottom: 30px;
+	margin-bottom: 30px;
+}
+
+.reservation-content-postal-code-text{
+	margin-left: 8px;
+}
+
+.reservation-content-address-text{
+	margin-left: 12px;
+}
+
+.reservation-content-entrance-fee-text{
+	margin-left: 12px;
+}
+
+.reservation-content-announce-text{
+	margin-left: 12px;
+	margin-right: 30px;
+}
+
+.reservation-confirm{
+	margin-top: 30px;
+	margin-left: 130px;
+}
+
+

@@ -17,7 +17,7 @@ $(function(){
 
         dayClick: function(date, jsEvent, view){
         // カレンダー空白部分クリック時イベント
-        $('#reservation-day-create').show();
+        $('#reservation-day-create').modal();
 
         // カレンダーを選択した日付が入るように設定
         $('#open_day_start_time_1i').val(date.format( "YYYY" ));
@@ -37,8 +37,7 @@ $(function(){
         eventClick: function(event, jsEvent, view){
 
 
-        $('#reservation-day-update').show();
-        $('#reservation-day-destroy').show();
+        $('#reservation-day-update').modal();
 
         // 空欄部分をクリックした時と同じidを使わないようにするための処理
         update = $('#reservation-day-update')
@@ -60,20 +59,6 @@ $(function(){
 
         destroy.find('#open_day_id').val(event.id);
         }
-
-    });
-
-
-    // カレンダーから日付選択画面を閉じる
-    $(function(){
-        $('.close-create').click(function(){
-            $('#reservation-day-create').hide();
-        });
-
-        $('.close-update').click(function(){
-            $('#reservation-day-update').hide();
-            $('#reservation-day-destroy').hide();
-        });
 
     });
 

@@ -259,13 +259,24 @@
 }
 
 .prev-btn{
+  cursor: pointer;
+  display: none;
   position: absolute;
   margin-left: 20px;
 }
 
 .next-btn{
+  cursor: pointer;
   position: absolute;
   margin-left: 360px;
+}
+
+.slide{
+  display: none;
+}
+
+.active{
+  display: block;
 }
 
 .like-button{
@@ -501,6 +512,7 @@
 .comment-title{
   font-size: 19px;
   color: #584c27;
+  font-size: 18px;;
   margin-left: 115px;
   margin-bottom: 30px;
 }
@@ -540,7 +552,7 @@
 .reserve-box{
   border-left: 1px solid #e7e2cd;
   margin-top: 30px;
-  margin-right: 100px;
+  margin-left: 80px;
 }
 
 .open-status-box{
@@ -592,6 +604,17 @@
 
 #calendar_reservation{
   margin-top: 50px;
+}
+
+#calendar_reservation .fc-event{
+  height: 20px !important;
+  font-size: 10px;
+  line-height: 20px;
+  text-align: center;
+}
+
+#calendar_reservation .fc-toolbar{
+  margin-left: 65px;
 }
 
 .to-reservation-page{
@@ -652,56 +675,44 @@
   color: #fff;
 }
 
-/*庭を公開時の情報を初期設定で非表示にする*/
-/*#reservation_info{
-  display: none;
-}*/
 
-#reservation-day-create{
-  display: none;
+
+
+
+/*new-open-garden庭の新規公開*/
+.reservation_info{
+  margin-left: 5px;
+  color: #584c27;
+  font-size: 21px;
+  margin-bottom: 35px;
+  margin-top: 30px;
 }
 
-#reservation-day-update{
-  display: none;
+.fa-door-closed{
+  margin-right: 10px;
 }
 
-#reservation-day-destroy{
-  display: none;
+.modal-button-position{
+  margin-left: 280px;
 }
 
-.prev-btn{
-  cursor: pointer;
-  display: none;
+.new-open-info-position{
+  margin-top: 50px;
 }
 
-.next-btn{
-  cursor: pointer;
+.new-open-background{
+  background-color: #f7f5ee;
+  border-radius: 10px;
+  padding-top: 45px;
+  padding-bottom: 30px;
+  margin-bottom: 30px;
 }
 
-.slide{
-  display: none;
+.new-open-postal-code-position{
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
-.active{
-  display: block;
-}
-
-.delete-open-garden{
-  cursor: pointer;
-}
-
-.reserve-box{
-  margin-left: 100px;
-}
-
-
-#calendar_reservation .fc-event{
-  height: 20px !important;
-  font-size: 10px;
-  line-height: 20px;
-  text-align: center;
-}
-
-#calendar_reservation .fc-toolbar{
-  margin-left: 65px;
+.new-open-address-position{
+  margin: 20px 0;
 }
