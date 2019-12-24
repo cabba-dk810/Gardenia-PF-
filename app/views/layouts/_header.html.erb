@@ -46,14 +46,20 @@
                     <div class="header-top">
                     <span class="header-current_user"><u><%= current_user.user_name %>さん</u> </span>
 
-                        <%= link_to notifications_path, class:"header-link" do %>
+                        
                             <% if unchecked_notifications.any? %>
-                                <span class="notification"> 通知</span>
+                                <span class="header-menu">
+                                    <%= link_to notifications_path, class:"header-link" do %>
+                                        <i class="fas fa-bell"></i>
+                                    <% end %>
+                                </span>
                                 <i class="fas fa-circle n-circle fa-stack-1x"></i>
                             <% else %>
-                                <span class="header-menu"><i class="fas fa-bell"></i></span>
+                                <%= link_to notifications_path, class:"header-link" do %>
+                                    <span class="header-menu"><i class="fas fa-bell"></i></span>
+                                <% end %>
                             <% end %>
-                        <% end %>
+                       
 
                     </div>
 

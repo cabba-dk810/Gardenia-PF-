@@ -1,33 +1,49 @@
-<% if post_garden.liked_by?(current_user) %>
+<% if user_signed_in? %>
+	<% if post_garden.liked_by?(current_user) %>
 
-	<%= link_to likes_post_garden_path(post_garden.id), method: :delete, remote: true, class:"like-link" do %>
-		<span class="like-button">
-			<i class="fa fa-heart" aria-hidden="true" style="color: red;"></i>
-		</span>
-	<% end %>
-
-	<span class="like-text">
-		<% if post_garden.likes_count.nil? %>
-			0人にいいねされています
-		<% else %>
-			<%= post_garden.reload.likes_count %>人にいいねされています
+		<%= link_to likes_post_garden_path(post_garden.id), method: :delete, remote: true, class:"like-link" do %>
+			<span class="like-button">
+				<i class="fa fa-heart" aria-hidden="true" style="color: red;"></i>
+			</span>
 		<% end %>
-	</span>
+
+		<span class="like-text">
+			<% if post_garden.likes_count.nil? %>
+				0人にいいねされています
+			<% else %>
+				<%= post_garden.reload.likes_count %>人にいいねされています
+			<% end %>
+		</span>
+
+	<% else %>
+
+		<%= link_to likes_post_garden_path(post_garden.id), method: :post, remote: true, class:"like-link" do %>
+			<span class="like-button">
+				<i class="fa fa-heart-o" aria-hidden="true"></i>
+			</span>
+		<% end %>
+
+		<span class="like-text">
+			<% if post_garden.likes_count.nil? %>
+				0人にいいねされています
+			<% else %>
+				<%= post_garden.reload.likes_count %>人にいいねされています
+			<% end %>
+		</span>
+
+	<% end %>
 
 <% else %>
 
-	<%= link_to likes_post_garden_path(post_garden.id), method: :post, remote: true, class:"like-link" do %>
+	<% if post_garden.likes_count.nil? %>
 		<span class="like-button">
-			<i class="fa fa-heart-o" aria-hidden="true"></i>
+			<i class="fa fa-heart" aria-hidden="true"></i>
 		</span>
+		0人にいいねされています
+	<% else %>
+		<span class="like-button">
+			<i class="fa fa-heart" aria-hidden="true" style="color: red;"></i>
+		</span>
+		<%= post_garden.reload.likes_count %>人にいいねされています
 	<% end %>
-
-	<span class="like-text">
-		<% if post_garden.likes_count.nil? %>
-			0人にいいねされています
-		<% else %>
-			<%= post_garden.reload.likes_count %>人にいいねされています
-		<% end %>
-	</span>
-
 <% end %>

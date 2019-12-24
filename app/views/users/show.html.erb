@@ -13,16 +13,18 @@
 			<div class="mp-info">
 
 				<!-- 他のユーザのページだったら、フォローボタンを設置 -->
-				<% unless current_user == @user %>
-					<% if current_user.following?(@user) %>
-						<%= form_for(current_user.relationships.find_by(follow_id: @user.id), url: unfollow_path(@user.id), html: { method: :delete }) do |f| %>
-							<%= hidden_field_tag :follow_id, @user.id %>
-							<%= f.submit 'フォロー解除', class:"btn btn-danger follow-button-position" %>
-						<% end %>
-					<% else %>
-						<%= form_for(@relationship) do |f| %>
-							<%= hidden_field_tag :follow_id, @user.id %>
-							<%= f.submit '+ フォロー', class:"btn btn-primary follow-button-position" %>
+				<% if user_signed_in? %>
+					<% unless current_user == @user %>
+						<% if current_user.following?(@user) %>
+							<%= form_for(current_user.relationships.find_by(follow_id: @user.id), url: unfollow_path(@user.id), html: { method: :delete }) do |f| %>
+								<%= hidden_field_tag :follow_id, @user.id %>
+								<%= f.submit 'フォロー解除', class:"btn btn-danger follow-button-position" %>
+							<% end %>
+						<% else %>
+							<%= form_for(@relationship) do |f| %>
+								<%= hidden_field_tag :follow_id, @user.id %>
+								<%= f.submit '+ フォロー', class:"btn btn-primary follow-button-position" %>
+							<% end %>
 						<% end %>
 					<% end %>
 				<% end %>
@@ -33,10 +35,12 @@
 				</span>
 
 				<!-- 自ユーザならば、投稿の編集 -->
-				<% if @user.id == current_user.id %>
-					<span class="mp-edit-user">
-						<%= link_to "会員情報編集", edit_user_path(@user.id), class:"btn btn-primary btn-sm" %>
-					</span>
+				<% if user_signed_in? %>
+					<% if @user.id == current_user.id %>
+						<span class="mp-edit-user">
+							<%= link_to "会員情報編集", edit_user_path(@user.id), class:"btn btn-primary btn-sm" %>
+						</span>
+					<% end %>
 				<% end %>
 
 
@@ -71,14 +75,16 @@
 							<span class="like-index btn btn-default"><%= link_to "いいねした庭園", likes_path, class:"mp-link" %></span>
 						</div>
 
-						<% if current_user == @user %>
-							<div class="col-xs-4">
-								<span class="reservation-request-index btn btn-default"><%= link_to "予約済の庭園一覧", request_reservations_path, class:"mp-link" %></span>
-							</div>
+						<% if user_signed_in? %>
+							<% if current_user == @user %>
+								<div class="col-xs-4">
+									<span class="reservation-request-index btn btn-default"><%= link_to "予約済の庭園一覧", request_reservations_path, class:"mp-link" %></span>
+								</div>
 
-							<div class="col-xs-4">
-								<span class="reservation-accept-index btn btn-default"><%= link_to "庭園の見学予約", accept_reservations_path, class:"mp-link" %></span>
-							</div>
+								<div class="col-xs-4">
+									<span class="reservation-accept-index btn btn-default"><%= link_to "庭園の見学予約", accept_reservations_path, class:"mp-link" %></span>
+								</div>
+							<% end %>
 						<% end %>
 					</div>
 				</div>
@@ -89,19 +95,43 @@
 
 
 		<!-- スケジュール管理 -->
-		<% if current_user == @user %>
-			<div class="col-xs-4 reserve-calendar-border">
+		<% if user_signed_in? %>
+			<% if current_user == @user %>
+				<div class="col-xs-4 reserve-calendar-border">
 
-				<div class="reservation-new-event">
-					<span class="reservation-new-event-text"><strong><i class="far fa-calendar-alt"></i>予約カレンダー</strong></span>
+					<div class="reservation-new-event">
+						<span class="reservation-new-event-text"><strong><i class="far fa-calendar-alt"></i>予約カレンダー</strong></span>
+					</div>
+					<div id="calendar-user"></div>
+
+					<div class="request-example-color">
+						<span class="request-color"></span>
+						<span class="request-color-text"> ••• 訪問が確定している予約</span>
+					</div>
+
+					<div class="accept-example-color">
+						<span class="accept-color"></span>
+						<span class="accept-color-text"> ••• 他ユーザの来訪が確定している予約</span>
+					</div>
+					<!-- どの投稿のカレンダーか判別するため、idをjqueryに渡している -->
+					<div class="params_num_user" data-params="<%= @user.id %>"></div>
 				</div>
-				<div id="calendar-user"></div>
+			<% else %>
 
-				<!-- どの投稿のカレンダーか判別するため、idをjqueryに渡している -->
-				<div class="params_num_user" data-params="<%= @user.id %>"></div>
-			</div>
+				<div class="col-xs-4 reserve-calendar-border">
+
+					<div class="reservation-new-event">
+						<span class="reservation-new-event-text"><strong><i class="far fa-calendar-alt"></i>予約カレンダー</strong></span>
+					</div>
+
+					<div class="not-yet-my-mp">
+						<span>他のユーザの予定は見ることができません</span>
+					</div>
+
+				</div>
+
+			<% end %>
 		<% else %>
-
 			<div class="col-xs-4 reserve-calendar-border">
 
 				<div class="reservation-new-event">
@@ -113,7 +143,6 @@
 				</div>
 
 			</div>
-
 		<% end %>
 	</div>
 

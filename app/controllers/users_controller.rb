@@ -8,8 +8,10 @@ class UsersController < ApplicationController
 		@relationship_followings = Relationship.where(user_id: @user.id)
 
 		# カレンダーに登録するイベント
-		@visit_requests = Reservation.where(user_id: current_user.id).where(request_status: "承認")
-		@accept_requests = Reservation.where(owner_id: current_user.id).where(request_status: "承認")
+		if user_signed_in?
+			@visit_requests = Reservation.where(user_id: current_user.id).where(request_status: "承認")
+			@accept_requests = Reservation.where(owner_id: current_user.id).where(request_status: "承認")
+		end
 	end
 
 	def confirm
