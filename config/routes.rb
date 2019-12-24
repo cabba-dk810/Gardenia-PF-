@@ -34,7 +34,7 @@ Rails.application.routes.draw do
   resources :relationships, only: [:create]
   delete 'relationships/:id' => 'relationships#destroy', as: 'unfollow'
 
-  resources :reservations, only: [:create, :show, :edit, :update, :destroy]
+  resources :reservations, only: [:create, :show, :edit, :update]
   get 'reservations/new/:id' => 'reservations#new', as: 'new_reservation'
   get 'done' => 'reservations#done', as: 'done'
   get 'accept_reservations/:id' => 'reservations#accept_reservations', as: 'accept_reservations'

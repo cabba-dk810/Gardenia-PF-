@@ -2,15 +2,9 @@
 	<div class="form-group">
 
 		<div class="col-xs-3">
-			<%= f.text_field :plant_name, class:"plant_name_field" %>
+			<%= f.text_field :plant_name, class:"form-control plant_name_field" %>
 		</div>
-
-		<div class="col-xs-2">
-			<%= f.number_field :plant_number, class:"plant_number_field" %>
-			<span class="plant_number_unit">本</span>
-		</div>
-
-		<%= link_to_remove_association "削除", f %>
+		<%= link_to_remove_association "削除", f, class:"btn btn-danger" %>
 		
 	</div>
 </div>

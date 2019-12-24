@@ -1,9 +1,8 @@
-<div class="col-xs-3">
+<div class="col-xs-4">
 	<div class="nested-fields well well-compact">
-		<div class="form-group">
-
-			<%= f.attachment_field :garden_image %>
-			<%= link_to_remove_association "削除", f %>
+		<div class="form-group new-post-image-box">
+			<%= f.attachment_field :garden_image, class:"new-post-image" %>
+			<%= link_to_remove_association "削除", f, class:"btn btn-danger btn-sm new-post-image-delete-position" %>
 
 		</div>
 	</div>
