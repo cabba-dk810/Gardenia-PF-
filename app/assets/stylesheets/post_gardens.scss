@@ -134,12 +134,19 @@
   font-size: 15px;
 }
 
+.follow-post-index{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+
 .post-index{
   border-right: 1px solid #e7e2cd;
   border-left: 1px solid #e7e2cd;
   border-bottom: 1px solid #e7e2cd;
   width: 200px;
   margin-left: 8px;
+  margin-bottom: 20px;
   padding-bottom: 20px;
 }
 
@@ -625,7 +632,37 @@
 }
 
 
-/*画像投稿のデザイン*/
+
+/*post_garden new新規投稿画面*/
+.new-post-garden-title{
+  margin-top: 30px;
+  margin-left: 30px;
+  margin-bottom: 30px;
+  font-size: 21px;
+  color: #584c27;
+}
+
+.fa-pencil-ruler{
+  margin-right: 10px;
+}
+
+.new-post-bg-color{
+  border: 1px solid #f7f5ee;
+  border-radius: 10px;
+  margin-top: 40px;
+  padding-top: 30px;
+  padding-bottom: 20px;
+  margin-bottom: 30px;
+}
+
+.new-post-image-add-position{
+  margin-top: 70px;
+}
+
+.new-post-image-delete-position{
+  margin-left: 180px;
+  margin-top: 10px;
+}
 
 #upload_image{
   font-size: 15px;
@@ -675,7 +712,42 @@
   color: #fff;
 }
 
+.new-post-content{
+  margin-top: 30px;
+}
 
+.new-post-place{
+  margin-top: 20px;
+}
+
+.new-post-tagging{
+  margin-top: 20px;
+}
+
+.bootstrap-tagsinput{
+  width: 470px;
+}
+
+.new-post-area{
+  margin-top: 20px;
+}
+
+.new-post-expence{
+  margin-top: 20px;
+}
+
+.new-post-planted-garden{
+  margin-top: 20px;
+}
+
+.new-post-problem{
+  margin-top: 20px;
+}
+
+.new-post-solution{
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
 
 
 

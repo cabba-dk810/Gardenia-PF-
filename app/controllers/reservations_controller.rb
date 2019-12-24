@@ -60,12 +60,8 @@ class ReservationsController < ApplicationController
 			RequestCancelMailer.send_request_for_visit(@user, @reservation).deliver
 			RequestCancelMailer.recieve_request_for_visit(@user, @reservation).deliver
 			@reservation.cancel_notification_reservation!(current_user)
-			redirect_to accept_reservations_path(current_user.id)
+			redirect_to user_path(current_user.id)
 		end
-	end
-
-	def destroy
-
 	end
 
 	def request_reservations
