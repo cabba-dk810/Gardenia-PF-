@@ -9,8 +9,8 @@
 
 			<!-- 人気の投稿順 -->
 			<div class="row">
-				<div class="popular-post-title">
-					<span class="popular-post-text"><strong>いいねした投稿</strong></span>
+				<div class="like-post-title">
+					<span class="like-post-text"><strong><i class="far fa-thumbs-up"></i>いいねした投稿</strong></span>
 				</div>
 
 				<div class="popular-post-index">
@@ -18,16 +18,26 @@
 					<% @likes.each do |like| %>
 
 						<div class="col-xs-3">
-							<%= link_to post_garden_path(like.post_garden_id) do %>
+							<%= link_to post_garden_path(like.post_garden.id) do %>
 								<%= attachment_image_tag like.post_garden.post_images[0], :garden_image, :fill, 200,200, format: 'jpg', class:"index-post-image" %>
 							<% end %>
 
-							<div class="tags-list-index">
-								<% like.post_garden.tag_list.each do |tag| %>
-									<%= link_to search_result_path(tag_name: tag), class:"tag-label-link" do %>
-										<span class="post-tag-text"><%= tag %>　></span>
+							<div class="post-index">
+								<div class="index-profile-image-position">
+									<%= link_to user_path(like.user.id), class:"profile-image-link" do %>
+										<%= attachment_image_tag like.user, :profile_image, :fill, 30,30, format: 'jpg', class:"index-profile-image" %>
+										<span class="profile-image-name"><%= like.post_garden.user.user_name %></span>
 									<% end %>
-								<% end %>
+								</div>
+
+								<div class="tags-list-index">
+									<% like.post_garden.tag_list.each do |tag| %>
+										<!-- コントローラにパラメータを渡すtag_nameには、idではなくタグの名前を渡す必要がある -->
+										<%= link_to search_result_path(tag_name: tag), class:"tag-label-link" do %>
+											<span class="post-tag-text"><%= tag %>　></span>
+										<% end %>
+									<% end %>
+								</div>
 							</div>
 						</div>
 
