@@ -1,7 +1,15 @@
 <div class="contaner">
 	<div class="row">
-		
-		予約完了しました。
+
+		<div class="col-xs-4 col-xs-offset-4">
+			<div class="done-reservation-title-position">
+				<span class="done-reservation-title"><i class="fas fa-user-check"></i>予約リクエストが送信されました。</span>
+			</div>
+
+			<div class="done-reservation-text-position">
+				<span class="done-reservation-text">リクエストが承認されるまでお待ちください。<br>予約リクエストは、<%= link_to "予約一覧", request_reservations_path(current_user.id) %>からご確認ください。</span>
+			</div>
+		</div>
 
 	</div>
 </div>

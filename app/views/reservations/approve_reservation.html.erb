@@ -1,8 +1,10 @@
 <div class="container">
 	<div class="row">
 
-		<div class="reservation-new-title">
-			<span class="reservation-new-title-text">オープンガーデンの予約リクエスト</san>
+		<div class="col-xs-8 col-xs-offset-1">
+			<div class="approve-reservation-title">
+				<span class="approve-reservation-title-text"><strong><i class="fas fa-leaf"></i>庭園の訪問予約リクエスト</strong></span>
+			</div>
 		</div>
 
 		<div class="row">
@@ -15,51 +17,45 @@
 		<div class="params_num_reservation" data-params="<%= @reservation.post_garden.id %>"></div>
 
 		<div class="row">
-			<div class="col-xs-3 col-xs-offset-3">
 
-				<div class="field">
-					<label class="reservation-go-text">予約時間</label><br>
-					<%= @reservation.r_start_datetime.strftime("%Y年%m月%d日 %H時%M分") %>
+			<div class="col-xs-8 col-xs-offset-2 approve-reservation-info">
+
+				<div class="col-xs-8 col-xs-offset-3">
+					<div class="approve-reservation-content">
+						<span class="approve-reservation-content-text"><strong>ご予約内容</strong></span>
+					</div>
 				</div>
-			</div>
 
-			<div class="col-xs-3">
-				<div class="field">
-					<label class="reservation-back-text">終了時間</label><br>
-					<%= @reservation.r_end_datetime.strftime("%Y年%m月%d日 %H時%M分") %>
+				<div class="col-xs-8 col-xs-offset-3">
+					<label class="approve-reservation-datetime-text">◯ 予約時間</label><br>
+					<%= @reservation.r_start_datetime.strftime("%Y年%m月%d日 %H時%M分") %>　〜　<%= @reservation.r_end_datetime.strftime("%Y年%m月%d日 %H時%M分") %>
 				</div>
-			</div>
-
-		</div>
 
 
-		<!-- 予約者名と人数 -->
-		<div class="row">
-
-			<div class="col-xs-4 col-xs-offset-1">
-				<div class="field">
-					<label class="reservation-name">予約者名</label><br>
-					<%= @reservation.reservation_name %>
+				<!-- 予約者名と人数 -->
+				<div class="col-xs-2 col-xs-offset-3">
+					<div class="approve-reservation-name">
+						<label class="approve-reservation-name-text">◯ 予約者名</label><br>
+						<%= @reservation.reservation_name %>様
+					</div>
 				</div>
-			</div>
 
-			<div class="col-xs-4 col-xs-offset-1">
-				<div class="field">
-					<label class="reservation-num">予約人数（最大人数<%= @reservation.post_garden.open_max_number %>人）</label><br>
-					<%= @reservation.reservation_num %>
+				<div class="col-xs-5">
+					<div class="approve-reservation-num">
+						<label class="approve-reservation-num-text">◯ 予約人数（最大<%= @reservation.post_garden.open_max_number %>人）</label><br>
+						<%= @reservation.reservation_num %>
+					</div>
 				</div>
-			</div>
-		</div>
 
 
-		<!-- 予約メッセージ -->
-		<div class="row">
-
-			<div class="col-xs-9 col-xs-offset-1">
-				<div class="field">
-					<label class="reservation-message">予約メッセージ</label><br>
-					<%= @reservation.reservation_message %>
+				<!-- 予約メッセージ -->
+				<div class="col-xs-9 col-xs-offset-3">
+					<div class="field">
+						<label class="reservation-message">◯ 予約メッセージ</label><br>
+						<%= @reservation.reservation_message %>
+					</div>
 				</div>
+
 			</div>
 		</div>
 
@@ -70,25 +66,14 @@
 
 			<div class="col-xs-9 col-xs-offset-1">
 
-				<div class="reservation-content">
-					<span class="reservation-content-text">ご予約リクエストを受けたオープンガーデンはこちらです。</span>
-				</div>
-
-
-				<!-- 住所 -->
-				<div class="field">
-					<label class="reservation-content-address">住所</label><br>
-					〒<%= @reservation.postal_code %><br>
-					<%= @reservation.reservation_address %>
+				<div class="approve-reservation-bottom-content">
+					<span class="approve-reservation-bottom-content-text">◯ ご予約リクエストを受けたお庭はこちらです。</span>
 				</div>
 
 			</div>
 
-		</div>
 
-
-		<div class="row">
-			<div class="col-xs-10 col-xs-offset-2">
+			<div class="col-xs-10 col-xs-offset-1">
 
 				<div id="map"></div>
 
@@ -126,54 +111,57 @@
 					</script>
 			</div>
 
-		</div>
+			<div class="col-xs-10 col-xs-offset-1 reservation-info">
 
-
-		<div class="row">
-			<div class="col-xs-10 col-xs-offset-1">
+				<!-- 住所 -->
+				<div class="col-xs-8">
+					<label class="reservation-content-address">・住所</label>
+						<span class="reservation-content-postal-code-text">〒<%= @reservation.postal_code %></span>
+						<span class="reservation-content-address-text"><%= @reservation.reservation_address %></span>
+				</div>
 
 				<!-- 入場料 -->
-				<div class="field">
-					<label class="reservation-content-entrance-fee">入場料</label><br>
-					<%= @reservation.entrance_fee %>
+				<div class="col-xs-8 reservation-content-entrance-fee-position">
+					<label class="reservation-content-entrance-fee">・入場料</label>
+					<span class="reservation-content-entrance-fee-text"><%= @reservation.entrance_fee %>円</span>
 				</div>
 
-
-			</div>
-
-		</div>
-
-
-		<div class="row">
-			<div class="col-xs-10 col-xs-offset-1">
 
 				<!-- 注意事項 -->
-				<div class="field">
-					<label class="reservation-content-entrance-fee">注意事項</label><br>
-					<%= @reservation.announce %>
+				<div class="col-xs-8">
+					<label class="reservation-content-entrance-fee">・注意事項</label><br>
+					<div class="reservation-content-announce-text">
+						<%= @reservation.announce %>
+					</div>
+				</div>
+
+				<div class="col-xs-1 col-xs-offset-2">
+					<%= link_to "詳細", post_garden_path(@reservation.post_garden_id), class:"btn btn-primary" %>
 				</div>
 
 			</div>
 
 		</div>
 
-
 		<div class="row">
-			<div class="col-xs-6 col-xs-offset-3">
-				<div class="reservation-confirm">
+			<div class="reservation-confirm">
+				<div class="col-xs-2 col-xs-offset-4">
 
 					<!-- リクエストステータスを"承認"に変更 -->
 					<%= form_for @reservation, url:reservation_path, method: :patch do |f| %>
 						<%= f.hidden_field :request_status, :value => "承認" %>
-						<%= f.submit "リクエストを承認する", data: {confirm: "リクエストを承認します。よろしいですか？"} %>
+						<%= f.submit "リクエストを承認する", class:"btn btn-success", data: {confirm: "リクエストを承認します。よろしいですか？"} %>
 					<% end %>
 
-					<!-- キャンセル画面へ -->
-					<%= link_to "キャンセル画面へ", cancel_reason_path(@reservation.id) %>
+				</div>
 
+				<div class="col-xs-2 col-xs-offset-3">
+					<!-- キャンセル画面へ -->
+					<%= link_to "キャンセルする", cancel_reason_path(@reservation.id), class:"btn btn-warning" %>
 				</div>
 			</div>
 		</div>
+
 	</div>
 </div>
 

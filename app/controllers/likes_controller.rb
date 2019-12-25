@@ -12,4 +12,10 @@ class LikesController < ApplicationController
 		like = Like.find_by(post_garden_id: params[:id], user_id: current_user.id)
 		like.destroy
 	end
+
+	def index
+		@user = User.find(params[:id])
+		@likes = Like.where(user_id: @user.id)
+		@tags = ActsAsTaggableOn::Tag.most_used
+	end
 end

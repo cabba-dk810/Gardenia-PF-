@@ -1,8 +1,18 @@
 <div class="container">
 	<div class="row">
 
-		<div class="accept-reservations-index-title">
-			<span class="accept-reservations-index-title-text">公開中の庭の見学希望一覧</span>
+		<div class="col-xs-8 col-xs-offset-2">
+			<div class="accept-reservations-index-title">
+				<span class="accept-reservations-index-title-text"><strong><i class="fas fa-home"></i>公開中の庭園見学希望一覧</strong></span>
+			</div>
+		</div>
+
+		<div class="col-xs-8 col-xs-offset-2">
+			<div class="request-color-example">
+				<span class="not-check-color-example"></span> •••未承認
+				<span class="accept-color-example"></span> •••承認済
+				<span class="cancel-color-example"></span> •••キャンセル済
+			</div>
 		</div>
 
 
@@ -10,70 +20,158 @@
 			<% @reservations.each do |reservation| %>
 
 				<% if reservation.request_status == "未受付" %>
-
 					<div class="panel panel-danger">
+						<div class="panel-heading">
+							予約者名：<%= reservation.reservation_name %>
+							<span class="request-reservation-day">予約リクエスト受信日：<%= reservation.created_at.strftime("%Y年%m月%d日 %H時%M分") %></span>
+						</div>
+
+						<div class="panel-body">
+							<h4 class="panel-title">
+								予約日：<%= reservation.r_start_datetime.strftime("%Y年%m月%d日 %H時%M分") %>〜<%= reservation.r_end_datetime.strftime("%Y年%m月%d日 %H時%M分") %>
+							</h4>
+
+							<div class="row">
+								<div class="panel-content">
+									<div class="col-xs-2">
+										<%= link_to post_garden_path(reservation.post_garden.id) do %>
+											<%= attachment_image_tag reservation.post_garden.post_images[0], :garden_image, :fill, 80,80, format: 'jpg', class:"index-post-image" %>
+										<% end %>
+									</div>
+
+									<div class="col-xs-2 request-reservation-content-position">
+										<label class="request-reservation-num">訪問者</label><br>
+										<span class="request-reservation-user-name">
+											<%= attachment_image_tag reservation.user, :profile_image, :fill, 20,20, format: 'jpg', class:"index-profile-image" %>
+											<%= reservation.user.user_name %>
+										</span>
+									</div>
+
+									<div class="col-xs-2 request-reservation-content-position">
+										<label class="request-reservation-num">予約人数</label><br>
+										<span class="request-reservation-num"><%= reservation.reservation_num %>人</span>
+									</div>
+
+									<div class="col-xs-3 request-reservation-content-position">
+										<label class="request-reservation-message">予約メッセージ</label><br>
+										<span class="request-reservation-message"><%= reservation.reservation_message %></span>
+									</div>
+								</div>
+
+
+								<div class="col-xs-3">
+									<div class="detail-reservation request-reservation-content-position">
+										<%= link_to "新規予約リクエスト", approve_reservation_path(reservation.id), class:"btn btn-danger" %>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
 
 				<% elsif reservation.request_status == "承認" %>
 
 					<div class="panel panel-success">
+						<div class="panel-heading">
+							予約者名：<%= reservation.reservation_name %>
+							<span class="request-reservation-day">予約リクエスト受信日：<%= reservation.created_at.strftime("%Y年%m月%d日 %H時%M分") %></span>
+						</div>
+
+						<div class="panel-body">
+							<h4 class="panel-title">
+								予約日：<%= reservation.r_start_datetime.strftime("%Y年%m月%d日 %H時%M分") %>〜<%= reservation.r_end_datetime.strftime("%Y年%m月%d日 %H時%M分") %>
+							</h4>
+
+							<div class="row">
+								<div class="panel-content">
+									<div class="col-xs-2">
+										<%= link_to post_garden_path(reservation.post_garden.id) do %>
+											<%= attachment_image_tag reservation.post_garden.post_images[0], :garden_image, :fill, 80,80, format: 'jpg', class:"index-post-image" %>
+										<% end %>
+									</div>
+
+									<div class="col-xs-2 request-reservation-content-position">
+										<label class="request-reservation-num">訪問者</label><br>
+										<span class="request-reservation-user-name">
+											<%= attachment_image_tag reservation.user, :profile_image, :fill, 20,20, format: 'jpg', class:"index-profile-image" %>
+											<%= reservation.user.user_name %>
+										</span>
+									</div>
+
+									<div class="col-xs-2 request-reservation-content-position">
+										<label class="request-reservation-num">予約人数</label><br>
+										<span class="request-reservation-num"><%= reservation.reservation_num %>人</span>
+									</div>
+
+									<div class="col-xs-4 request-reservation-content-position">
+										<label class="request-reservation-message">予約メッセージ</label><br>
+										<span class="request-reservation-message"><%= reservation.reservation_message %></span>
+									</div>
+								</div>
+
+
+								<div class="col-xs-2">
+									<div class="detail-reservation request-reservation-content-position">
+										<%= link_to "詳細", approved_path(reservation.id), class:"btn btn-success" %>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
 
 				<% elsif reservation.request_status == "キャンセル" %>
 
 					<div class="panel panel-warning">
-
-				<% end %>
-
-					<div class="panel-heading">
-						予約者名：<%= reservation.reservation_name %>様
-						利用アカウント：<%= attachment_image_tag reservation.post_garden.user, :profile_image, :fill, 20,20, format: 'jpg' %>
-						<%= reservation.post_garden.user.user_name %>
-						予約リクエスト送信日：<%= reservation.created_at.strftime("%Y年%m月%d日 %H時%M分") %>
-					</div>
-
-					<div class="panel-body">
-						<h4 class="panel-title">
-							<%= reservation.r_start_datetime.strftime("%Y年%m月%d日 %H時%M分") %>〜<%= reservation.r_end_datetime.strftime("%Y年%m月%d日 %H時%M分") %>
-						</h4>
-
-						<div class="panel-content">
-							<%= link_to post_garden_path(reservation.post_garden.id) do %>
-								<%= attachment_image_tag reservation.post_garden.post_images[0], :garden_image, :fill, 50,50, format: 'jpg' %>
-							<% end %>
-
-							<%= reservation.reservation_num %>人
-							<%= reservation.reservation_message %>
+						<div class="panel-heading">
+							予約者名：<%= reservation.reservation_name %>
+							<span class="request-reservation-day">予約リクエスト受信日：<%= reservation.created_at.strftime("%Y年%m月%d日 %H時%M分") %></span>
 						</div>
 
+						<div class="panel-body">
+							<h4 class="panel-title">
+								予約日：<%= reservation.r_start_datetime.strftime("%Y年%m月%d日 %H時%M分") %>〜<%= reservation.r_end_datetime.strftime("%Y年%m月%d日 %H時%M分") %>
+							</h4>
 
-						<% if reservation.request_status == "未受付" %>
+							<div class="row">
+								<div class="panel-content">
+									<div class="col-xs-2">
+										<%= link_to post_garden_path(reservation.post_garden.id) do %>
+											<%= attachment_image_tag reservation.post_garden.post_images[0], :garden_image, :fill, 80,80, format: 'jpg', class:"index-post-image" %>
+										<% end %>
+									</div>
 
-							<%= link_to approve_reservation_path(reservation.id) do %>
-								<div class="not-approve-yet">
-									<span class="not-approve-yet-text">新規予約リクエスト</span>
+									<div class="col-xs-2 request-reservation-content-position">
+										<label class="request-reservation-num">訪問者</label><br>
+										<span class="request-reservation-user-name">
+											<%= attachment_image_tag reservation.user, :profile_image, :fill, 20,20, format: 'jpg', class:"index-profile-image" %>
+											<%= reservation.user.user_name %>
+										</span>
+									</div>
+
+									<div class="col-xs-2 request-reservation-content-position">
+										<label class="request-reservation-num">予約人数</label><br>
+										<span class="request-reservation-num"><%= reservation.reservation_num %>人</span>
+									</div>
+
+									<div class="col-xs-4 request-reservation-content-position">
+										<label class="request-reservation-message">予約メッセージ</label><br>
+										<span class="request-reservation-message"><%= reservation.reservation_message %></span>
+									</div>
 								</div>
-							<% end %>
 
-						<% elsif reservation.request_status == "承認" %>
 
-							<%= link_to approved_path(reservation.id) do %>
-								<div class="approved-reservation">
-									<span class="approved-reservation-text">予約承認済</span>
+								<div class="col-xs-2">
+									<div class="detail-reservation request-reservation-content-position">
+										<%= link_to "詳細", canceled_path(reservation.id), class:"btn btn-warning" %>
+									</div>
 								</div>
-							<% end %>
+							</div>
 
-						<% elsif reservation.request_status == "キャンセル" %>
-
-							<%= link_to canceled_path(reservation.id) do %>
-								<div class="canceled-reservation">
-									<span class="canceled-reservation-text">キャンセル済</span>
-								</div>
-							<% end %>
-
-						<% end %>
-
+						</div>
 					</div>
-				</div>
 
+				<% end %>
 
 			<% end %>
 		</div>
