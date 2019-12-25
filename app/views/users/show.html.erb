@@ -72,17 +72,17 @@
 				<div class="like-reservation-index">
 					<div class="row">
 						<div class="col-xs-4">
-							<span class="like-index btn btn-default"><%= link_to "いいねした庭園", likes_path, class:"mp-link" %></span>
+							<span class="like-index"><%= link_to "いいねした庭園", likes_user_path(@user.id), class:"btn btn-default" %></span>
 						</div>
 
 						<% if user_signed_in? %>
 							<% if current_user == @user %>
 								<div class="col-xs-4">
-									<span class="reservation-request-index btn btn-default"><%= link_to "予約済の庭園一覧", request_reservations_path, class:"mp-link" %></span>
+									<span class="reservation-request-index"><%= link_to "予約済の庭園一覧", request_reservations_path, class:"btn btn-default" %></span>
 								</div>
 
 								<div class="col-xs-4">
-									<span class="reservation-accept-index btn btn-default"><%= link_to "庭園の見学予約", accept_reservations_path, class:"mp-link" %></span>
+									<span class="reservation-accept-index"><%= link_to "庭園の見学予約", accept_reservations_path, class:"btn btn-default" %></span>
 								</div>
 							<% end %>
 						<% end %>

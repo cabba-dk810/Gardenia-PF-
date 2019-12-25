@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :users, only: [:show, :edit, :update] do
     get 'users/following', to: 'users#following', on: :member
     get 'users/follower', to: 'users#follower', on: :member
+    get 'likes', to: 'likes#index', on: :member
   end
   get 'users/:id/exit' => 'users#exit', as: 'exit'
   get 'users/:id/follower' => 'users#follower', as: 'follower'
@@ -23,8 +24,6 @@ Rails.application.routes.draw do
   get 'post_gardens/:id/new_open_garden' => 'post_gardens#new_open_garden', as: 'new_open_garden'
   get 'search_result' => 'post_gardens#search_result', as: 'search_result'
   patch 'post_gardens/:id/delete_open_info' => 'post_gardens#delete_open_info', as: 'delete_open_info'
-
-  resources :likes, only: [:index]
 
   resources :post_images, only: [:destroy]
 

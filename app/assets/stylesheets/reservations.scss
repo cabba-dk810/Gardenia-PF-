@@ -3,7 +3,7 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 
-/*予約時に日付のセレクトボックスを無効に*/
+/*新規予約画面*/
 .reservation-new-title{
 	margin-left: 5px;
 	color: #584c27;
@@ -78,6 +78,10 @@ select#reservation_r_end_datetime_3i{
 	margin-left: 12px;
 }
 
+.reservation-content-entrance-fee-position{
+	margin: 20px 0;
+}
+
 .reservation-content-entrance-fee-text{
 	margin-left: 12px;
 }
@@ -93,3 +97,137 @@ select#reservation_r_end_datetime_3i{
 }
 
 
+/*予約一覧（リクエスト送信側）*/
+.request-reservations-index-title{
+	margin-left: 5px;
+	color: #584c27;
+	font-size: 21px;
+	margin-bottom: 35px;
+	margin-top: 30px;
+}
+
+.fa-running{
+	margin-right: 10px;
+}
+
+.request-color-example{
+	margin-bottom: 20px;
+}
+
+.not-check-color-example{
+	background-color: #f2dede;
+	border: 1px solid #ebccd1;
+	border-radius: 5px;
+	padding: 1px 27px;
+}
+
+.accept-color-example{
+	background-color: #dff0d8;
+	border: 1px solid #d6e9c6;
+	border-radius: 5px;
+	padding: 1px 27px;
+	margin-left: 10px;
+}
+
+.cancel-color-example{
+	background-color: #fcf8e3;
+	border: 1px solid #faebcc;
+	color: #8a6d3b;
+	border-radius: 5px;
+	padding: 1px 27px;
+	margin-left: 10px;
+}
+
+.request-reservation-day{
+	margin-left: 275px;
+}
+
+.panel-content{
+	margin-top: 20px;
+}
+
+.request-reservation-content-position{
+	margin-top: 15px;
+}
+
+
+
+/*予約一覧（受付側）*/
+.accept-reservations-index-title{
+	margin-left: 5px;
+	color: #584c27;
+	font-size: 21px;
+	margin-bottom: 35px;
+	margin-top: 30px;
+}
+
+.fa-home{
+	margin-right: 10px;
+}
+
+
+
+
+
+
+/*予約完了ページ*/
+.done-reservation-title-position{
+	margin-left: 5px;
+	color: #584c27;
+	font-size: 21px;
+	margin-bottom: 35px;
+	margin-top: 30px;
+	text-align: center;
+}
+
+.fa-user-check{
+	margin-right: 10px;
+}
+
+.done-reservation-text-position{
+	text-align: center;
+}
+
+.done-reservation-text{
+	line-height: 30px;
+}
+
+
+
+
+/*予約リクエスト承認画面*/
+.approve-reservation-title{
+	margin-left: 5px;
+	color: #584c27;
+	font-size: 21px;
+	margin-bottom: 35px;
+	margin-top: 30px;
+}
+
+.fa-leaf{
+	margin-right: 10px;
+}
+
+.approve-reservation-content{
+	color: #584c27;
+	font-size: 20px;
+	margin-bottom: 15px;
+}
+
+.approve-reservation-info{
+	background-color: #f7f5ee;
+	border-radius: 10px;
+	margin-top: 20px;
+	padding-top: 25px;
+	padding-bottom: 30px;
+	margin-bottom: 100px;
+}
+
+
+.approve-reservation-name{
+	margin: 20px 0;
+}
+
+.approve-reservation-num{
+	margin: 20px 0;
+}

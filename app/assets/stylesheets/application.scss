@@ -66,9 +66,9 @@ header{
 }
 
 .header-current_user{
+	position: relative;
 	margin-left: 300px;
 	font-size: 13px;
-	margin-right: 9px;
 }
 
 .header-menu{
@@ -85,9 +85,39 @@ header{
 
 .fa-bell{
 	font-size: 19px;
-	position: relative;
+	position: absolute;
 	z-index: 5;
+	margin-left: 20px;
 }
+
+/*ログイン画面*/
+.login-title{
+	color: #584c27;
+	font-size: 24px;
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+
+.login-title-text{
+	margin-left: 110px;
+}
+
+.login-bg-color{
+	background-color: #f7f5ee;
+	border-radius: 10px;
+	margin-top: 40px;
+	padding-top: 25px;
+	padding-bottom: 30px;
+	padding-right: 30px;
+	padding-left: 30px;
+	margin-bottom: 30px;
+}
+
+.login-button-position{
+	margin-top: 38px;
+	margin-left: 115px;
+}
+
 
 /*サイドメニュー*/
 .side-title{
