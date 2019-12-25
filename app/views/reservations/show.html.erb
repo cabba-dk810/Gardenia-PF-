@@ -1,93 +1,91 @@
 <div class="container">
 	<div class="row">
 
-		<div class="reservation-new-title">
-			<span class="reservation-new-title-text">予約詳細</san>
-		</div>
-
-		<div class="row">
-			<div class="col-xs-3 col-xs-offset-3">
-
-				<div class="field">
-					<label class="reservation-go-text">予約時間</label><br>
-					<%= @reservation.r_start_datetime.strftime("%Y年%m月%d日 %H時%M分") %>
+		<div class="col-xs-10 col-xs-offset-1 reservation-show-all-title">
+			<% if @reservation.request_status == "未受付" %>
+				<div class="reservation-show-not-yet-title">
+					<span class="reservation-show-not-yet-text"><strong><i class="fas fa-spinner"></i>予約リクエスト中</strong></span>
 				</div>
-			</div>
-
-			<div class="col-xs-3">
-				<div class="field">
-					<label class="reservation-back-text">終了時間</label><br>
-					<%= @reservation.r_end_datetime.strftime("%Y年%m月%d日 %H時%M分") %>
+			<% elsif @reservation.request_status == "承認" %>
+				<div class="reservation-show-approved-title">
+					<span class="reservation-show-approved-text"><strong><i class="far fa-check-circle"></i>この予約は確定されています</strong></span>
 				</div>
-			</div>
-
-			<!-- キャンセルした予約は、編集できないように -->
-			<% if @reservation.request_status == "未受付" || @reservation.request_status == "承認" %>
-				<div class="edit-reservation">
-					<%= link_to "予約内容変更", edit_reservation_path(@reservation.id) %>
+			<% elsif @reservation.request_status == "キャンセル" %>
+				<div class="reservation-show-canceled-title">
+					<span class="reservation-show-canceled-text"><strong><i class="fas fa-ban"></i>この予約はキャンセルされています</strong></span>
 				</div>
-
 			<% end %>
-
 		</div>
 
-
-		<!-- 予約者名と人数 -->
 		<div class="row">
+			<div class="col-xs-10 col-xs-offset-1 reservation-show-bg-color">
 
-			<div class="col-xs-4 col-xs-offset-1">
-				<div class="field">
-					<label class="reservation-name">予約者名</label><br>
-					<%= @reservation.reservation_name %>
+				<div class="reservation-show-content-title">
+					<span class="reservation-show-content-title-text"><strong>予約詳細</strong></span>
 				</div>
-			</div>
 
-			<div class="col-xs-4 col-xs-offset-1">
-				<div class="field">
-					<label class="reservation-num">予約人数（最大人数<%= @reservation.post_garden.open_max_number %>人）</label><br>
-					<%= @reservation.reservation_num %>
+
+				<!-- 予約者名と人数 -->
+				<div class="col-xs-2 col-xs-offset-1">
+					<label class="reservation-show-name">◯ 予約者名</label><br>
+					<span class="reservation-show-name-text"><%= @reservation.reservation_name %></span>
 				</div>
-			</div>
-		</div>
 
-
-		<!-- 予約メッセージ -->
-		<div class="row">
-
-			<div class="col-xs-9 col-xs-offset-1">
-				<div class="field">
-					<label class="reservation-message">予約メッセージ</label><br>
-					<%= @reservation.reservation_message %>
-				</div>
-			</div>
-		</div>
-
-
-		<!-- 予約内容確認事項 -->
-
-		<div class="row">
-
-			<div class="col-xs-9 col-xs-offset-1">
-
-				<div class="reservation-content">
-					<span class="reservation-content-text">ご予約リクエストを受けたオープンガーデンはこちらです。</span>
+				<div class="col-xs-3">
+					<label class="reservation-show-num">◯ 予約人数（最大<%= @reservation.post_garden.open_max_number %>人）</label><br>
+					<span class="reservation-show-num-text"><%= @reservation.reservation_num %>人</span>
 				</div>
 
 
 				<!-- 住所 -->
-				<div class="field">
-					<label class="reservation-content-address">住所</label><br>
-					〒<%= @reservation.postal_code %><br>
-					<%= @reservation.reservation_address %>
+				<div class="col-xs-6">
+					<label class="reservation-show-address">◯ 住所</label><br>
+					<span class="reservation-show-address-text">〒<%= @reservation.postal_code %>
+					<%= @reservation.reservation_address %></span>
 				</div>
 
-			</div>
 
+				<!-- 予約時間 -->
+				<div class="col-xs-6 col-xs-offset-1">
+					<label class="reservation-show-datetime">◯ 予約時間</label><br>
+					<span class="reservation-show-datetime-text"><%= @reservation.r_start_datetime.strftime("%Y年%m月%d日 %H時%M分") %>　〜　<%= @reservation.r_end_datetime.strftime("%Y年%m月%d日 %H時%M分") %></span>
+				</div>
+
+
+				<!-- 入場料 -->
+				<div class="col-xs-2">
+					<label class="reservation-show-entrance-fee">◯ 入場料</label><br>
+					<span class="reservation-show-entrance-fee-text"><%= @reservation.entrance_fee %>円</span>
+				</div>
+
+
+				<!-- 予約メッセージ -->
+				<div class="col-xs-4 col-xs-offset-1">
+					<label class="reservation-show-message">◯ 予約メッセージ</label><br>
+					<span class="reservation-show-message-text"><%= @reservation.reservation_message %></span>
+				</div>
+
+
+				<!-- 注意事項 -->
+				<div class="col-xs-4">
+					<label class="reservation-show-announce">◯ 注意事項</label><br>
+					<span class="reservation-show-announce-text"><%= @reservation.announce %></span>
+				</div>
+
+
+				<!-- 詳細へ -->
+				<div class="col-xs-3 reservation-show-post-detail">
+					<%= attachment_image_tag @reservation.post_garden.post_images[0], :garden_image, :fill, 50,50, format: 'jpg', class:"index-post-image reservation-show-post-detail-image" %>
+					<%= link_to "詳細", post_garden_path(@reservation.post_garden_id), class:"btn btn-primary" %>
+				</div>
+
+
+			</div>
 		</div>
 
 
 		<div class="row">
-			<div class="col-xs-10 col-xs-offset-2">
+			<div class="col-xs-10 col-xs-offset-1">
 
 				<div id="map"></div>
 
@@ -105,7 +103,7 @@
 				      		map.setCenter(latlng);
 
 							(function(){
-								var contentString = '<%= attachment_image_tag @reservation.post_garden.post_images[0], :garden_image, :fill, 100, 100, format: 'jpg' %>' + '<br><br><br>' + '<strong>住所</strong>' + '<br>' + '〒<%= @reservation.postal_code %>' + '<br>' + '<%= @reservation.reservation_address %>' + '<br>' + '<strong>投稿者</strong>' + '<br>' + '<%= @reservation.owner_name %>' + '<br>' + '<strong>使用している庭木</strong>' + '<br>' + '<% @reservation.post_garden.planted_gardens.each do |planted_garden| %><%= planted_garden.plant_name %><% end %>'+ '<br>' + '<%= @reservation.post_garden.tag_list %>' + '<br>' + '<%= link_to post_garden_path(@reservation.post_garden.id) do %><span class="link">詳細へ</span><% end %>';
+								var contentString = '<div class="row">' + '<div class="col-xs-6">' + '<%= attachment_image_tag @reservation.post_garden.post_images[0], :garden_image, :fill, 100, 100, format: 'jpg', class:"index-post-image" %>' + '</div>' + '<div class="col-xs-6">' + '<strong>投稿者</strong>' + '<br>' + '<%= @reservation.owner_name %>' + '<br>' + '<% @reservation.post_garden.tag_list.each do |tag| %>' + '<span class="post-tag-text"><%= tag %></span>' + '<% end %>' + '<p>' + '<%= link_to post_garden_path(@reservation.post_garden.id) do %><span class="btn btn-primary btn-sm">詳細へ</span><% end %>' + '</p>' + '</div>';
 								var infowindow = new google.maps.InfoWindow({
 									content: contentString,
 									maxWidth: 1000,
@@ -128,33 +126,25 @@
 		</div>
 
 
-		<div class="row">
-			<div class="col-xs-10 col-xs-offset-1">
-
-				<!-- 入場料 -->
-				<div class="field">
-					<label class="reservation-content-entrance-fee">入場料</label><br>
-					<%= @reservation.entrance_fee %>
+		<!-- 自身でリクエストした予約は編集可能。キャンセルした予約は、編集できないように -->
+		<% if @reservation.user_id == current_user.id %>
+			<% if @reservation.request_status == "未受付" || @reservation.request_status == "承認" %>
+				<div class="col-xs-2 col-xs-offset-5">
+					<%= link_to "予約内容変更", edit_reservation_path(@reservation.id), class:"btn btn-primary reservation-show-button" %>
 				</div>
 
-
-			</div>
-
-		</div>
-
-
-		<div class="row">
-			<div class="col-xs-10 col-xs-offset-1">
-
-				<!-- 注意事項 -->
-				<div class="field">
-					<label class="reservation-content-entrance-fee">注意事項</label><br>
-					<%= @reservation.announce %>
+				<div class="col-xs-2 col-xs-offset-2">
+					<%= link_to "キャンセルする", cancel_reason_path(@reservation.id), class:"btn btn-warning reservation-show-button" %>
 				</div>
+			<% end %>
 
+		<% elsif @reservation.owner_id == current_user.id %>
+			<% if @reservation.request_status == "未受付" || @reservation.request_status == "承認" %>
+			<div class="col-xs-2 col-xs-offset-9">
+				<%= link_to "キャンセルする", cancel_reason_path(@reservation.id), class:"btn btn-warning reservation-show-button" %>
 			</div>
-
-		</div>
+			<% end %>
+		<% end %>
 
 	</div>
 </div>

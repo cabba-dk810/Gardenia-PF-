@@ -18,22 +18,22 @@
 
 		<div class="row">
 
-			<div class="col-xs-8 col-xs-offset-2 approve-reservation-info">
+			<div class="col-xs-6 col-xs-offset-3 approve-reservation-info">
 
-				<div class="col-xs-8 col-xs-offset-3">
+				<div class="col-xs-10 col-xs-offset-1">
 					<div class="approve-reservation-content">
 						<span class="approve-reservation-content-text"><strong>ご予約内容</strong></span>
 					</div>
 				</div>
 
-				<div class="col-xs-8 col-xs-offset-3">
+				<div class="col-xs-10 col-xs-offset-1">
 					<label class="approve-reservation-datetime-text">◯ 予約時間</label><br>
 					<%= @reservation.r_start_datetime.strftime("%Y年%m月%d日 %H時%M分") %>　〜　<%= @reservation.r_end_datetime.strftime("%Y年%m月%d日 %H時%M分") %>
 				</div>
 
 
 				<!-- 予約者名と人数 -->
-				<div class="col-xs-2 col-xs-offset-3">
+				<div class="col-xs-3 col-xs-offset-1">
 					<div class="approve-reservation-name">
 						<label class="approve-reservation-name-text">◯ 予約者名</label><br>
 						<%= @reservation.reservation_name %>様
@@ -49,7 +49,7 @@
 
 
 				<!-- 予約メッセージ -->
-				<div class="col-xs-9 col-xs-offset-3">
+				<div class="col-xs-9 col-xs-offset-1">
 					<div class="field">
 						<label class="reservation-message">◯ 予約メッセージ</label><br>
 						<%= @reservation.reservation_message %>

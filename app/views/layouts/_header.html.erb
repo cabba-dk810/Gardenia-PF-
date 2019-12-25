@@ -55,7 +55,11 @@
                                 <i class="fas fa-circle n-circle"></i>
                             <% else %>
                                 <%= link_to notifications_path, class:"header-link" do %>
-                                    <span class="header-menu"><i class="fas fa-bell"></i></span>
+                                    <span class="header-menu">
+                                        <span class="header-current_user"><u><%= current_user.user_name %>さん</u>
+                                            <i class="fas fa-bell"></i>
+                                        </span>
+                                    </span>
                                 <% end %>
                             <% end %>
                        

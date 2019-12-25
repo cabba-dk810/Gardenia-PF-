@@ -231,3 +231,117 @@ select#reservation_r_end_datetime_3i{
 .approve-reservation-num{
 	margin: 20px 0;
 }
+
+
+
+
+
+/*予約詳細ページ*/
+.reservation-show-all-title{
+	color: #584c27;
+	font-size: 21px;
+	margin-top: 40px;
+	margin-bottom: 30px;
+}
+
+.fa-check-circle{
+	margin-right: 10px;
+}
+
+.fa-spinner{
+	margin-right: 10px;
+}
+
+.fa-ban{
+	margin-right: 10px;
+}
+
+.reservation-show-bg-color{
+	background-color: #f7f5ee;
+	border-radius: 10px;
+	margin-top: 20px;
+	padding-top: 25px;
+	padding-bottom: 30px;
+	margin-bottom: 40px;
+}
+
+.reservation-show-content-title{
+	margin-left: 60px;
+	font-size: 17px;
+	color: #584c27;
+	margin-bottom: 20px;
+}
+
+.reservation-show-name-text{
+	margin-left: 16px;
+}
+
+.reservation-show-num-text{
+	margin-left: 16px;
+}
+
+.reservation-show-address-text{
+	margin-left: 16px;
+}
+
+.reservation-show-datetime{
+	margin-top: 27px;
+}
+
+.reservation-show-datetime-text{
+	margin-left: 16px;
+}
+
+.reservation-show-entrance-fee{
+	margin-top: 27px;
+}
+
+.reservation-show-entrance-fee-text{
+	margin-left: 16px;
+}
+
+.reservation-show-message{
+	margin-top: 27px;
+}
+
+.reservation-show-message-text{
+	margin-left: 16px;
+}
+
+.reservation-show-announce{
+	margin-top: 27px;
+}
+
+.reservation-show-announce-text{
+	margin-left: 16px;
+}
+
+.reservation-show-post-detail{
+	margin-top: 27px;
+}
+
+.reservation-show-post-detail-image{
+	margin-left: 70px;
+}
+
+.reservation-show-button{
+	margin-top: 30px;
+}
+
+
+/*予約キャンセル理由記述画面*/
+.reservation-cancel-reason-title{
+	color: #584c27;
+	font-size: 20px;
+	text-align: center;
+	margin-top: 40px;
+	margin-bottom: 30px;
+}
+
+.reservation-cancel-reason{
+	margin-bottom: 10px;
+}
+
+.reservation-cancel-confirm{
+	margin-top: 50px;
+}
