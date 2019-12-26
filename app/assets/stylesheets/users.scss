@@ -137,3 +137,52 @@
 	flex-wrap: wrap;
 }
 
+
+
+
+
+
+/*フォロワー一覧*/
+.follower-index-title-position{
+	margin-top: 40px;
+	margin-bottom: 60px;
+	font-size: 20px;
+}
+
+.follower-index-title-text{
+	margin-left: 10px;
+	color: #584c27;
+}
+
+.follower-index-list{
+	margin-bottom: 30px;
+}
+
+.follower-index-user-name{
+	margin-left: 20px;
+	text-decoration: none !important;
+	color: #242424;
+}
+
+.follow-index-profile-content{
+	font-size: 13px;
+	margin-top: 12px;
+	color: grey;
+}
+
+.follow-index-prefecture{
+	margin-top: 11px;
+}
+
+.follow-index-prefecture-text{
+	border: 1px solid #242424;
+	border-radius: 5px;
+	padding: 3px 5px;
+	font-size: 11px;
+}
+
+.follower-index-button-position{
+	margin-top: 5px;
+	margin-left: 10px;
+}
+

@@ -55,6 +55,18 @@ class User < ApplicationRecord
     self.followings.include?(other_user)
   end
 
+  # フォロー一覧を表示させる際の、フォローかフォロー解除かの判定
+  #userではなくidを引数にしているため、どのユーザかfind_byしている
+  def user_following?(other_user)
+    user = followings.find_by(id: other_user)
+    self.followings.include?(user)
+  end
+
+  def user_followed?(other_user)
+    user = followers.find_by(id: other_user)
+    self.followers.include?(user)
+  end
+
 
   # 通知機能のメソッド
   def create_notification_follow!(current_user)
