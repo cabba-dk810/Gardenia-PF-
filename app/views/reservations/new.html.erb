@@ -25,6 +25,10 @@
 				<!-- どの投稿のカレンダーか判別するため、idをjqueryに渡している -->
 				<div class="params_num_reservation" data-params="<%= @post_garden.id %>"></div>
 
+				<div class="date-reselect">
+					<%= flash[:danger] %>
+				</div>
+
 				<div class="row reserve-date-select-position">
 
 					<div class="col-xs-5">
