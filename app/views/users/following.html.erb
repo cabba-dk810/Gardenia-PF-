@@ -1,9 +1,10 @@
 <div class="container">
 	<div class="row">
 
-		<div class="col-xs-4">
-			<div class="samuneiru-position">
-				<%= attachment_image_tag @user, :profile_image, :fill, 150, 150, format: 'jpg', fallback: "no_image.jpg" %>
+		<div class="col-xs-4 col-xs-offset-1">
+			<div class="follower-index-title-position">
+				<%= attachment_image_tag @user, :profile_image, :fill, 50, 50, format: 'jpg', fallback: "no_image.jpg", class:"index-profile-image" %>
+				<span class="follower-index-title-text"><strong><%= @user.user_name %>がフォロー中</strong></span>
 			</div>
 		</div>
 
@@ -11,9 +12,42 @@
 
 	<!-- フォロワー一覧 -->
 	<div class="row">
-		<div class="col-xs-10 col-xs-offset-1">
+		<div class="col-xs-11 col-xs-offset-1">
 			<% @followings.each do |following| %>
-				<%= following.follow.user_name %>
+
+				<div class="row follower-index-list">
+					<div class="col-xs-3 col-xs-offset-1">
+						<%= attachment_image_tag following.follow, :profile_image, :fill, 50, 50, format: 'jpg', fallback: "no_image.jpg", class:"index-profile-image" %>
+						<%= link_to user_path(following.follow_id), class:"follower-index-user-name" do %>
+							<strong><%= following.follow.user_name %></strong>
+						<% end %>
+					</div>
+
+					<div class="col-xs-3 follow-index-profile-content">
+						<%= following.follow.profile_text %>
+					</div>
+
+
+					<div class="col-xs-1 col-xs-offset-1 follow-index-prefecture">
+						<span class="follow-index-prefecture-text"><%= following.follow.prefecture %></span>
+					</div>
+
+					<div class="col-xs-2">
+						<% if user_signed_in? %>
+							<% if current_user.user_following?(following.follow_id) %>
+								<%= form_for(current_user.relationships.find_by(follow_id: following.follow_id), url: unfollow_path(following.follow_id), html: { method: :delete }) do |f| %>
+									<%= hidden_field_tag :follow_id, following.id %>
+									<%= f.submit 'フォロー解除', class:"btn btn-danger btn-sm follower-index-button-position" %>
+								<% end %>
+							<% else %>
+								<%= form_for(@relationship) do |f| %>
+									<%= hidden_field_tag :follow_id, following.id %>
+									<%= f.submit '+ フォロー', class:"btn btn-primary btn-sm follower-index-button-position" %>
+								<% end %>
+							<% end %>
+						<% end %>
+					</div>
+				</div>
 
 			<% end %>
 		</div>
