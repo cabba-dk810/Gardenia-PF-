@@ -10,14 +10,23 @@ class ReservationsController < ApplicationController
 	def create
 		@reservation = Reservation.new(reservation_params)
 		@user = current_user
-		if @reservation.save
-			# メールと通知
-			NotificationMailer.send_request_for_visit(@user, @reservation).deliver
-			NotificationMailer.recieve_request_for_visit(@user, @reservation).deliver
-			@reservation.create_notification_reservation!(current_user)
-			redirect_to done_path
+		@open_day = OpenDay.find_by(id: params[:reservation][:id])
+
+		if @reservation.r_start_datetime >= @open_day.start_time && @reservation.r_start_datetime <= @open_day.end_time && @reservation.r_end_datetime >= @open_day.start_time && @reservation.r_end_datetime <= @open_day.end_time
+
+			if @reservation.save
+				# メールと通知
+				NotificationMailer.send_request_for_visit(@user, @reservation).deliver
+				NotificationMailer.recieve_request_for_visit(@user, @reservation).deliver
+				@reservation.create_notification_reservation!(current_user)
+				redirect_to done_path
+			else
+				render 'new'
+			end
+
 		else
-			render 'new'
+			redirect_to new_reservation_path(@reservation.post_garden_id)
+			flash[:danger] = '指定された時間の中から開始時間と終了時間をお選びください'
 		end
 	end
 

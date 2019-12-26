@@ -7,17 +7,17 @@ class PostGarden < ApplicationRecord
 
 	belongs_to :user
 
-	has_many :post_images
+	has_many :post_images, dependent: :destroy
 	accepts_nested_attributes_for :post_images, allow_destroy: true
 	accepts_attachments_for :post_images, attachment: :garden_image
 
 	has_many :planted_gardens
 	accepts_nested_attributes_for :planted_gardens, allow_destroy: true
 
-	has_many :open_days
+	has_many :open_days, dependent: :destroy
 	has_many :likes, dependent: :destroy
 	has_many :post_comments, dependent: :destroy
-	has_many :reservations
+	has_many :reservations, dependent: :destroy
 
 	# タグ付用記述
 	acts_as_taggable
