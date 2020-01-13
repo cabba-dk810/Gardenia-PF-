@@ -1,3 +1,71 @@
+
+// new画像のプレビュー
+let counter = 0;
+
+$(function(){
+
+    $fileField = $('#new_file')
+
+  // 選択された画像を取得し表示
+  // document.addEventListener(function(e))
+  // 画像を追加するたびにchangeイベントを発生させたいので、.new-post-imageがchangeした時と定義している。
+    $(document).on('change', '.new-post-image', function(e) {
+        var file = e.target.files[0],
+            reader = new FileReader(),
+            // previewにidを指定していると複数枚の認識がうまくいかないので、input(e.target)要素の親のクラスをpreviewに代入する
+            $preview = $(e.target).parent();
+
+            $('.new_img_field').hide();
+
+        // 画像ファイル以外の場合は何もしない
+        if(file.type.indexOf("image") < 0){
+            return false;
+        }
+
+        // ファイル読み込みが完了した際のイベント登録
+        reader.onload = (function(file) {
+            return function(e) {
+                $preview.addClass("preview");
+                //既存のプレビューを削除
+                $preview.empty();
+                // .prevewの領域の中にロードした画像を表示するimageタグを追加
+                $preview.append($('<img>').attr({
+                  src: e.target.result,
+                  class: "preview",
+                  width: "100%",
+                  height: "100%",
+                  title: file.name
+                }));
+
+                $.ajax({
+                    url: "send_images",
+                    type: 'post',
+                    // e.target.resultだけだと、画像のコードの先頭にHTMLで表示するためのコードが入ってしまうので、splitで除く
+                    data: {image :e.target.result.split(',')[1]}
+                })
+                .done(function(data){
+                    $('.auto-keyword').show();
+                    for(var i = 0; i <= 4; i++) {
+                        // $previewからnext()を使ってauto-keywordクラスを取得すると、各画像に紐づいてタグをつけられる
+                        $auto_keyword = $preview.next().children('.auto-keyword-text-' + [i]);
+                        $auto_keyword.append(data[i]["keyword"]);
+                    }
+
+                })
+                .fail(function(err){
+                    console.log('エラーが発生しました')
+                })
+            };
+        })(file);
+
+        // この処理をしてからonloadをする
+        reader.readAsDataURL(file);
+
+    });
+});
+
+
+// show画面公開中かどうか表示している小さなカレンダー
 $(function(){
 
     var paramsNum = $('.params_num_show').data('params')
@@ -20,8 +88,6 @@ $(function(){
     });
 
 });
-
-
 
 
 // 複数枚ある投稿画像をスライドさせるときに使用
@@ -66,67 +132,3 @@ $(function(){
     }
 
 });
-
-
-// fadein outさせる用
-// $(function(){
-
-//     $('.change-btn-wrapper').hover(function(){
-//         $('.next-btn').fadeIn();
-//         $('.prev-btn').fadeIn();
-
-//         var slideIndex = $('.slide').index($('.active'));
-// console.log("---slideIndex---");
-// console.log(slideIndex);
-
-//         if (slideIndex == 0){
-//             $('.prev-btn').hide();
-//             $('.next-btn').fadeIn();
-//         }
-
-//         if (slideIndex == $('.slides').data('index') - 1){
-//             $('.next-btn').hide();
-//             $('.prev-btn').fadeIn();
-//         }
-
-//         $('.change-btn').click(function(){
-// console.log("---click---");
-//             var $displaySlide = $('.active');
-// console.log($displaySlide);
-
-//             $displaySlide.removeClass('active');
-
-//             if ($(this).hasClass('next-btn')){
-//                 $displaySlide.next('div').addClass('active');
-// console.log("---next active---");
-
-//             } else{
-//                 $displaySlide.prev('div').addClass('active');
-// console.log("---prev active---");
-
-//             }
-
-//         });
-
-//     },function(){
-//         $('.prev-btn').fadeOut();
-//         $('.next-btn').fadeOut();
-//     }
-//     );
-
-//     // １枚しか投稿していない場合でも、ボタンが表示されない設定
-//     var slideIndex = $('.slide').index($('.active'));
-
-//     if (slideIndex == 0){
-//         $('.prev-btn').hide();
-//         $('.next-btn').fadeIn();
-//     }
-
-//     if (slideIndex == $('.slides').data('index') - 1){
-//         $('.next-btn').hide();
-//         $('.prev-btn').fadeIn();
-//     }
-
-
-// });
-

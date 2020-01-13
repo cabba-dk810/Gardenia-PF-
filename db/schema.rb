@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_21_052832) do
+ActiveRecord::Schema.define(version: 2020_01_08_063230) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -103,6 +103,14 @@ ActiveRecord::Schema.define(version: 2019_12_21_052832) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "recognition_images", force: :cascade do |t|
+    t.integer "search_plant_id"
+    t.string "recognition_result"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.float "rate"
+  end
+
   create_table "relationships", force: :cascade do |t|
     t.integer "user_id"
     t.integer "follow_id"
@@ -131,6 +139,12 @@ ActiveRecord::Schema.define(version: 2019_12_21_052832) do
     t.integer "owner_id"
     t.string "owner_name"
     t.text "cancel_reason"
+  end
+
+  create_table "search_plants", force: :cascade do |t|
+    t.string "plant_image_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "taggings", force: :cascade do |t|

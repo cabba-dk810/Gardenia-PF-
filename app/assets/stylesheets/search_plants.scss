@@ -1,0 +1,135 @@
+// Place all the styles related to the SearchPlants controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+/*new 写真のプレビュー*/
+#img_field {
+  font-size: 15px;
+  margin-top: 10px;
+  padding: 5px 8px;
+  border: dashed 3px #dacfaf;
+  color: #666;
+  position: relative;
+  padding: 0;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 500px;
+  height: 250px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-color: #f7f5ee;
+  overflow: hidden;
+  box-sizing: border-box;
+  transition: 0.3s ease-out;
+  margin-bottom: 50px;
+
+  &.preview {
+  	border: none;
+  	height: auto;
+  	filter: drop-shadow(6px 6px 6px rgba(0,0,0,0.6));
+  }
+}
+
+.search-plant-image-text{
+	margin-top: 120px;
+}
+
+#img_field i {
+  font-size: 100px;
+  color: #aaa;
+  line-height: 250px;
+  transition: 0.3s ease-out;
+}
+
+#img_field:hover {
+  background-color: #e7e2cd;
+  transition: 0.3s ease-out;
+  opacity: 0.9;
+}
+
+#img_field:hover i {
+  transition: 0.3s ease-out;
+  display: block;
+  color: #fff;
+}
+
+#img_field:hover .search-plant-image-text {
+  transition: 0.3s ease-out;
+  display: block;
+  color: #fff;
+}
+
+.search-plant-button{
+	margin-bottom: 80px;
+}
+
+.search-plant-new-title{
+    margin-left: 5px;
+    color: #584c27;
+    font-size: 21px;
+    margin-bottom: 35px;
+    margin-top: 30px;
+}
+
+.fa-images{
+	margin-right: 10px;
+}
+
+
+
+
+
+/*show検索結果画面*/
+.show-search-image{
+	width: 500px;
+	height: auto;
+	filter: drop-shadow(6px 6px 6px rgba(0,0,0,0.6));
+}
+
+.recognition-image-result-title{
+	margin-top: 75px;
+	margin-bottom: 20px;
+	margin-left: 65px;
+	font-size: 16px;
+}
+
+.recognition-image-result{
+	color: #584c27;
+	margin-left: 60px;
+	font-size: 20px;
+	height: auto;
+	width: 400px;
+	border: 1px solid white;
+	box-shadow: 0 0 4px gray;
+}
+
+.recognition-image-text{
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.recognition-label-link{
+	text-decoration: none !important;
+	color: #584c27;
+}
+
+.recognition-label-link:hover{
+	font-size: 22px;
+	color: #02A553;
+	transition: 0.2s ease-out;
+}
+
+.recognition-image-text-rate{
+	font-size: 17px;
+}
+
+.search-plant-show-button{
+	margin-top: 80px;
+	margin-bottom: 80px;
+}
+
+
+
+
