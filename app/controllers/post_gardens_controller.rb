@@ -6,6 +6,18 @@ class PostGardensController < ApplicationController
 		@planted_garden = @post_garden.planted_gardens.build
 	end
 
+	def send_images
+		# postアクションなので、strongparameterを設定する必要がある
+		send_images = Vision.get_image_ajax(send_image_params[:image])
+		translations = []
+		send_images.each do |send_image|
+			translate_result = Translation.get_label_data(send_image['description'])
+			add_translations = {'keyword' => "#{translate_result}" }
+			translations.push(add_translations)
+		end
+		render :json => translations
+	end
+
 	def create
 		@post_garden = PostGarden.new(post_garden_params)
 		@post_garden.user_id = current_user.id
@@ -134,4 +146,7 @@ class PostGardensController < ApplicationController
 	], planted_gardens_attributes: [:id, :plant_name, :plant_number, :_destroy])
 	end
 
+	def send_image_params
+		params.permit(:image)
+	end
 end

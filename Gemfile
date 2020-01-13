@@ -77,8 +77,8 @@ gem 'font-awesome-sass'
 gem 'momentjs-rails'
 gem 'acts-as-taggable-on'
 gem 'fullcalendar-rails'
-gem 'momentjs-rails'
 gem 'geocoder'
+gem 'dotenv-rails'
 
 group :production do
   gem 'mysql2'

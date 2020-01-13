@@ -25,6 +25,14 @@
 @import "bootstrap";
 
 
+/*body全体に（footerを下部に固定するため）*/
+body{
+    min-height: 100vh;
+    position: relative;/*←相対位置*/
+    padding-bottom: 120px;/*←footerの高さ*/
+    box-sizing: border-box;/*←全て含めてmin-height:100vhに*/
+}
+
 /*header画面*/
 header{
 	height: 70px;
@@ -147,6 +155,15 @@ header{
 	text-decoration: none !important;
 }
 
+.search-plant-title-text{
+	margin-top: 65px;
+	margin-bottom: 25px;
+}
+
+.search-plant-link{
+	line-height: 50px;
+}
+
 .before-login-header{
 	margin-top: 20px;
 	margin-left: 100px;
@@ -155,11 +172,12 @@ header{
 
 /*フッター用*/
 footer{
-	margin-top: 60px;
 	width: 100%;
 	height: 120px;
 	background-color: #6D3D1E;
 	color: #F2E0D7;
+	position: absolute;/*←bodyのrelativeから見て絶対位置*/
+    bottom: 0;
 }
 
 .footer-box{

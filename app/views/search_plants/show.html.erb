@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="row">
+
+        <div class="col-xs-6 col-xs-offset-3">
+
+            <div class="search-plant-new-title">
+                <span class="search-plant-new-title-text"><strong><i class="fas fa-images"></i>画像の分析結果</strong></span>
+            </div>
+
+            <div class="show-search-image">
+                <%= attachment_image_tag @search_plant, :plant_image, class:"show-search-image" %>
+            </div>
+
+            <div class="recognition-image-result-title">
+                <span class="recognition-image-result-title-text"><strong>画像に一致した言語</strong></span>
+            </div>
+
+            <div class="recognition-image-result">
+                <% @recognition_images.each do |image| %>
+                    <div class="row recognition-image-text">
+                        <div class="col-xs-5 col-xs-offset-2">
+                            <%= link_to search_result_path(tag_name: image.recognition_result), class:"recognition-label-link" do %>
+                                <strong><%= image.recognition_result %></strong>
+                            <% end %>
+                        </div>
+                        <div class="col-xs-3 col-xs-offset-1">
+                            <span class="recognition-image-text-rate"><%= (image.rate * 100).round(1) %>%</span>
+                        </div>
+                    </div>
+                <% end %>
+            </div>
+
+
+            <div class="search-plant-show-button">
+                <%=link_to "< 別の写真を選択する", new_search_plant_path, class:"btn btn-info" %>
+            </div>
+        </div>
+
+    </div>
+</div>

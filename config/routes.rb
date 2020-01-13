@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     resources :post_comments, only: [:create, :destroy]
     post 'likes', to: 'likes#create', on: :member
     delete 'likes', to: 'likes#destroy', on: :member
+    post 'send_images', to:'post_gardens#send_images', on: :collection
   end
   root to: 'post_gardens#index'
   get 'about' => 'post_gardens#about', as: 'about'
@@ -44,5 +45,7 @@ Rails.application.routes.draw do
   get 'canceled/:id' => 'reservations#canceled', as: 'canceled'
 
   resources :notifications, only: :index
+
+  resources :search_plants, only: [:new, :show, :create]
 
 end

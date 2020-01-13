@@ -32,6 +32,12 @@
   height: 400px;
 }
 
+.about-gardenia-bg-bottom{
+  height: 400px;
+  margin-bottom: 160px;
+}
+
+
 .what-is-gardenia{
   margin-top: 80px;
   margin-bottom: 15px;
@@ -223,7 +229,7 @@
 }
 
 .map-title{
-  margin-top: 110px;
+  margin-top: 80px;
   margin-bottom: 20px;
   margin-left: 10px;
   color: #584c27;
@@ -235,6 +241,7 @@
   height: 500px;
   width: 900px;
   margin-top: 30px;
+  margin-bottom: 60px;
   margin-left: 30px;
 }
 
@@ -668,60 +675,74 @@
 }
 
 .new-post-image-add-position{
-  margin-top: 70px;
+  margin-top: 265px;
+  margin-left: 10px;
 }
 
 .new-post-image-delete-position{
-  margin-left: 180px;
+  margin-left: 245px;
   margin-top: 10px;
 }
 
-#upload_image{
-  font-size: 15px;
-  margin-top: 10px;
-  padding: 5px 8px;
-  border: solid 1px #EDBC6C;
+.new_img_field {
+  font-size: 11px;
+  margin-top: 5px;
+  border: dashed 3px #dacfaf;
   color: #666;
   position: relative;
   padding: 0;
   border-radius: 5px;
   cursor: pointer;
-  width: 400px;
-  height: 250px;
+  width: 300px;
+  height: 300px;
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
-  background-color: #fff;
+  background-color: #f7f5ee;
   overflow: hidden;
   box-sizing: border-box;
   transition: 0.3s ease-out;
+  margin-bottom: 10px;
 }
 
-#upload_image:hover {
-  background-color: #EDBC6C;
+.preview{
+  height: 300px;
+  filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.4));
+}
+
+.new-image-text{
+  margin-top: 55px;
+}
+
+.new_img_field i {
+  font-size: 50px;
+  color: #aaa;
+  line-height: 130px;
+  transition: 0.3s ease-out;
+}
+
+.new_img_field:hover {
+  background-color: #e7e2cd;
   transition: 0.3s ease-out;
   opacity: 0.9;
 }
 
-#upload_image i {
-  font-size: 100px;
-  color: #aaa;
-  line-height: 250px;
-  transition: 0.3s ease-out;
-}
-
-#upload_image i.add {
-  display: none;
-  font-size: 50px;
-  position: absolute;
-  top: -90px;
-  right: 15px;
-}
-
-#upload_image:hover i {
+.new_img_field:hover i {
   transition: 0.3s ease-out;
   display: block;
   color: #fff;
+}
+
+.new_img_field:hover .new-image-text {
+  transition: 0.3s ease-out;
+  display: block;
+  color: #fff;
+}
+
+.auto-keyword{
+  display: none;
+  margin-top: 20px;
+  margin-left: 10px;
 }
 
 .new-post-content{
