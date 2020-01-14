@@ -3,7 +3,7 @@
 		<div class="form-group new-post-image-box">
 
 			<!-- // id "file"で、fileとdivを紐付けクリック時に連動 -->
-            <div class="new_img_field" onClick="$('#new_file').click()">
+            <div class="new_img_field" onClick="$('.new-post-image').click()">
 
                 <div class="row">
                     <div class="col-xs-7 col-xs-offset-1">
@@ -18,7 +18,7 @@
 
             <div class="new-post-image-preview">
 	            <!-- // id "file"をつけ、「display:none;」で隠す -->
-	            <%= f.attachment_field :garden_image, class:"new-post-image", style:"display:none;", id:"new_file" %>
+	            <%= f.attachment_field :garden_image, direct: true, class:"new-post-image", style:"display:none;" %>
 	        </div>
 
 	        <div class="auto-keyword">

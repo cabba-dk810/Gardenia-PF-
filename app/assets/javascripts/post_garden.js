@@ -26,8 +26,6 @@ $(function(){
         reader.onload = (function(file) {
             return function(e) {
                 $preview.addClass("preview");
-                //既存のプレビューを削除
-                $preview.empty();
                 // .prevewの領域の中にロードした画像を表示するimageタグを追加
                 $preview.append($('<img>').attr({
                   src: e.target.result,
