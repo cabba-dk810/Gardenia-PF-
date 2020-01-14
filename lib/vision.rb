@@ -6,7 +6,9 @@ module Vision
         def get_image_data(image_file)
             api_url = "https://vision.googleapis.com/v1/images:annotate?key=#{ENV['GOOGLE_API_KEY']}"
             # 画像をbase64にエンコード
-            base64_image = Base64.encode64(open("#{Rails.root}/public/uploads/#{image_file.id}").read)
+            # ./tmp/uploads/store refileで画像を保存した時に、初期設定で保存される場所
+            base64_image = Base64.encode64(open("./tmp/uploads/store/#{image_file.id}").read)
+
             # APIリクエスト用のJSONパラメータ
             params = {
                 requests: [{

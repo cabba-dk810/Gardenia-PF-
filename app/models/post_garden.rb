@@ -8,11 +8,11 @@ class PostGarden < ApplicationRecord
 	belongs_to :user
 
 	has_many :post_images, dependent: :destroy
-	accepts_nested_attributes_for :post_images, allow_destroy: true
+	accepts_nested_attributes_for :post_images, reject_if: :all_blank, allow_destroy: true
 	accepts_attachments_for :post_images, attachment: :garden_image
 
 	has_many :planted_gardens
-	accepts_nested_attributes_for :planted_gardens, allow_destroy: true
+	accepts_nested_attributes_for :planted_gardens, reject_if: :all_blank, allow_destroy: true
 
 	has_many :open_days, dependent: :destroy
 	has_many :likes, dependent: :destroy

@@ -21,17 +21,19 @@ class PostGardensController < ApplicationController
 	def create
 		@post_garden = PostGarden.new(post_garden_params)
 		@post_garden.user_id = current_user.id
+		
 
 		# 子要素のインスタンスを作成
-		@post_image = PostImage.create(
-			garden_image_id: params[:post_garden][:post_images_attributes][:"0"][:garden_image]
-			)
-
-		@planted_garden = PlantedGarden.create(
-			plant_name: params[:post_garden][:planted_gardens_attributes][:"0"][:plant_name],
-			plant_number: params[:post_garden][:planted_gardens_attributes][:"0"][:plant_number]
-			)
 		if @post_garden.save
+			# @post_image = PostImage.create(
+			# 	garden_image_id: params[:post_garden][:post_images_attributes][:"0"][:garden_image],
+			# )
+
+			# @planted_garden = PlantedGarden.create(
+			# 	plant_name: params[:post_garden][:planted_gardens_attributes][:"0"][:plant_name],
+			# 	plant_number: params[:post_garden][:planted_gardens_attributes][:"0"][:plant_number]
+			# )
+
 			redirect_to root_path
 		else
 			render 'new'
@@ -142,7 +144,7 @@ class PostGardensController < ApplicationController
 	private
 
 	def post_garden_params
-		params.require(:post_garden).permit(:post_content, :place, :area, :price, :problem, :solution, :open_status, :open_postal_code, :open_prefecture, :address, :latitude, :longitude, :open_max_number, :open_entrance_fee, :open_announce, :tag_list, post_images_attributes:[:garden_image, :_destroy
+		params.require(:post_garden).permit(:post_content, :place, :area, :price, :problem, :solution, :open_status, :open_postal_code, :open_prefecture, :address, :latitude, :longitude, :open_max_number, :open_entrance_fee, :open_announce, :tag_list, post_images_attributes:[:id, :garden_image, :_destroy
 	], planted_gardens_attributes: [:id, :plant_name, :plant_number, :_destroy])
 	end
 
