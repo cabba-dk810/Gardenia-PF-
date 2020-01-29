@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.array!(@accept_requests) do |accept_request|
   json.extract! accept_request, :id, :r_start_datetime, :r_end_datetime
   json.id accept_request.id

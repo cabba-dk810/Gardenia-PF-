@@ -1,6 +1,8 @@
-class OpenDay < ApplicationRecord
-	belongs_to :post_garden
+# frozen_string_literal: true
 
-	validates :start_time, presence: true
-	validates :end_time, presence: true
+class OpenDay < ApplicationRecord
+  belongs_to :post_garden
+
+  validates :start_time, presence: true
+  validates :end_time, presence: true
 end

@@ -1,11 +1,12 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   devise_for :admins
-
 
   # ユーザ用ルーティング
   devise_for :users
 
-  resources :users, only: [:show, :edit, :update] do
+  resources :users, only: %i[show edit update] do
     get 'users/following', to: 'users#following', on: :member
     get 'users/follower', to: 'users#follower', on: :member
     get 'likes', to: 'likes#index', on: :member
@@ -14,11 +15,11 @@ Rails.application.routes.draw do
   get 'users/:id/follower' => 'users#follower', as: 'follower'
   get 'users/:id/following' => 'users#following', as: 'following'
 
-  resources :post_gardens, only: [:new, :create, :show, :edit, :update, :destroy] do
-    resources :post_comments, only: [:create, :destroy]
+  resources :post_gardens, only: %i[new create show edit update destroy] do
+    resources :post_comments, only: %i[create destroy]
     post 'likes', to: 'likes#create', on: :member
     delete 'likes', to: 'likes#destroy', on: :member
-    post 'send_images', to:'post_gardens#send_images', on: :collection
+    post 'send_images', to: 'post_gardens#send_images', on: :collection
   end
   root to: 'post_gardens#index'
   get 'about' => 'post_gardens#about', as: 'about'
@@ -28,13 +29,13 @@ Rails.application.routes.draw do
 
   resources :post_images, only: [:destroy]
 
-  resources :open_days, only: [:create, :update, :destroy]
+  resources :open_days, only: %i[create update destroy]
   # resources :new_open_garden
 
   resources :relationships, only: [:create]
   delete 'relationships/:id' => 'relationships#destroy', as: 'unfollow'
 
-  resources :reservations, only: [:create, :show, :edit, :update]
+  resources :reservations, only: %i[create show edit update]
   get 'reservations/new/:id' => 'reservations#new', as: 'new_reservation'
   get 'done' => 'reservations#done', as: 'done'
   get 'accept_reservations/:id' => 'reservations#accept_reservations', as: 'accept_reservations'
@@ -46,6 +47,5 @@ Rails.application.routes.draw do
 
   resources :notifications, only: :index
 
-  resources :search_plants, only: [:new, :show, :create]
-
+  resources :search_plants, only: %i[new show create]
 end

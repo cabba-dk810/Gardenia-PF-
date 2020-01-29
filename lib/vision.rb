@@ -1,63 +1,65 @@
+# frozen_string_literal: true
+
 require 'base64'
 require 'json'
 require 'net/https'
 module Vision
-    class << self
-        def get_image_data(image_file)
-            api_url = "https://vision.googleapis.com/v1/images:annotate?key=#{ENV['GOOGLE_API_KEY']}"
-            # 画像をbase64にエンコード
-            # ./tmp/uploads/store refileで画像を保存した時に、初期設定で保存される場所
-            base64_image = Base64.encode64(open("./tmp/uploads/store/#{image_file.id}").read)
+  class << self
+    def get_image_data(image_file)
+      api_url = "https://vision.googleapis.com/v1/images:annotate?key=#{ENV['GOOGLE_API_KEY']}"
+      # 画像をbase64にエンコード
+      # ./tmp/uploads/store refileで画像を保存した時に、初期設定で保存される場所
+      base64_image = Base64.encode64(open("./tmp/uploads/store/#{image_file.id}").read)
 
-            # APIリクエスト用のJSONパラメータ
-            params = {
-                requests: [{
-                    image: {
-                        content: base64_image
-                    },
-                    features: [
-                        {
-                        type: 'LABEL_DETECTION'
-                        }
-                    ]
-                }]
-            }.to_json
-            # Google Cloud Vision APIにリクエスト
-            uri = URI.parse(api_url)
-            https = Net::HTTP.new(uri.host, uri.port)
-            https.use_ssl = true
-            request = Net::HTTP::Post.new(uri.request_uri)
-            request['Content-Type'] = 'application/json'
-            response = https.request(request, params)
-            # APIレスポンス出力
-            JSON.parse(response.body)['responses'][0]['labelAnnotations'].take(5)
-        end
-
-        def get_image_ajax(image_file)
-            api_url = "https://vision.googleapis.com/v1/images:annotate?key=#{ENV['GOOGLE_API_KEY']}"
-            # 既にコードとして引数に引数に渡っているので、Base64する必要なし
-            # APIリクエスト用のJSONパラメータ
-            params = {
-                requests: [{
-                    image: {
-                        content: image_file
-                    },
-                    features: [
-                        {
-                        type: 'LABEL_DETECTION'
-                        }
-                    ]
-                }]
-            }.to_json
-            # Google Cloud Vision APIにリクエスト
-            uri = URI.parse(api_url)
-            https = Net::HTTP.new(uri.host, uri.port)
-            https.use_ssl = true
-            request = Net::HTTP::Post.new(uri.request_uri)
-            request['Content-Type'] = 'application/json'
-            response = https.request(request, params)
-            # APIレスポンス出力
-            JSON.parse(response.body)['responses'][0]['labelAnnotations'].take(5)
-        end
+      # APIリクエスト用のJSONパラメータ
+      params = {
+        requests: [{
+          image: {
+            content: base64_image
+          },
+          features: [
+            {
+              type: 'LABEL_DETECTION'
+            }
+          ]
+        }]
+      }.to_json
+      # Google Cloud Vision APIにリクエスト
+      uri = URI.parse(api_url)
+      https = Net::HTTP.new(uri.host, uri.port)
+      https.use_ssl = true
+      request = Net::HTTP::Post.new(uri.request_uri)
+      request['Content-Type'] = 'application/json'
+      response = https.request(request, params)
+      # APIレスポンス出力
+      JSON.parse(response.body)['responses'][0]['labelAnnotations'].take(5)
     end
+
+    def get_image_ajax(image_file)
+      api_url = "https://vision.googleapis.com/v1/images:annotate?key=#{ENV['GOOGLE_API_KEY']}"
+      # 既にコードとして引数に引数に渡っているので、Base64する必要なし
+      # APIリクエスト用のJSONパラメータ
+      params = {
+        requests: [{
+          image: {
+            content: image_file
+          },
+          features: [
+            {
+              type: 'LABEL_DETECTION'
+            }
+          ]
+        }]
+      }.to_json
+      # Google Cloud Vision APIにリクエスト
+      uri = URI.parse(api_url)
+      https = Net::HTTP.new(uri.host, uri.port)
+      https.use_ssl = true
+      request = Net::HTTP::Post.new(uri.request_uri)
+      request['Content-Type'] = 'application/json'
+      response = https.request(request, params)
+      # APIレスポンス出力
+      JSON.parse(response.body)['responses'][0]['labelAnnotations'].take(5)
+    end
+  end
 end
