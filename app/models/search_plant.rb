@@ -1,5 +1,7 @@
-class SearchPlant < ApplicationRecord
-	has_many :recognition_images, dependent: :destroy
+# frozen_string_literal: true
 
-	attachment :plant_image
+class SearchPlant < ApplicationRecord
+  has_many :recognition_images, dependent: :destroy
+
+  attachment :plant_image
 end
