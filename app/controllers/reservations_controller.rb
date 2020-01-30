@@ -75,11 +75,11 @@ class ReservationsController < ApplicationController
   end
 
   def request_reservations
-    @reservations = Reservation.where(user_id: current_user.id).order(created_at: 'DESC')
+    @reservations = Reservation.where(user_id: current_user.id).order(created_at: 'DESC').includes([post_garden: :user]).includes([post_garden: :post_images])
   end
 
   def accept_reservations
-    @reservations = Reservation.where(owner_id: current_user.id).order(created_at: 'DESC')
+    @reservations = Reservation.where(owner_id: current_user.id).order(created_at: 'DESC').includes([:post_garden]).includes([:user])
   end
 
   def approve_reservation
