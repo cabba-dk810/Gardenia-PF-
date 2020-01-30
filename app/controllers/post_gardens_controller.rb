@@ -32,9 +32,9 @@ class PostGardensController < ApplicationController
 
   def index
     # 新着の投稿
-    @post_gardens = PostGarden.all.order(created_at: :desc).limit(12)
+    @post_gardens = PostGarden.all.order(created_at: :desc).limit(12).includes([:user]).includes([:post_images]).includes([:taggings])
     # いいね数順
-    @rank_orders = PostGarden.all.order(likes_count: :desc).limit(12)
+    @rank_orders = PostGarden.all.order(likes_count: :desc).limit(12).includes([:user]).includes([:post_images]).includes([:taggings])
 
     if user_signed_in?
       # フォローしているユーザの投稿
@@ -42,7 +42,7 @@ class PostGardensController < ApplicationController
       @following_posts = []
       # フォローしている人１人ずつに対して
       @followings.each do |follow|
-        posts = PostGarden.where(user_id: follow.follow_id)
+        posts = PostGarden.where(user_id: follow.follow_id).includes([:user]).includes([:post_images]).includes([:taggings])
         @following_posts.concat(posts)
       end
       # フォローしているユーザの全投稿を並び替える
@@ -57,26 +57,24 @@ class PostGardensController < ApplicationController
   end
 
   def search_result
-    # 検索パラメータはapplicationcontrollerでも設定済
-    @search = PostGarden.ransack(params[:q])
-    @post_gardens = PostGarden.all
+    # 検索パラメータはapplicationcontrollerで設定済
     # よく使うタグを取ってくる（デフォルトで20件）
     @tags = ActsAsTaggableOn::Tag.most_used
 
     # タグをクリックしたときの検索結果
+    @post_gardens = PostGarden.all.includes([:post_images]).includes([:user]).includes([:taggings])
     @post_gardens = if params[:tag_name]
-                      # @post_gardens = PostGarden.where(tag_list: params[:tag_name])
                       @post_gardens.tagged_with(params[:tag_name].to_s)
                     else
                       @search.result(distinct: true)
-                       end
+                    end
   end
 
   def show
     @post_garden = PostGarden.find(params[:id])
+    @post_comments = PostComment.where(post_garden_id: @post_garden.id).includes([:user])
     @user = User.find_by(id: @post_garden.user_id)
     @post_comment = PostComment.new
-
     @reservation = Reservation.new
 
     # イベント取得用

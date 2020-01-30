@@ -63,7 +63,7 @@
 
 									<% when 'reservation_cancel' then %>
 										<%= "予約をキャンセルしました。" %>
-										<%= link_to 'こちら', canceled_path(notification.reservation.id), style: "font-weight:bold;" %>
+										<%= link_to 'こちら', reservation_path(notification.reservation.id), style: "font-weight:bold;" %>
 										<%= "からキャンセル内容を確認してください" %>
 
 									<% end %>

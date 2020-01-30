@@ -182,9 +182,9 @@
 				<p class="comment-title">コメント一覧</p>
 
 				<!-- コメント表示 -->
-				<% if @post_garden.post_comments.any? %>
+				<% if @post_comments.any? %>
 
-					<% @post_garden.post_comments.each do |post_comment| %>
+					<% @post_comments.each do |post_comment| %>
 
 					<div class="row">
 						<div class="col-xs-2 col-xs-offset-2">

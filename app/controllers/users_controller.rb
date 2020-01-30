@@ -3,7 +3,7 @@
 class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
-    @post_gardens = PostGarden.where(user_id: @user.id)
+    @post_gardens = PostGarden.where(user_id: @user.id).includes([:post_images]).includes([:user]).includes([:taggings])
     @relationship = Relationship.new
 
     @relationship_followers = Relationship.where(follow_id: @user.id)

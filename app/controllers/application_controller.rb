@@ -13,6 +13,6 @@ class ApplicationController < ActionController::Base
   end
 
   def read_ransack
-    @search = PostGarden.ransack(params[:q])
+    @search = PostGarden.includes([:post_images]).includes([:user]).includes([:taggings]).ransack(params[:q])
   end
 end
