@@ -72,7 +72,7 @@ gem 'acts-as-taggable-on'
 gem 'bootstrap-sass', '~>3.3.6'
 gem 'cocoon'
 gem 'devise'
-gem 'dotenv-rails'
+gem 'dotenv-rails'd
 gem 'font-awesome-sass'
 gem 'fullcalendar-rails'
 gem 'geocoder'
