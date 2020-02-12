@@ -9,7 +9,7 @@ class RequestCancelMailer < ApplicationMailer
     @reservation = reservation
     # @start_datetime = @reservation.r_start_datetime.strftime('%Y年%m月%d日 %H時%M分')
     # @end_datetime = @reservation.r_end_datetime.strftime('%Y年%m月%d日 %H時%M分')
-    @url = "http://3.114.135.20/users/#{@user.id}"
+    @url = "https://open-gardenia.com/users/#{@user.id}"
     mail to: @user.email, subject: '【Gardenia事務局】予約、もしくは予約リクエストがキャンセルされました', from: '"Gardenia事務局" <gardenia@gmail.com>'
   end
 
@@ -19,7 +19,7 @@ class RequestCancelMailer < ApplicationMailer
     @reservation = reservation
     # @reservation.start_datetime = @reservation.r_start_datetime.strftime("%Y年%m月%d日 %H時%M分")
     # @reservation.end_datetime = @reservation.r_end_datetime.strftime("%Y年%m月%d日 %H時%M分")
-    @url = "http://3.114.135.20/users/#{@reservation.owner_id}"
+    @url = "https://open-gardenia.com/users/#{@reservation.owner_id}"
     mail to: @reservation.post_garden.user.email, subject: '【Gardenia事務局】予約、もしくは予約リクエストがキャンセルされました', from: '"Gardenia事務局" <gardenia@gmail.com>'
   end
 end
