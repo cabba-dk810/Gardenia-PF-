@@ -7,24 +7,9 @@ RSpec.describe User, type: :model do
     @user = FactoryBot.build(:user)
   end
 
-  context '存在が必須であること' do
-    it '名前(first_name)は必須であること' do
-      @user = FactoryBot.build(:user, first_name: nil)
-      expect(@user.valid?).to eq(false)
-    end
-
-    it '苗字(last_name)は必須であること' do
-      @user = FactoryBot.build(:user, last_name: nil)
-      expect(@user.valid?).to eq(false)
-    end
-
-    it 'フリガナ(first_furigana)は必須であること' do
-      @user = FactoryBot.build(:user, first_furigana: nil)
-      expect(@user.valid?).to eq(false)
-    end
-
-    it 'フリガナ(last_furigana)は必須であること' do
-      @user = FactoryBot.build(:user, last_furigana: nil)
+  context '入力が必須であること' do
+    it 'ユーザネーム(user_name)は必須であること' do
+      @user = FactoryBot.build(:user, user_name: nil)
       expect(@user.valid?).to eq(false)
     end
 
@@ -60,41 +45,6 @@ RSpec.describe User, type: :model do
   end
 
   context '文字制限が有効であること' do
-    it '名前(first_name)は16文字で保存できないこと' do
-      @user.first_name = 'a' * 16
-      expect(@user).not_to be_valid
-    end
-    it '名前(first_name)は15文字で保存できること' do
-      @user.first_name = 'a' * 15
-      expect(@user).to be_valid
-    end
-
-    it '苗字(last_name)は16文字で保存できないこと' do
-      @user.last_name = 'a' * 16
-      expect(@user).not_to be_valid
-    end
-    it '苗字(last_name)は15文字で保存できること' do
-      @user.last_name = 'a' * 15
-      expect(@user).to be_valid
-    end
-
-    it 'フリガナ(last_furigana)は21文字で保存できないこと' do
-      @user.last_furigana = 'a' * 21
-      expect(@user).not_to be_valid
-    end
-    it 'フリガナ(last_furigana)は20文字で保存できること' do
-      @user.last_furigana = 'a' * 20
-      expect(@user).to be_valid
-    end
-
-    it 'フリガナ(first_furigana)は21文字で保存できないこと' do
-      @user.first_furigana = 'a' * 21
-      expect(@user).not_to be_valid
-    end
-    it 'フリガナ(first_furigana)は20文字で保存できること' do
-      @user.first_furigana = 'a' * 20
-      expect(@user).to be_valid
-    end
 
     it '郵便番号(postal_code)は6文字で保存できないこと' do
       @user.postal_code = '1' * 6
