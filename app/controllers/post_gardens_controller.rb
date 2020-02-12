@@ -51,6 +51,8 @@ class PostGardensController < ApplicationController
 
     # 公開している庭一覧（Googlemapにピンを立てる）
     @open_gardens = PostGarden.where(open_status: 1)
+    # 新着公開中庭園
+    @open_gardens_side = PostGarden.where(open_status: 1).limit(3).includes([:post_images])
 
     # よく使うタグを取ってくる（デフォルトで20件）
     @tags = ActsAsTaggableOn::Tag.most_used
@@ -68,6 +70,8 @@ class PostGardensController < ApplicationController
                     else
                       @search.result(distinct: true)
                     end
+    # 新着公開中庭園
+    @open_gardens_side = PostGarden.where(open_status: 1).limit(3).includes([:post_images])
   end
 
   def show
