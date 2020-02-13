@@ -129,18 +129,18 @@
 		<!-- 自身でリクエストした予約は編集可能。キャンセルした予約は、編集できないように -->
 		<% if @reservation.user_id == current_user.id %>
 			<% if @reservation.request_status == "未受付" || @reservation.request_status == "承認" %>
-				<div class="col-xs-2 col-xs-offset-5">
-					<%= link_to "予約内容変更", edit_reservation_path(@reservation.id), class:"btn btn-primary reservation-show-button" %>
+				<div class="col-xs-2 col-xs-offset-5 reservation-bottom">
+					<%= link_to "予約内容変更", edit_reservation_path(@reservation.id), class:"btn btn-primary" %>
 				</div>
 
 				<div class="col-xs-2 col-xs-offset-2">
-					<%= link_to "キャンセルする", cancel_reason_path(@reservation.id), class:"btn btn-warning reservation-show-button" %>
+					<%= link_to "キャンセルする", cancel_reason_path(@reservation.id), class:"btn btn-warning" %>
 				</div>
 			<% end %>
 
 		<% elsif @reservation.owner_id == current_user.id %>
 			<% if @reservation.request_status == "未受付" || @reservation.request_status == "承認" %>
-			<div class="col-xs-2 col-xs-offset-9">
+			<div class="col-xs-2 col-xs-offset-9 reservation-bottom">
 				<%= link_to "キャンセルする", cancel_reason_path(@reservation.id), class:"btn btn-warning reservation-show-button" %>
 			</div>
 			<% end %>

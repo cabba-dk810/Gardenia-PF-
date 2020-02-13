@@ -572,7 +572,8 @@
 }
 
 .comment-button{
-  margin-top: 10px;
+  margin-top: 20px;
+  margin-bottom: 80px;
 }
 
 .reserve-box{
@@ -659,13 +660,24 @@
   margin-right: 10px;
 }
 
+.new-post-garden-title{
+  color: #584c27;
+  font-size: 20px;
+}
+
+.fa-pencil-ruler{
+  color: #584c27;
+  font-size: 20px;
+  margin-right: 10px;
+}
+
 .new-post-bg-color{
   border: 1px solid #f7f5ee;
   border-radius: 10px;
   margin-top: 40px;
   padding-top: 30px;
   padding-bottom: 20px;
-  margin-bottom: 30px;
+  margin-bottom: 60px;
 }
 
 .new-post-image-add-position{
@@ -774,6 +786,10 @@
 .new-post-solution{
   margin-top: 20px;
   margin-bottom: 50px;
+}
+
+.bottom-blank{
+  margin-bottom: 100px;
 }
 
 
