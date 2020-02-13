@@ -4,8 +4,6 @@ let counter = 0;
 
 $(function(){
 
-    $fileField = $('#new_file')
-
   // 選択された画像を取得し表示
   // document.addEventListener(function(e))
   // 画像を追加するたびにchangeイベントを発生させたいので、.new-post-imageがchangeした時と定義している。
@@ -25,6 +23,8 @@ $(function(){
         // ファイル読み込みが完了した際のイベント登録
         reader.onload = (function(file) {
             return function(e) {
+                // attachment_field消える
+                $preview.empty();
                 $preview.addClass("preview");
                 // .prevewの領域の中にロードした画像を表示するimageタグを追加
                 $preview.append($('<img>').attr({
