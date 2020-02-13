@@ -9,12 +9,25 @@ Gardeniaは、庭好きが集まるwebサイトです。
 Gardeniaは、自身で手入れした庭を投稿したり、困ったことがあれば相談することができます。また、検索機能を使い、庭がある場所、使用している庭木等で投稿を絞り込むことで、好みの庭を探し出すこともできます。
 加えて、投稿した庭を公開（オープンガーデン）することで、どんな庭を作っているかを直接見学してもらい、交流することも可能です。逆に気になった庭があれば、見学の予約をお願いすることもできます。
 
-## 技術的なポイント（Features）
-・新規投稿時、Vision APIを使ったタグのおすすめ機能
-・庭園の公開時、日程をfullcalendarを使ったカレンダーから選択する機能（庭園の予約は、予め選択された日時からのみ可能）
-・庭園の公開時、場所がGooglemapAPIにプロットされる機能
-・予約の確定時、マイページのカレンダーに予定として追加される機能
-・４パターンに分けたAction Mailer（予約リクエスト、予約承認、予約変更、予約キャンセル）
+## 技術的なポイント
+・新規投稿時、Vision APIを使ったタグのおすすめ機能 
+・庭園の公開時、日程をfullcalendarを使ったカレンダーから選択する機能（庭園の予約は、予め選択された日時からのみ可能） 
+・庭園の公開時、場所がGooglemapAPIにプロットされる機能 
+・予約の確定時、マイページのカレンダーに予定として追加される機能 
+・４パターンに分けたAction Mailer（予約リクエスト、予約承認、予約変更、予約キャンセル） 
+
+## デモ
+1.VisionAPIを使ったタグのおすすめ機能 
+![タグのおすすめ](https://github.com/Daichi0502/Gardenia-PF-/blob/media/VisionAI.gif) 
+
+2.新規投稿とfullcalendarを使った庭の公開
+![投稿と公開](https://github.com/Daichi0502/Gardenia-PF-/blob/media/post.gif) 
+
+3.fullcalendarを使った予約
+![予約](https://github.com/Daichi0502/Gardenia-PF-/blob/media/reservation.gif) 
+
+4.予約の承認
+![承認](https://github.com/Daichi0502/Gardenia-PF-/blob/media/confirm.gif) 
 
 ## 使い方（Usage）
 https://open-gardenia.com/
