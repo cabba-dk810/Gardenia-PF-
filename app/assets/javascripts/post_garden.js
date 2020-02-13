@@ -24,7 +24,7 @@ $(function(){
         reader.onload = (function(file) {
             return function(e) {
                 // attachment_field消える
-                $preview.empty();
+                // $preview.empty();
                 $preview.addClass("preview");
                 // .prevewの領域の中にロードした画像を表示するimageタグを追加
                 $preview.append($('<img>').attr({

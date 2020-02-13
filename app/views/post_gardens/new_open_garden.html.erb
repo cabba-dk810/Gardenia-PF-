@@ -70,16 +70,17 @@
 										<%= f.datetime_select :end_time, :use_month_numbers => true, :minute_step => 30 %>
 									</div>
 
-									<%= f.submit "更新", class:"btn btn-success btn-sm modal-button-position" %>
+									<span>
+										<%= f.submit "更新", class:"btn btn-success btn-sm modal-button-position" %>
+										<span id="reservation-day-destroy">
+											<%= form_for @open_day, url:open_day_path, method: :delete do |f| %>
+												<%= f.hidden_field :id %>
+											    <%= f.submit "削除", class:"btn btn-danger btn-sm" %>
+											<% end %>
+										</span>
+									</span>
 
 								<% end %>
-
-								<span id="reservation-day-destroy">
-									<%= form_for @open_day, url:open_day_path, method: :delete do |f| %>
-										<%= f.hidden_field :id %>
-									    <%= f.submit "削除", class:"btn btn-danger btn-sm modal-button-position" %>
-									<% end %>
-								</span>
 
 							</div>
 
@@ -159,7 +160,7 @@
 						<% if @post_garden.open_status == "非公開" %>
 
 							<div class="col-xs-2 col-xs-offset-5">
-								<div class="active">
+								<div class="active reservation-bottom">
 									<%= f.submit "公開する", class:"btn btn-primary" %>
 								</div>
 							</div>
@@ -167,13 +168,13 @@
 						<% else @post_garden.open_status == "公開" %>
 
 							<div class="col-xs-3 col-xs-offset-5">
-								<div class="active">
+								<div class="active reservation-bottom">
 									<%= f.submit "更新する", class:"btn btn-success" %>
 								</div>
 							</div>
 
 							<div class="col-xs-3 col-xs-offset-1">
-								<div class="active">
+								<div class="active reservation-bottom">
 									<%= link_to "公開を停止する", delete_open_info_path(params[:id]), method: :patch, "data-confirm" => "非公開にしますか？", class:"btn btn-danger" %>
 								</div>
 							</div>
