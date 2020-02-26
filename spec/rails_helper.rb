@@ -64,4 +64,11 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  # ログインテスト用に追加
+  # config.include Devise::TestHelpers, type: :controller
+  # config.include ControllerMacros, type: :controller
 end
+
+# require 'devise'
+# require File.expand_path("spec/support/controller_macros.rb")

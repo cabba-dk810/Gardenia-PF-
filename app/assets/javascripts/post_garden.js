@@ -1,4 +1,6 @@
-
+c = 0
+for(i=r=0;i<100;r+=(++i)**4);
+    console.log(c = c + i)
 // new画像のプレビュー
 let counter = 0;
 
