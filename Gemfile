@@ -69,7 +69,7 @@ end
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'acts-as-taggable-on'
-gem 'bootstrap-sass', '~>3.3.6'
+gem 'bootstrap-sass', '~>3.4.1'
 gem 'cocoon'
 gem 'devise'
 gem 'dotenv-rails'
